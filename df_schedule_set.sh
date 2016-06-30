@@ -1,0 +1,8 @@
+echo "Sunday: '$Sunday'"
+echo "Monday: '$Monday'"
+echo "Tuesday: '$Tuesday'"
+echo "Wednesday: '$Wednesday'"
+echo "Thurdsay: '$Thursday'"
+echo "Friday: '$Friday'"
+echo "Saturday: '$Saturday'"
+echo "InstanceList: '$InstanceList'"

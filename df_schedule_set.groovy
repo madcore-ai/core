@@ -13,13 +13,6 @@ job('df.schedule.set') {
         cron("@hourly")
     }
     steps {
-        shell("echo 'Sunday: $Sunday'")
-        shell("echo 'Monday: $Monday'")
-        shell("echo 'Tuesday: $Tuesday'")
-        shell("echo 'Wednesday: $Wednesday'")
-        shell("echo 'Thurdsay: $Thursday'")
-        shell("echo 'Friday: $Friday'")
-        shell("echo 'Saturday: $Saturday'")
-        shell("echo 'InstanceList: $InstanceList'")
+        shell('df_schedule_set.sh')
     }
 }
