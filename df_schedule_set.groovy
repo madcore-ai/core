@@ -1,7 +1,7 @@
 job('df.schedule.set') {
     parameters {
-predefinedProp("key", "value")
-choiceParam('myParameterName', ['option 1 (default)', 'option 2', 'option 3'], 'my description')
+    stringParam('VERSION', '10.2.0.0', '')
+    stringParam('BRANCH', 'master', '')
     }
     triggers {
         cron("@hourly")
