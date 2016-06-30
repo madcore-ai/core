@@ -1,7 +1,13 @@
 job('df.schedule.set') {
     parameters {
-    stringParam('VERSION', '10.2.0.0', '')
-    stringParam('BRANCH', 'master', '')
+        stringParam('Monday', '', '')
+        stringParam('Tuesday', '', '')
+        stringParam('Wednesday', '', '')
+        stringParam('Thurdsay', '', '')
+        stringParam('Friday', '', '')
+        stringParam('Saturday', '', '')
+        stringParam('Sunday', '', '')
+        stringParam('InstanceList', '', '')
     }
     triggers {
         cron("@hourly")
