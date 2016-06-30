@@ -3,7 +3,7 @@ job('df.schedule.set') {
         stringParam('Monday', '', '')
         stringParam('Tuesday', '', '')
         stringParam('Wednesday', '', '')
-        stringParam('Thurdsay', '', '')
+        stringParam('Thursday', '', '')
         stringParam('Friday', '', '')
         stringParam('Saturday', '', '')
         stringParam('Sunday', '', '')
