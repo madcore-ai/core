@@ -13,6 +13,12 @@ job('df.schedule.set') {
         cron("@hourly")
     }
     steps {
-        shell('pushd /var/lib/jenkins/jobs/seed-dsl/workspace/controlbox && df_schedule_set.sh  && popd')
+        def command = """
+#!/bin/bash
+pushd /var/lib/jenkins/jobs/seed-dsl/workspace/controlbox
+df_schedule_set.sh
+popd
+"""
+        shell(command)
     }
 }
