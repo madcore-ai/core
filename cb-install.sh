@@ -25,7 +25,7 @@ sudo "/var/lib/jenkins/git/habitat/terraform/scripts/bootstrap.sh"
 
 
 # JENKINS PLUGINS
-sudo su -c "sed -i '/JAVA_ARGS=/c\JAVA_ARGS=\"-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false\"' /var/lib/jenkins/config.xml" jenkins
+sudo sed -i '/^JAVA_ARGS=/c\JAVA_ARGS=\"-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false\"' /etc/default/jenkins
 sudo su -c "sed -i '/<useSecurity>/c\<useSecurity>false</useSecurity>' /var/lib/jenkins/config.xml" jenkins
 sudo service jenkins restart
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8080/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
