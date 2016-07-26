@@ -38,6 +38,8 @@ sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://1
 
 # CONFIGURE AND RUN 1ST SEED JOB (WILL CREATE ALL OTHER JOBS FROM REPO)
 sudo su -c "mkdir -p /var/lib/jenkins/jobs/seed-dsl" jenkins
+sudo su -c "mkdir -p /var/lib/jenkins/workspace/seed-dsl" jenkins
+sudo su -c "ln -s /opt/controlbox /var/lib/jenkins/workspace/seed-dsl/controlbox" jenkins
 sudo su -c "cp /var/lib/jenkins/workspace/seed-dsl/controlbox/seed-dls_config.xml /var/lib/jenkins/jobs/seed-dsl/config.xml" jenkins
 sudo service jenkins restart
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8080/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
