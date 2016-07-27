@@ -14,7 +14,7 @@ job('df.schedule.set') {
     }
     steps {
         def command = """#!/bin/bash
-pushd /var/lib/jenkins/jobs/seed-dsl/workspace/controlbox
+pushd /var/lib/jenkins/workspace/seed-dsl/controlbox
     bash df_schedule_set.sh
 popd
 """
