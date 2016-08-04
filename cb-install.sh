@@ -9,6 +9,7 @@ pushd /tmp
     sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
     sudo apt-get update
     sudo apt-get install openjdk-8-jdk git jenkins python-pip awscli -y
+    sudo pip install boto
     sudo groupadd hab && useradd -g hab -s /bin/bash -m hab
     sudo curl -fsSL https://get.docker.com/ | sh
     sudo usermod -aG docker jenkins
