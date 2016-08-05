@@ -8,9 +8,9 @@ job('df.jenkins.user.create') {
     }
     steps {
         def command = """#!/bin/bash
-pushd /var/lib/jenkins/workspace/seed-dsl/controlbox
-    bash df_jenkins_user_create.sh
-popd
+  pushd /var/lib/jenkins/workspace/seed-dsl/controlbox
+      bash df_jenkins_user_create.sh
+  popd
 """
         shell(command)
     }
