@@ -3,6 +3,13 @@ registry:
   ports:
     - 127.0.0.1:5000:5000
   environment:
-    DIR: /opt/dockerstorage
+    REGISTRY_HTTP_TLS_CERTIFICATE: /certs/domain.crt
+    REGISTRY_HTTP_TLS_KEY: /certs/domain.key
+    REGISTRY_AUTH: htpasswd
+    REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+    REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+    REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /opt/dockerstorage
   volumes:
-    - /opt/controlbox:/opt/dockerstorage
+    - /opt/dockerstorage:/opt/dockerstorage
+    - /opt/controlbox/certs:/certs
+    - /opt/controlbox/auth:/auth
