@@ -6,4 +6,3 @@ ExecStart=/bin/hab-director start -c /hab/svc/hab-director/controlbox.toml
 
 [Install]
 WantedBy=default.target
-
