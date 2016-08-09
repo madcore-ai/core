@@ -1,7 +1,0 @@
-#!/bin/bash
-su - jenkins
-cd /opt/controlbox/registrydocker
-sudo su -c  "docker-compose up &"
-exit
-exit
-
