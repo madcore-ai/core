@@ -22,8 +22,11 @@ popd
 sudo su -c "mkdir -p /var/lib/jenkins/git/habitat" jenkins
 sudo su -c "git clone https://github.com/habitat-sh/habitat /var/lib/jenkins/git/habitat" jenkins
 sudo "/var/lib/jenkins/git/habitat/components/hab/install.sh"
-sudo "/var/lib/jenkins/git/habitat/terraform/scripts/bootstrap.sh"
-
+#sudo "/var/lib/jenkins/git/habitat/terraform/scripts/bootstrap.sh"
+sudo "hab install core/hab-sup"
+sudo "hab install core/redis"
+sudo "hab install core/hab-depot"
+sudo "hab install core/hab-director"
 
 # JENKINS PLUGINS
 sudo service jenkins stop

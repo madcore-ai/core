@@ -8,7 +8,7 @@ job('df.docker.setup') {
     steps {
         def command = """#!/bin/bash
 pushd /var/lib/jenkins/workspace/seed-dsl/controlbox
-    bash /opt/docker_registry_setup/df_docker_setup.sh
+    bash /opt/controlbox/registrydocker/df_docker_setup.sh
 popd
 """
         shell(command)
