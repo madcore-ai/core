@@ -8,7 +8,7 @@ job('df.aws.instance') {
     }
     steps {
         def command = """#!/bin/bash
-pushd /var/lib/jenkins/workspace/seed-dsl/controlbox
+pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
     bash df_aws_instance.sh
 popd
 """
