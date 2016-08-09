@@ -48,3 +48,9 @@ sudo su -c "cp /var/lib/jenkins/workspace/seed-dsl/controlbox/seed-dls_config.xm
 sudo service jenkins restart
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8080/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 build seed-dsl" jenkins
+
+# Setup various Services
+sudo "/opt/controlbox/ssl/setup.sh"
+sudo "/opt/controlbox/haproxy/setup.sh"
+sudo "/opt/controlbox/registrydocker/setup.sh"
+sudo "/opt/controlbox/registryhabitat/setup.sh"
