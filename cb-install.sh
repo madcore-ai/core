@@ -23,10 +23,15 @@ sudo su -c "mkdir -p /var/lib/jenkins/git/habitat" jenkins
 sudo su -c "git clone https://github.com/habitat-sh/habitat /var/lib/jenkins/git/habitat" jenkins
 sudo "/var/lib/jenkins/git/habitat/components/hab/install.sh"
 #sudo "/var/lib/jenkins/git/habitat/terraform/scripts/bootstrap.sh"
-sudo "hab install core/hab-sup"
-sudo "hab install core/redis"
-sudo "hab install core/hab-depot"
-sudo "hab install core/hab-director"
+sudo hab install core/hab-sup
+sudo hab install core/redis
+sudo hab install core/hab-depot
+sudo hab install core/hab-director
+sudo hab pkg binlink core/hab-sup hab-sup
+sudo hab pkg binlink core/redis redis-cli
+sudo hab pkg binlink core/hab-depot hab-depot
+sudo hab pkg binlink core/hab-director hab-director
+
 
 # JENKINS PLUGINS
 sudo service jenkins stop
@@ -50,7 +55,7 @@ sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8080/cli/' -o /de
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 build seed-dsl" jenkins
 
 # PROXY AND REGISTRIES
-sudo "/opt/controlbox/ssl/setup.sh"
-sudo "/opt/controlbox/haproxy/setup.sh"
-sudo "/opt/controlbox/registrydocker/setup.sh"
-sudo "/opt/controlbox/registryhabitat/setup.sh"
+sudo bash "/opt/controlbox/ssl/setup.sh"
+sudo bash "/opt/controlbox/haproxy/setup.sh"
+sudo bash "/opt/controlbox/registrydocker/setup.sh"
+sudo bash "/opt/controlbox/registryhabitat/setup.sh"

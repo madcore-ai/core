@@ -1,3 +1,4 @@
+mkdir -p /etc/pki/tls/certs
 echo "
 [ req ]
 default_bits = 2048 # Size of keys
@@ -24,12 +25,12 @@ countryName_default = GB
 localityName_default = London
 0.organizationName_default = Rona Animation Studios
 organizationalUnitName_default = Development
-commonName_default = $SERVER" > openssl.cnf
-sudo mv openssl.cnf /etc/pki/tls/certs/
-cd /etc/pki/tls/certs
+commonName_default = $SERVER" > /etc/pki/tls/certs/openssl.cnf
 
-sudo openssl genrsa -des3 -passout pass:TasWq -out serverPAS.key 2048
-sudo openssl req -new -key serverPAS.key -passin pass:TasWq -out server.csr -config openssl.cnf -batch
-sudo openssl x509 -req -days 365 -in server.csr -signkey serverPAS.key -passin pass:TasWq -out server.crt
-sudo openssl rsa -passin pass:TasWq -in serverPAS.key -out server.key
-cat /etc/pki/tls/certs/server.crt /etc/pki/tls/certs/server.key > /etc/pki/tls/certs/server.bundle.pem
+pushd /etc/pki/tls/certs
+    sudo openssl genrsa -des3 -passout pass:TasWq -out serverPAS.key 2048
+    sudo openssl req -new -key serverPAS.key -passin pass:TasWq -out server.csr -config openssl.cnf -batch
+    sudo openssl x509 -req -days 365 -in server.csr -signkey serverPAS.key -passin pass:TasWq -out server.crt
+    sudo openssl rsa -passin pass:TasWq -in serverPAS.key -out server.key
+    cat server.crt server.key > server.bundle.pem
+popd
