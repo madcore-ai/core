@@ -11,5 +11,5 @@ registry:
     REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /opt/dockerstorage
   volumes:
     - /opt/dockerstorage:/opt/dockerstorage
-    - /opt/controlbox/certs:/certs
+    - /etc/pki/tls/certs:/certs
     - /opt/controlbox/auth:/auth
