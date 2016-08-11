@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt-get install haproxy -y
-sudo /home/ubuntu/controlbox/ssl/ssl-self-signed-generate.sh
+#certificate generated as part of main script cb-install.sh
 sudo service haproxy stop
 sudo sh -c 'mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.old'
 sudo sh -c 'rm /etc/default/haproxy'
