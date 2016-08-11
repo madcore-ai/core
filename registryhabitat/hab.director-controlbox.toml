@@ -1,5 +1,0 @@
-[cfg.services.core.redis.depot]
-start = "--permanent-peer --peer 10.0.2.15:9000"
-
-[cfg.services.core.hab-depot.depot]
-start = "--permanent-peer --bind database:redis.depot,router:hab-depot.depot --peer 10.0.2.15:9000"
