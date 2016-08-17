@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /opt/controlbox/docker_registry_setup
+cd /opt/controlbox/registrydocker
 sudo docker run -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done"
 sudo docker run --rm --entrypoint htpasswd registry:2.5 -Bbn indy_user redhat  >> /opt/controlbox/auth/htpasswd
 sudo docker-compose stop
