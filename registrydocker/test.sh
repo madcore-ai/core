@@ -1,7 +1,9 @@
 #!/bin/bash
 cd /opt/controlbox/registrydocker
+mkdir -p /opt/auth
+docker-compose up &
 sudo docker run -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done"
-sudo docker run --rm --entrypoint htpasswd registry:2.5 -Bbn indy_user redhat  >> /opt/controlbox/auth/htpasswd
+sudo docker run --rm --entrypoint htpasswd registry:2.5 -Bbn indy_user redhat  >> /opt/auth/htpasswd
 sudo docker-compose stop
 sudo docker-compose up &
 sudo docker login -uindy_user -predhat localhost:5000/
