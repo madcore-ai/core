@@ -14,7 +14,8 @@ pushd /tmp
     sudo curl -fsSL https://get.docker.com/ | sh
     sudo usermod -aG docker jenkins
     sudo usermod -aG docker hab
-    sudo curl -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+    sudo wget https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
     sudo curl -sSf https://static.rust-lang.org/rustup.sh | sh
 popd
 
