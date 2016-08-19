@@ -16,10 +16,20 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
     sudo apt-get install git -y
-    sudo mkdir -p /opt/controlbox
-    sudo chown ubuntu:ubuntu /opt/controlbox
-    git clone -b development https://bitbucket.org/ronaanimation/controlbox.git /opt/controlbox
-    sudo chmod +x /opt/controlbox/cb-install.sh
-    sudo "/opt/controlbox/cb-install.sh"
+
+    pushd /opt
+        sudo git clone https://bitbucket.org/ronaanimation/controlbox.git 
+        sudo chown -R ubuntu:ubuntu /opt/controlbox
+    popd
+
+    pushd /opt/controlbox
+        sudo git checkout -b development origin/development
+        sudo chmod +x cb-install.sh
+        sudo cb-install.sh"
+    popd
+
+    pushd /opt
+        sudo chown -R ubuntu:ubuntu /opt/controlbox
+    popd
   SHELL
 end
