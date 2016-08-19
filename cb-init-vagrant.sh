@@ -8,5 +8,5 @@ popd
 pushd /opt/controlbox
     sudo git checkout -b development origin/development
     sudo chmod +x cb-install.sh
-    sudo cb-install.sh"
+    sudo bash cb-install.sh
 popd
