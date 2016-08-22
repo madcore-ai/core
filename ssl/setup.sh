@@ -1,4 +1,5 @@
 mkdir -p /etc/pki/tls/certs
+export SERVER=$HOSTNAME
 echo "
 [ req ]
 default_bits = 2048 # Size of keys

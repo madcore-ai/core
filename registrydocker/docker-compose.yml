@@ -3,8 +3,8 @@ registry:
   ports:
     - 127.0.0.1:5000:5000
   environment:
-    REGISTRY_HTTP_TLS_CERTIFICATE: /certs/domain.crt
-    REGISTRY_HTTP_TLS_KEY: /certs/domain.key
+    REGISTRY_HTTP_TLS_CERTIFICATE: /certs/server.crt
+    REGISTRY_HTTP_TLS_KEY: /certs/server.key
     REGISTRY_AUTH: htpasswd
     REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
     REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
@@ -12,4 +12,4 @@ registry:
   volumes:
     - /opt/dockerstorage:/opt/dockerstorage
     - /etc/pki/tls/certs:/certs
-    - /opt/controlbox/auth:/auth
+    - /opt/auth:/auth
