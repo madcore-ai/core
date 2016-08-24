@@ -1,4 +1,4 @@
-job('df.docker_build_from_git') {
+job('df_docker_build_from_git') {
    
     triggers {
         cron("@minutes")
@@ -6,7 +6,7 @@ job('df.docker_build_from_git') {
     steps {
         def command = """#!/bin/bash
 pushd /var/lib/jenkins/workspace/seed-dsl/controlbox
-    bash df.docker_build_from_git.sh
+    bash df_docker_build_from_git.sh
 popd
 """
         shell(command)
