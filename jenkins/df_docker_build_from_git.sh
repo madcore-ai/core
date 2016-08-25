@@ -3,7 +3,7 @@ REPO_PATH=/apache
 REPO_HTTPS=https://github.com/kstaken/dockerfile-examples.git
 WORKSPACE=/web_server
 DOCKER_NAME_LABEL=my-web-server
-sudu git clone $REPO_HTTPS $WORKSPACE
+sudo git clone $REPO_HTTPS $WORKSPACE
 pushd $WORKSPACE/$REPO_PATH
 sudo docker build -t=$DOCKER_NAME_LABEL .
 sudo docker run -d -p 443:80 --name web my-web-server
