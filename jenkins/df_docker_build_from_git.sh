@@ -1,5 +1,5 @@
 #!/bin/bash
-REPO_PATH=/apache
+REPO_PATH=apache
 REPO_HTTPS=https://github.com/kstaken/dockerfile-examples.git
 WORKSPACE=/web_server
 DOCKER_NAME_LABEL=my-web-server
