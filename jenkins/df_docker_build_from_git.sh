@@ -1,8 +1,8 @@
 #!/bin/bash
-REPO_PATH=apache
-REPO_HTTPS=https://github.com/kstaken/dockerfile-examples.git
-WORKSPACE=/web_server
-DOCKER_NAME_LABEL=my-web-server
+echo "REPO_PATH: '$REPO_PATH'"
+echo "REPO_HTTPS: '$REPO_HTTPS'"
+echo "WORKSPACE: '$WORKSPACE'"
+echo "DOCKER_NAME_LABEL: '$DOCKER_NAME_LABEL'"
 sudo git clone $REPO_HTTPS $WORKSPACE
 pushd $WORKSPACE/$REPO_PATH
 sudo docker build -t=$DOCKER_NAME_LABEL .

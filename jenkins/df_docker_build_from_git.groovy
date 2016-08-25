@@ -1,5 +1,10 @@
 job('df_docker_build_from_git') {
-   
+    parameters {
+        stringParam('REPO_PATH', '', '')
+        stringParam('REPO_HTTPS', '', '')  
+        stringParam('WORKSPACE', '', '')     
+        stringParam('DOCKER_NAME_LABEL', '', '') 
+    }   
     triggers {
         cron("@minutes")
     }
