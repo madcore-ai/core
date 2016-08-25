@@ -1,5 +1,6 @@
 job('df.schedule.set') {
     parameters {
+		stringParam('Name', '', '')
         stringParam('Monday', '', '')
         stringParam('Tuesday', '', '')
         stringParam('Wednesday', '', '')
@@ -8,6 +9,7 @@ job('df.schedule.set') {
         stringParam('Saturday', '', '')
         stringParam('Sunday', '', '')
         stringParam('InstanceList', '', '')
+		stringParam('IsEnabled', '', '')
     }
     triggers {
         cron("@hourly")
