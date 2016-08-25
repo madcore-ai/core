@@ -1,15 +1,14 @@
-#!/bin/bash 
-sudo apt-get update
-sudo apt-get install git -y
-pushd /opt
-    sudo git clone https://bitbucket.org/ronaanimation/controlbox.git
-    sudo chown -R ubuntu:ubuntu /opt/controlbox
+#!/bin/bash
+REPO_PATH=/apache
+REPO_HTTPS=https://github.com/kstaken/dockerfile-examples.git
+WORKSPACE=/web_server
+DOCKER_NAME_LABEL=my-web-server
+git clone $REPO_HTTPS $WORKSPACE
+pushd $WORKSPACE/$REPO_PATH
+docker build -t=$DOCKER_NAME_LABEL .
+docker run -d -p 443:80 --name web my-web-server
+docker tag $(docker images | grep my-web-server | awk '{print $3}') localhost:5000/my-web-server:image
+docker push localhost:5000/my-web-server:image
+
 popd
-pushd /opt/controlbox
-    sudo git checkout -b development origin/development
-    cd /opt/controlbox/
-    sudo docker run -d ubuntu /bin/sh
-    docker tag $(docker images | grep ubuntu | awk '{print $3}') localhost:5000/ubuntu:test
-    docker push localhost:5000/ubuntu:test
-popds
- 
+
