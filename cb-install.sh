@@ -55,8 +55,9 @@ sudo service jenkins restart
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8080/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 build seed-dsl" jenkins
 
-# PROXY AND REGISTRIES
+# PROXY,REGISTRIES, KUBERNETES
 sudo bash "/opt/controlbox/ssl/setup.sh"
 sudo bash "/opt/controlbox/haproxy/setup.sh"
 sudo bash "/opt/controlbox/registrydocker/setup.sh"
+sudo bash "/opt/controlbox/kubernetes/setup.sh"
 sudo bash "/opt/controlbox/registryhabitat/setup.sh"
