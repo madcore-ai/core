@@ -4,7 +4,7 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-ExecStart=/usr/local/bin/docker-compose -f /opt/controlbox/kubernetes/docker-compose.yml up  -d
+ExecStart=/usr/local/bin/docker-compose -f /opt/controlbox/kubernetes/docker-compose.yml up etcd apiserver controller scheduler kubelet proxy 
 
 [Install]
 WantedBy=multi-user.target
