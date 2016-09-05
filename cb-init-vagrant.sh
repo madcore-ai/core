@@ -1,4 +1,7 @@
 #!/bin/bash 
+
+
+echo 'Updating repos' list'
 sudo apt-get update
 sudo apt-get install git -y
 pushd /opt
