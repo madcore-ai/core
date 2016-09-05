@@ -3,6 +3,9 @@
 # From Ubuntu user
 # Maintained by Peter Styk (devopsfactory@styk.tv)
 
+
+echo "Test"
+
 # PREREQUESITES
 pushd /tmp
     sudo wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
@@ -59,5 +62,6 @@ sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://1
 sudo bash "/opt/controlbox/ssl/setup.sh"
 sudo bash "/opt/controlbox/haproxy/setup.sh"
 sudo bash "/opt/controlbox/registrydocker/setup.sh"
+sudo chmod +x /opt/controlbox/kubernetes/setup.sh
 sudo bash "/opt/controlbox/kubernetes/setup.sh"
 sudo bash "/opt/controlbox/registryhabitat/setup.sh"
