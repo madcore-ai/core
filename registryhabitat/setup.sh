@@ -17,7 +17,7 @@ cat /opt/controlbox/registryhabitat/hab.director-controlbox.toml.template  | sed
 # Location to Copy Files into /etc/systemd/system
 cp /opt/controlbox/registryhabitat/habitat-depot.service /etc/systemd/system/habitat-depot.service
 #not required
-cp /opt/controlbox/registryhabitat/controlbox.toml /hab/svc/hab-director/controlbox.toml
+#cp /opt/controlbox/registryhabitat/controlbox.toml /hab/svc/hab-director/controlbox.toml
 
 # systemd reload
 systemctl daemon-reload
