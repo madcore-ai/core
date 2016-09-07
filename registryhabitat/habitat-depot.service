@@ -2,7 +2,7 @@
 Description=Habitat Director
 
 [Service]
-ExecStart=/bin/hab-director start -c /opt/controlbox/registryhabitat/controlbox.toml
+ExecStart=/bin/hab-director start -c /hab/svc/hab-director/controlbox.toml
 
 [Install]
 WantedBy=default.target
