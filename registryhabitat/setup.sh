@@ -10,7 +10,7 @@ ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 # write toml file with ip address
 # write directly to proper folder, do not ever write anything into repo folder as it will conflict later with pulls
 mkdir -p /hab/svc/hab-director
-cat /opt/controlbox/registryhabitat/hab.director-controlbox.toml.template  | sed -e "s/\${ip}/${ip}/" >  /opt/controlbox/registryhabitat/hab.director-controlbox.toml
+cat /opt/controlbox/registryhabitat/hab.director-controlbox.toml.template  | sed -e "s/\${ip}/${ip}/" >  /hab/svc/hab-director/controlbox.toml
 
 # Service Setup
 # Copy Files to Proper Locaiton
