@@ -9,24 +9,24 @@ services:
     image: gcr.io/google_containers/hyperkube:v1.3.6
     container_name: apiserver
     ports:
-      - "8081:8081"
-    command: ["/hyperkube", "apiserver", "--insecure-port=8081","--service-cluster-ip-range=172.17.17.1/24", "--insecure-bind-address=0.0.0.0", "--etcd_servers=http://etcd:4001", "--v=2"]
+      - "8080:8080"
+    command: ["/hyperkube", "apiserver", "--insecure-port=8080","--service-cluster-ip-range=172.17.17.1/24", "--insecure-bind-address=0.0.0.0", "--etcd_servers=http://etcd:4001", "--v=2"]
 
   controller:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: ["/hyperkube", "controller-manager", "--address=0.0.0.0", "--master=http://apiserver:8081", "--v=2"]
+    command: ["/hyperkube", "controller-manager", "--address=0.0.0.0", "--master=http://apiserver:8080", "--v=2"]
     environment:
       - "affinity:container==*apiserver*"
 
   scheduler:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: ["/hyperkube", "scheduler", "--address=0.0.0.0", "--master=http://apiserver:8081", "--v=2"]
+    command: ["/hyperkube", "scheduler", "--address=0.0.0.0", "--master=http://apiserver:8080", "--v=2"]
     environment:
       - "affinity:container==*apiserver*"
 
   kubelet:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: ['/hyperkube', 'kubelet', '--containerized' , '--api_servers=http://apiserver:8081', '--v=2', '--address=0.0.0.0', '--enable_server']
+    command: ['/hyperkube', 'kubelet', '--containerized' , '--api_servers=http://apiserver:8080', '--v=2', '--address=0.0.0.0', '--enable_server']
     volumes:
       - /:/rootfs:ro
       - /sys:/sys:ro
@@ -42,7 +42,7 @@ services:
 
   proxy:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: ['/hyperkube', 'proxy', '--master=http://apiserver:8081', '--v=2']
+    command: ['/hyperkube', 'proxy', '--master=http://apiserver:8080', '--v=2']
     privileged: true
     # A proxy should run alongside another kubelet but not alongside another proxy
     environment:
@@ -51,7 +51,7 @@ services:
 
   dashboard:
     image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.4.0-beta1
-    command: ['/dashboard', '--port=9090', '--apiserver-host=http://apiserver:8081']
+    command: ['/dashboard', '--port=9090', '--apiserver-host=http://apiserver:8080']
 
     depends_on:
      - apiserver
