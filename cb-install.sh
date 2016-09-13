@@ -41,13 +41,14 @@ sudo hab pkg binlink core/hab-director hab-director
 sudo service jenkins stop
 sudo chown -R jenkins:jenkins /opt/controlbox
 sudo su -c "cp -f /opt/controlbox/jenkins/config.xml /var/lib/jenkins/config.xml"
+sudo su -c "cp -f /opt/controlbox/jenkins/jenkins /etc/init.d/jenkins"
 sudo sed -i '/^JAVA_ARGS=/c\JAVA_ARGS=\"-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false\"' /etc/default/jenkins
 sudo su -c "sed -i '/<useSecurity>/c\<useSecurity>false</useSecurity>' /var/lib/jenkins/config.xml" jenkins
 sudo service jenkins start
-sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8080/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
-sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 install-plugin git -deploy" jenkins
-sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 install-plugin ssh-credentials" jenkins
-sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 install-plugin job-dsl -deploy" jenkins
+sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin git -deploy" jenkins
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin ssh-credentials" jenkins
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin job-dsl -deploy" jenkins
 
 # CONFIGURE AND RUN 1ST SEED JOB (WILL CREATE ALL OTHER JOBS FROM REPO)
 sudo su -c "mkdir -p /var/lib/jenkins/jobs/seed-dsl" jenkins
@@ -55,13 +56,13 @@ sudo su -c "mkdir -p /var/lib/jenkins/workspace/seed-dsl" jenkins
 sudo su -c "ln -s /opt/controlbox /var/lib/jenkins/workspace/seed-dsl/controlbox" jenkins
 sudo su -c "cp /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins/seed-dls_config.xml /var/lib/jenkins/jobs/seed-dsl/config.xml" jenkins
 sudo service jenkins restart
-sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8080/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
-sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 build seed-dsl" jenkins
+sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build seed-dsl" jenkins
 
 # PROXY,REGISTRIES, KUBERNETES
 
-sudo bash "/opt/controlbox/kubernetes/setup.sh"
 sudo bash "/opt/controlbox/ssl/setup.sh"
 sudo bash "/opt/controlbox/haproxy/setup.sh"
 sudo bash "/opt/controlbox/registrydocker/setup.sh"
+sudo bash "/opt/controlbox/kubernetes/setup.sh"
 sudo bash "/opt/controlbox/registryhabitat/setup.sh"
