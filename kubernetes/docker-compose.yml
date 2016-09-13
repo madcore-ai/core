@@ -3,30 +3,13 @@ services:
   etcd:
     image: gcr.io/google_containers/etcd:2.0.13
     container_name: etcd
-    command: ['/usr/local/bin/etcd', '--bind-addr=0.0.0.0:4001', '--data-dir=/var/etcd/data']
+    command: ['/usr/local/bin/etcd', '--bind-addr=0.0.0.0:4001', '--addr=127.0.0.1:4001', '--data-dir=/var/etcd/data']
+    network_mode: "host"
+    pid: host
 
-  apiserver:
+  master:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    container_name: apiserver
-    ports:
-      - "8080:8080"
-    command: ["/hyperkube", "apiserver", "--insecure-port=8080","--service-cluster-ip-range=172.17.17.1/24", "--insecure-bind-address=0.0.0.0", "--etcd_servers=http://etcd:4001", "--v=2"]
-
-  controller:
-    image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: ["/hyperkube", "controller-manager", "--address=0.0.0.0", "--master=http://apiserver:8080", "--v=2"]
-    environment:
-      - "affinity:container==*apiserver*"
-
-  scheduler:
-    image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: ["/hyperkube", "scheduler", "--address=0.0.0.0", "--master=http://apiserver:8080", "--v=2"]
-    environment:
-      - "affinity:container==*apiserver*"
-
-  kubelet:
-    image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: ['/hyperkube', 'kubelet', '--containerized' , '--api_servers=http://apiserver:8080', '--v=2', '--address=0.0.0.0', '--enable_server']
+    command: ["/hyperkube", "kubelet", "--containerized", "--hostname-override=127.0.0.1", "--address=0.0.0.0", "--api-servers=http://localhost:8080", "--config=/etc/kubernetes/manifests"]
     volumes:
       - /:/rootfs:ro
       - /sys:/sys:ro
@@ -36,32 +19,28 @@ services:
       - /var/lib/kubelet/:/var/lib/kubelet:rw
       - /var/run:/var/run:rw
     privileged: true
+    network_mode: "host"
+    pid: host
     # A kubelet shouldn't run alongside another kubelet - One privileged kubelet per node
     environment:
       - "affinity:container!=*kubelet*"
 
   proxy:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: ['/hyperkube', 'proxy', '--master=http://apiserver:8080', '--v=2']
+    command: ['/hyperkube', 'proxy', '--master=http://127.0.0.1:8080', '--v=2']
     privileged: true
     # A proxy should run alongside another kubelet but not alongside another proxy
+    network_mode: "host"
+    pid: host
     environment:
       - "affinity:container==*kubelet*"
       - "affinity:container!=*proxy*"
 
   dashboard:
     image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.4.0-beta1
-    command: ['/dashboard', '--port=9090', '--apiserver-host=http://apiserver:8080']
-
-    depends_on:
-     - apiserver
-     - etcd
-     - controller
-     - scheduler
-     - kubelet
-     - proxy
-    links:
-     - "apiserver"
-    ports:
-     - "9090:9090"
+    command: ['/dashboard', '--port=9090', '--apiserver-host=http://127.0.0.1:8080']
+    network_mode: "host"
+    pid: host
+#    ports:
+#     - "9090:9090"
 
