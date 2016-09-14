@@ -10,6 +10,8 @@ pushd /opt
     sudo chown -R ubuntu:ubuntu /opt/controlbox
 popd
 pushd /opt/controlbox
+    sudo git fetch
+    sudo git branch -v -a
     sudo git checkout -b development origin/development
     sudo chmod +x cb-install.sh
     sudo bash cb-install.sh
