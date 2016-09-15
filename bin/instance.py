@@ -21,7 +21,8 @@ try:
 
 
     print
-    reservations = conn.get_all_instances()
+    reservations = conn.get_all_instances(instance_ids=['i-fed3d873'])
+    #reservations = conn.get_all_instances()
     for reservation in reservations:
         for instance in reservation.instances:
             print instance
