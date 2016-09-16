@@ -9,7 +9,7 @@ services:
 
   master:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: ["/hyperkube", "kubelet", "--containerized", "--hostname-override=127.0.0.1", "--address=0.0.0.0", "--api-servers=http://localhost:8080", "--config=/etc/kubernetes/manifests"]
+    command: /bin/sh -c "sed -i 's/--insecure-bind-address=127.0.0.1/--insecure-bind-address=0.0.0.0/g' /etc/kubernetes/manifests/master.json && /hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://localhost:8080 --config=/etc/kubernetes/manifests"
     volumes:
       - /:/rootfs:ro
       - /sys:/sys:ro
@@ -24,6 +24,8 @@ services:
     # A kubelet shouldn't run alongside another kubelet - One privileged kubelet per node
     environment:
       - "affinity:container!=*kubelet*"
+#    ports:
+#      - "8080:8080"
 
   proxy:
     image: gcr.io/google_containers/hyperkube:v1.3.6
