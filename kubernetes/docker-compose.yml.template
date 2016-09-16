@@ -9,7 +9,7 @@ services:
 
   master:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: /bin/sh -c "sed -i 's/--insecure-bind-address=127.0.0.1/--insecure-bind-address=0.0.0.0/g' /etc/kubernetes/manifests/master.json && /hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://10.0.2.15:8080 --config=/etc/kubernetes/manifests"
+    command: /bin/sh -c "sed -i 's/--insecure-bind-address=127.0.0.1/--insecure-bind-address=0.0.0.0/g' /etc/kubernetes/manifests/master.json && /hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://${ip}:8080 --config=/etc/kubernetes/manifests"
     volumes:
       - /:/rootfs:ro
       - /sys:/sys:ro
@@ -29,7 +29,7 @@ services:
 
   proxy:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: ['/hyperkube', 'proxy', '--master=http://10.0.2.15:8080', '--v=2']
+    command: ['/hyperkube', 'proxy', '--master=http://$ip:8080', '--v=2']
     privileged: true
     # A proxy should run alongside another kubelet but not alongside another proxy
     network_mode: "host"
@@ -40,6 +40,6 @@ services:
 
   dashboard:
     image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.4.0-beta1
-    command: ['/dashboard', '--port=9090', '--apiserver-host=http://10.0.2.15:8080']   
+    command: ['/dashboard', '--port=9090', '--apiserver-host=http://${ip}:8080']   
     network_mode: "host"
     pid: host

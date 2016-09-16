@@ -4,7 +4,7 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-ExecStart=/usr/local/bin/docker-compose -f /opt/controlbox/kubernetes/docker-compose.yml up
+ExecStart=/usr/local/bin/docker-compose -f /kubernetes/docker-compose.yml up
 
 [Install]
 WantedBy=multi-user.target
