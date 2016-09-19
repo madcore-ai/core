@@ -19,11 +19,10 @@ class Settings(object):
 
     # full arguments object passed
     args = None
-    region = None
 
     def __init__(self, args):
         '''
         Constructor
         '''
         self.args = args
-        self.region = args.region
+        self.instancelist = args.instancelist.split(",")
