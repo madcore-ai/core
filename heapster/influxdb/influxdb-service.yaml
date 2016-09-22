@@ -5,6 +5,7 @@ metadata:
   name: monitoring-influxdb
   namespace: kube-system
 spec:
+  hostNetwork: true
   ports:
   - name: http
     port: 8083

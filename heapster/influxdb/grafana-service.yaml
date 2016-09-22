@@ -11,6 +11,7 @@ spec:
   # or through a public IP. 
   # type: LoadBalancer
   ports:
+  hostNetwork: true
   - port: 80
     targetPort: 3000
   selector:
