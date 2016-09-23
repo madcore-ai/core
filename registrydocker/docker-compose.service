@@ -1,0 +1,10 @@
+[Unit]
+Description=My Rigistry 
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStart=/usr/local/bin/docker-compose -f /opt/controlbox/registrydocker/docker-compose.yml up  -d
+
+[Install]
+WantedBy=multi-user.target

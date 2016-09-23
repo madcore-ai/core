@@ -4,27 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.5.0">
-    <configVersion>2</configVersion>
-    <userRemoteConfigs>
-      <hudson.plugins.git.UserRemoteConfig>
-        <url>https://bitbucket.org/ronaanimation/controlbox.git</url>
-      </hudson.plugins.git.UserRemoteConfig>
-    </userRemoteConfigs>
-    <branches>
-      <hudson.plugins.git.BranchSpec>
-        <name>*/development</name>
-      </hudson.plugins.git.BranchSpec>
-    </branches>
-    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <submoduleCfg class="list"/>
-    <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
-      <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-        <relativeTargetDir>controlbox</relativeTargetDir>
-      </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-    </extensions>
-  </scm>
+  <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -32,14 +12,20 @@
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.47">
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash 
+pushd /opt/controlbox
+    git pull
+popd</command>
+    </hudson.tasks.Shell>
+    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.51">
       <targets>controlbox/jenkins/**/*.groovy</targets>
       <usingScriptText>false</usingScriptText>
       <ignoreExisting>false</ignoreExisting>
+      <ignoreMissingFiles>false</ignoreMissingFiles>
       <removedJobAction>IGNORE</removedJobAction>
       <removedViewAction>IGNORE</removedViewAction>
       <lookupStrategy>JENKINS_ROOT</lookupStrategy>
-      <additionalClasspath></additionalClasspath>
     </javaposse.jobdsl.plugin.ExecuteDslScripts>
   </builders>
   <publishers/>

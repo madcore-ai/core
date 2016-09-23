@@ -20,3 +20,12 @@ setup.sh
 habitat-depot.service
 
   It the service script that needs to be placed in systemd dir.
+
+habitat ports:
+redis-server - 6379
+hab-depot - 9632
+
+child1 http api - 8000
+child2 http api - 8001
+child1 http gossip - 9000
+child2 http gossip - 9001
