@@ -7,9 +7,10 @@ metadata:
   name: heapster
   namespace: kube-system
 spec:
-  hostNetwork: true
   ports:
   - port: 80
     targetPort: 8082
+  externalIPs: 
+  - 10.0.2.15
   selector:
     k8s-app: heapster

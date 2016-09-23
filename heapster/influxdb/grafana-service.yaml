@@ -11,8 +11,12 @@ spec:
   # or through a public IP. 
   # type: LoadBalancer
   ports:
-  hostNetwork: true
+#  hostNetwork: true
   - port: 80
     targetPort: 3000
+#  externalIPs: 
+#  - 10.0.2.15
+
   selector:
     name: influxGrafana
+  
