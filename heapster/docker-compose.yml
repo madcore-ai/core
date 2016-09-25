@@ -1,0 +1,32 @@
+influxdb:
+  image: influxdb:latest
+  container_name: influxdb
+  ports:
+    - "8083:8083"
+    - "8086:8086"
+    - "8090:8090"
+#  env:
+#    - INFLUXDB_DATA_ENGINE=tsm1
+
+#telegraf:
+#  image: telegraf:latest
+#  container_name: telegraf
+#  links:
+#    - influxdb
+#  volumes:
+#    - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+
+grafana:
+  image: grafana/grafana:latest
+  container_name: grafana
+  ports:
+    - "3000:3000"
+  links:
+  - influxdb
+
+heapster:
+  image: kubernetes/heapster:v0.13.0
+  container_name: heapster
+  ports:
+    - "8082:8082"
+  command: ["/heapster", "--source=kubernetes:http://10.0.2.15:8080?inClusterConfig=false&useServiceAccount=true&auth=", "--sink=influxdb:http://10.0.2.15:8086"]
