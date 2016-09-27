@@ -12,3 +12,5 @@ cd /etc/systemd/system/
 systemctl enable docker-compose-kubernetes.service
 # Start the service
 systemctl start docker-compose-kubernetes
+sleep 60
+systemctl restart docker-compose-kubernetes
