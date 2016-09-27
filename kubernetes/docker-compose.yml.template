@@ -9,7 +9,7 @@ services:
 
   master:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: /bin/sh -c "sed -i 's/--insecure-bind-address=127.0.0.1/--insecure-bind-address=0.0.0.0/g' /etc/kubernetes/manifests/master.json && /hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://${ip}:8080 --config=/etc/kubernetes/manifests"
+    command: /bin/sh -c "sed -i 's/--insecure-bind-address=127.0.0.1/--insecure-bind-address=0.0.0.0/g' /etc/kubernetes/manifests/master.json && sed -i '/kubernetes.io/cluster-service:/d' /etc/kubernetes/addons/skydns-rc.yaml && sed -i '/kubernetes.io/cluster-service:/d' /etc/kubernetes/addons/skydns-svc.yaml  && /hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://${ip}:8080 --cluster_dns=10.0.0.10 --cluster_domain=cluster.local --config=/etc/kubernetes/manifests"
     volumes:
       - /:/rootfs:ro
       - /sys:/sys:ro
