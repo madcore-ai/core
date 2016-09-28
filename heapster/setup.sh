@@ -1,7 +1,4 @@
-mkdir /opt/bin
-wget -O /opt/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.3.4/bin/linux/amd64/kubectl
-chmod +x /opt/bin/kubectl
-ln -s /opt/bin/kubectl /usr/local/bin/kubectl
+#!/bin/bash
 ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 mkdir -p /opt/heapster
 cat /opt/controlbox/heapster/influxdb/heapster-controller.yaml | sed -e "s/\${ip}/${ip}/" > /opt/heapster/heapster-controller.yaml
