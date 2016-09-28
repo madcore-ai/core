@@ -5,6 +5,7 @@ cd /opt/controlbox/kubernetes
 cp /opt/controlbox/kubernetes/docker-compose.service /etc/systemd/system/docker-compose-kubernetes.service
 mkdir -p /opt/kubernetes
 cat /opt/controlbox/kubernetes/docker-compose.yml.template | sed -e "s/\${ip}/${ip}/" > /opt/kubernetes/docker-compose.yml
+cat /opt/controlbox/kubernetes/dashboard.yaml.template | sed -e "s/\${ip}/${ip}/" > /opt/kubernetes/dashboard.yaml
 # systemd reload
 systemctl daemon-reload
 # Enable the service
@@ -12,3 +13,9 @@ cd /etc/systemd/system/
 systemctl enable docker-compose-kubernetes.service
 # Start the service
 systemctl start docker-compose-kubernetes
+#
+#
+#
+sleep 30
+kubectl delete -f /opt/kubernetes/dashboard.yaml
+kubectl create -f /opt/kubernetes/dashboard.yaml

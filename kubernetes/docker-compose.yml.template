@@ -9,7 +9,7 @@ services:
 
   master:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: /bin/sh -c "sed -i 's/--insecure-bind-address=127.0.0.1/--insecure-bind-address=0.0.0.0/g' /etc/kubernetes/manifests/master.json && sed -i '/kubernetes.io/cluster-service:/d' /etc/kubernetes/addons/skydns-rc.yaml && sed -i '/kubernetes.io/cluster-service:/d' /etc/kubernetes/addons/skydns-svc.yaml  && /hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://${ip}:8080 --cluster_dns=10.0.0.10 --cluster_domain=cluster.local --config=/etc/kubernetes/manifests"
+    command: /bin/sh -c "/hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://${ip}:8080 --cluster_dns=10.0.0.10 --cluster_domain=cluster.local --config=/etc/kubernetes/manifests-multi"
     volumes:
       - /:/rootfs:ro
       - /sys:/sys:ro
@@ -24,8 +24,6 @@ services:
     # A kubelet shouldn't run alongside another kubelet - One privileged kubelet per node
     environment:
       - "affinity:container!=*kubelet*"
-#    ports:
-#      - "8080:8080"
 
   proxy:
     image: gcr.io/google_containers/hyperkube:v1.3.6
@@ -38,8 +36,3 @@ services:
       - "affinity:container==*kubelet*"
       - "affinity:container!=*proxy*"
 
-  dashboard:
-    image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.4.0-beta1
-    command: ['/dashboard', '--port=9090', '--apiserver-host=http://${ip}:8080']   
-    network_mode: "host"
-    pid: host
