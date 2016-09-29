@@ -16,7 +16,7 @@ services:
       - /dev:/dev
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/:/var/lib/docker:ro
-      - /var/lib/kubelet/:/var/lib/kubelet:rw
+      - /var/lib/kubelet/:/var/lib/kubelet:rw,rslave
       - /var/run:/var/run:rw
     privileged: true
     network_mode: "host"
@@ -27,7 +27,7 @@ services:
 
   proxy:
     image: gcr.io/google_containers/hyperkube:v1.3.6
-    command: ['/hyperkube', 'proxy', '--master=http://$ip:8080', '--v=2']
+    command: ['/hyperkube', 'proxy', '--master=http://${ip}:8080', '--masquerade-all', '--v=2']
     privileged: true
     # A proxy should run alongside another kubelet but not alongside another proxy
     network_mode: "host"

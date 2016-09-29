@@ -24,6 +24,6 @@ popd
 systemctl start docker-compose-kubernetes
 
 #  workaround for bug where 1st start info is not acknowledged
-sleep 180
-kubectl delete -f /opt/kubernetes/dashboard.yaml
-kubectl create -f /opt/kubernetes/dashboard.yaml
+#sleep 180
+#kubectl delete -f /opt/kubernetes/dashboard.yaml
+#kubectl create -f /opt/kubernetes/dashboard.yaml
