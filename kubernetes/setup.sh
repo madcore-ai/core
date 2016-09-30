@@ -23,6 +23,10 @@ popd
 # Start the service
 systemctl start docker-compose-kubernetes
 
+###### wait time for kubernetes services starting
+sleep 60
+
+
 #  workaround for bug where 1st start info is not acknowledged
 #sleep 180
 #kubectl delete -f /opt/kubernetes/dashboard.yaml
