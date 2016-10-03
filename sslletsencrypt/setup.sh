@@ -1,9 +1,10 @@
 #!/bin/bash
 hostname=`wget -q -O - http://169.254.169.254/latest/meta-data/public-hostname`
+email=devopsfactory@styk.tv
 
 sudo apt-get install letsencrypt -y
 
-mkdir -p /opt/letsencrypt
+mkdir -p /opt/sslletsencrypt
 
 echo "
 [ req ]
@@ -31,10 +32,13 @@ countryName_default = GB
 localityName_default = London
 0.organizationName_default = Rona Animation Studios
 organizationalUnitName_default = Development
-commonName_default = $hostname" > /opt/letsencrypt/openssl.cnf
+commonName_default = $hostname
+
+[SAN]
+subjectAltName=DNS:$hostname"  > /opt/sslletsencrypt/openssl.cnf
 
 
 
 pushd /opt/letsencrypt
-    sudo openssl req -nodes -newkey rsa:2048 -keyout server.key -out server.der -outform der -config openssl.cnf -batch
-    sudo letsencrypt certonly --csr /opt/letsencrypt/server.der --standalone
+    sudo openssl req -nodes -newkey rsa:2048 -keyout server.key -out server.der -outform der -config openssl.cnf -batch -reqexts SAN
+    sudo letsencrypt certonly --csr /opt/sslletsencrypt/server.der --standalone --email $email
