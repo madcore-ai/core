@@ -6,7 +6,7 @@ chmod +x /opt/bin/kubectl
 ln -s /opt/bin/kubectl /usr/local/bin/kubectl
 fi
 
-echo “Waiting for kubernetes-dashboard (may take few minutes) …”
+echo "Waiting for kubernetes-dashboard (may take few minutes) …"
 sudo su -c "until curl -sL -w '%{http_code}' 'http://localhost:8080/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 echo “kubernetes-dashboard confirmed.”
 
@@ -23,6 +23,6 @@ popd
 
 kubectl create -f /opt/heapster
 
-echo “Waiting for monitoring-grafana (may take few minutes) …”
+echo "Waiting for monitoring-grafana (may take few minutes) …"
 sudo su -c "until curl -sL -w '%{http_code}' 'http://localhost:8080/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 echo “monitoring-grafana confirmed”
