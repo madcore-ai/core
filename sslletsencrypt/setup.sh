@@ -1,5 +1,6 @@
 #!/bin/bash
-hostname=`wget -q -O - http://169.254.169.254/latest/meta-data/public-hostname`
+#hostname=`wget -q -O - http://169.254.169.254/latest/meta-data/public-hostname`
+hostname='controlbox.polfilm.devopshosted.com'
 email=devopsfactory@styk.tv
 
 sudo apt-get install letsencrypt -y
@@ -39,6 +40,10 @@ subjectAltName=DNS:$hostname"  > /opt/sslletsencrypt/openssl.cnf
 
 
 
-pushd /opt/letsencrypt
-    sudo openssl req -nodes -newkey rsa:2048 -keyout server.key -out server.der -outform der -config openssl.cnf -batch -reqexts SAN
-    sudo letsencrypt certonly --csr /opt/sslletsencrypt/server.der --standalone --email $email
+pushd /opt/sslletsencrypt
+    sudo openssl req -nodes -newkey rsa:2048 -keyout server.key -out server.der -outform der -config openssl.cnf -sha256 -batch -reqexts SAN
+    sudo letsencrypt certonly --csr /opt/sslletsencrypt/server.der --standalone --standalone-supported-challenges http-01 --email $email
+    cat 0000_cert.pem server.key > /etc/pki/tls/certs/server.bundle.pem
+
+sudo service haproxy stop
+sudo service haproxy start

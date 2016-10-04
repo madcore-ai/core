@@ -9,5 +9,5 @@ sudo sh -c 'mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.old'
 sudo sh -c 'rm /etc/default/haproxy'
 sudo sh -c 'cp /opt/controlbox/haproxy/haproxy /etc/default/haproxy'
 sudo sh -c 'cp /opt/controlbox/haproxy/haproxy.cfg.template /opt/haproxy/haproxy.cfg'
-sudo sh -c 'ln -s /etc/haproxy/haproxy.cfg /opt/haproxy/haproxy.cfg'
+sudo sh -c 'ln -s /opt/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg'
 sudo service haproxy start
