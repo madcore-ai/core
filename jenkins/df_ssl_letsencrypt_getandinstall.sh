@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Email: '$Email'"
 sudo apt-get install letsencrypt -y
-
+Email=devopsfactory@styk.tv
 pushd /etc/pki/tls/certs
     openssl req -inform pem -outform der -in server.csr -out server.der
     sudo letsencrypt certonly --csr server.der --standalone --standalone-supported-challenges http-01 --email $Email

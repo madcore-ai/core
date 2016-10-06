@@ -15,4 +15,3 @@ f.close
 os.system("openssl req -nodes -newkey rsa:2048 -keyout /etc/pki/tls/certs/server.key -out  /etc/pki/tls/certs/server.csr -config /etc/pki/tls/certs/openssl.cnf -sha256 -batch -reqexts SAN")
 
 
-print y['Hostname']

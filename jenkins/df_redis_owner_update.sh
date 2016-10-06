@@ -6,7 +6,7 @@ echo "OrganizationalUnitName: '$OrganizationalUnitName'"
 echo "LocalityName: '$LocalityName'"
 echo "Country: '$Country'"
 
-python df_redis_owner_update.py example.com test@example.com testOrg unit company UA
+python df_redis_owner_update.py polifilm.devopshosted.com devopsfactory@styk.tv RonaStudio IT company GB
 #$Hostname $Email $OrganizationName $OrganizationalUnitName $LocalityName $Country
 
 
