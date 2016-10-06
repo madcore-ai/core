@@ -6,7 +6,6 @@ echo "OrganizationalUnitName: '$OrganizationalUnitName'"
 echo "LocalityName: '$LocalityName'"
 echo "Country: '$Country'"
 
-python df_redis_owner_update.py polifilm.devopshosted.com devopsfactory@styk.tv RonaStudio IT company GB
-#$Hostname $Email $OrganizationName $OrganizationalUnitName $LocalityName $Country
+python df_redis_owner_update.py $Hostname $Email $OrganizationName $OrganizationalUnitName $LocalityName $Country
 
 
