@@ -14,6 +14,7 @@ spec:
       labels:
         name: influxGrafana
     spec:
+      hostNetwork: true
       containers:
       - name: influxdb
         image: kubernetes/heapster_influxdb:v0.5
