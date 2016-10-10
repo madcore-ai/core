@@ -1,5 +1,6 @@
 {
-  "id": 3,
+  "dashboard":{
+  "id": null,
   "title": "Jenkins",
   "originalTitle": "Jenkins",
   "tags": [],
@@ -151,4 +152,5 @@
   "schemaVersion": 8,
   "version": 2,
   "links": []
+}
 }
