@@ -3,7 +3,7 @@
   <targets>
     <jenkinsci.plugins.influxdb.models.Target>
       <description>local</description>
-      <url>http:127.0.0.1:8086</url>
+      <url>http//:127.0.0.1:8086</url>
       <username>jenkins</username>
       <password>12345</password>
       <database>jenkins_logs</database>
