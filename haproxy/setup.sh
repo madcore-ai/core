@@ -1,6 +1,8 @@
 #!/bin/bash
-HOSTNAME=`wget -q -O - http://169.254.169.254/latest/meta-data/public-hostname`
-sudo apt-get install haproxy -y
+HOSTNAME=$(wget -q -O -T 5 - http://169.254.169.254/latest/meta-data/public-hostname)
+if [ -z $HOSTNAME ]; then
+    HOSTNAME="vagrant.local"
+fi
 mkdir -p /opt/haproxy
 cat /opt/controlbox/haproxy/haproxy.cfg.template | sed -e "s/\hostname_tmpl/${HOSTNAME}/" > /opt/haproxy/haproxy.cfg
 sudo service haproxy stop
