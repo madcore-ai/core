@@ -1,6 +1,8 @@
 #!/bin/bash
+ping -q -c1 169.254.169.254 > /dev/null
+if [ $? -eq 0 ]; then
 HOSTNAME=$(wget -q -O -T 5 - http://169.254.169.254/latest/meta-data/public-hostname)
-if [ -z $HOSTNAME ]; then
+else
     HOSTNAME="vagrant.local"
 fi
 mkdir -p /opt/haproxy
