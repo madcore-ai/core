@@ -62,7 +62,7 @@ sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://1
 
 # PROXY,REGISTRIES, KUBERNETES
 
-sudo bash "/opt/controlbox/ssl/setup.sh"
+sudo bash "/opt/controlbox/sslselfsigned/setup.sh"
 sudo bash "/opt/controlbox/haproxy/setup.sh"
 sudo bash "/opt/controlbox/registrydocker/setup.sh"
 sudo bash "/opt/controlbox/kubernetes/setup.sh"
