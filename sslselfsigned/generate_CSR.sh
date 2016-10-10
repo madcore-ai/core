@@ -1,5 +1,5 @@
-mkdir -p /etc/pki/tls/certs
-export SERVER=$HOSTNAME
+#!/bin/bash
+
 echo "
 [ req ]
 default_bits = 2048 # Size of keys
@@ -7,6 +7,7 @@ default_keyfile = key.pem # name of generated keys
 default_md = md5 # message digest algorithm
 string_mask = nombstr # permitted characters
 distinguished_name = req_distinguished_name
+req_extensions = v3_req
 
 [ req_distinguished_name ]
 # Variable name   Prompt string
@@ -26,12 +27,17 @@ countryName_default = GB
 localityName_default = London
 0.organizationName_default = Rona Animation Studios
 organizationalUnitName_default = Development
-commonName_default = $SERVER" > /etc/pki/tls/certs/openssl.cnf
+commonName_default = $SERVER
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @SAN
+
+
+[ SAN ]
+subjectAltName=DNS:controlbox.$SERVER, DNS:grafana.$SERVER, DNS:influxdb.$SERVER, DNS:jenkins.$SERVER, DNS:kubeapi.$SERVER, DNS:kubedash.$SERVER" > /etc/pki/tls/certs/openssl.cnf
 
 pushd /etc/pki/tls/certs
-    sudo openssl genrsa -des3 -passout pass:TasWq -out serverPAS.key 2048
-    sudo openssl req -new -key serverPAS.key -passin pass:TasWq -out server.csr -config openssl.cnf -batch
-    sudo openssl x509 -req -days 365 -in server.csr -signkey serverPAS.key -passin pass:TasWq -out server.crt
-    sudo openssl rsa -passin pass:TasWq -in serverPAS.key -out server.key
-    cat server.crt server.key > server.bundle.pem
+    sudo openssl req -nodes -newkey rsa:2048 -keyout server.key -out server.csr -config openssl.cnf -sha256 -batch -reqexts SAN
 popd
