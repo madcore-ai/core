@@ -11,8 +11,8 @@ pushd /tmp
     sudo wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
     sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
     sudo apt-get update
-    sudo apt-get install openjdk-8-jdk git jenkins python-pip awscli haproxy -y
-    sudo pip install boto redis
+    sudo apt-get install openjdk-8-jdk git jenkins python-pip awscli haproxy letsencrypt -y
+    sudo pip install boto redis jinja2
     sudo groupadd hab && useradd -g hab -s /bin/bash -m hab
     sudo curl -fsSL https://get.docker.com/ | sh
     sudo usermod -aG docker jenkins
@@ -60,6 +60,7 @@ sudo su -c "cp /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins/seed-dls_c
 sudo service jenkins restart
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build seed-dsl" jenkins
+sudo su -c "mkdir -p /opt/certs" jenkins
 
 # PROXY,REGISTRIES, KUBERNETES
 
