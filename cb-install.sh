@@ -11,8 +11,8 @@ pushd /tmp
     sudo wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
     sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
     sudo apt-get update
-    sudo apt-get install openjdk-8-jdk git jenkins python-pip awscli -y
-    sudo pip install boto
+    sudo apt-get install openjdk-8-jdk git jenkins python-pip awscli haproxy -y
+    sudo pip install boto redis
     sudo groupadd hab && useradd -g hab -s /bin/bash -m hab
     sudo curl -fsSL https://get.docker.com/ | sh
     sudo usermod -aG docker jenkins
@@ -50,6 +50,7 @@ sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /de
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin git -deploy" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin ssh-credentials" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin job-dsl -deploy" jenkins
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin influxdb -deploy" jenkins
 
 # CONFIGURE AND RUN 1ST SEED JOB (WILL CREATE ALL OTHER JOBS FROM REPO)
 sudo su -c "mkdir -p /var/lib/jenkins/jobs/seed-dsl" jenkins
@@ -62,8 +63,9 @@ sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://1
 
 # PROXY,REGISTRIES, KUBERNETES
 
-sudo bash "/opt/controlbox/ssl/setup.sh"
+sudo bash "/opt/controlbox/sslselfsigned/setup.sh"
 sudo bash "/opt/controlbox/haproxy/setup.sh"
 sudo bash "/opt/controlbox/registrydocker/setup.sh"
 sudo bash "/opt/controlbox/kubernetes/setup.sh"
 sudo bash "/opt/controlbox/registryhabitat/setup.sh"
+sudo bash "/opt/controlbox/heapster/setup.sh"

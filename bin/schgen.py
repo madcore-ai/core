@@ -1,3 +1,4 @@
+import template
 
 name = 'testschedule'
 s_mo = '100000000001111110000000'
@@ -29,8 +30,6 @@ class Cycle:
     scheds_off = None
     scheds_all = None
 
-
-
     def __init__(self, mo, tu, we, th, fr, sa, su):
 
         self.scheds_on = []
@@ -52,15 +51,15 @@ class Cycle:
             day_of_week_previous, hour_of_day_previous, schedule_previous = self.get_prev_week_day_ints(i)
 
             if schedule_currrent is "1" and schedule_previous is "0":
-                # processing ON schedule
-                s = "H(1-5) {1} * * {0}".format(day_of_week_current, hour_of_day_current)
-                self.scheds_on.append(s)
-                self.scheds_all.append(s)
+                # processing ON schedule (start of an hour)
+                sch = "H(1-5) {1} * * {0}".format(day_of_week_current, hour_of_day_current)
+                self.scheds_on.append(sch)
+                self.scheds_all.append(sch)
             elif schedule_currrent is "0" and schedule_previous is "1":
-                # processing ON schedule
-                s = "H(55-59) {1} * * {0}".format(day_of_week_previous, hour_of_day_previous)
-                self.scheds_off.append(s)
-                self.scheds_all.append(s)
+                # processing OFF schedule (end of an hour)
+                sch = "H(55-59) {1} * * {0}".format(day_of_week_previous, hour_of_day_previous)
+                self.scheds_off.append(sch)
+                self.scheds_all.append(sch)
 
     def verify_day(self, day):
         if len(day) != 24:
@@ -86,3 +85,6 @@ class Cycle:
 c = Cycle(s_mo, s_tu, s_we, s_th, s_fr, s_sa, s_su)
 for x in c.scheds_all:
     print x
+
+template = template.Template(name, c)
+template.generate_dsl_schedule()

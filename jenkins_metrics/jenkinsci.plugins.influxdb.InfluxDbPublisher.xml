@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jenkinsci.plugins.influxdb.DescriptorImpl plugin="influxdb@1.8.1">
+  <targets>
+    <jenkinsci.plugins.influxdb.models.Target>
+      <description>local</description>
+      <url>http//:127.0.0.1:8086</url>
+      <username>jenkins</username>
+      <password>12345</password>
+      <database>jenkins_logs</database>
+      <retentionPolicy>default</retentionPolicy>
+    </jenkinsci.plugins.influxdb.models.Target>
+  </targets>
+</jenkinsci.plugins.influxdb.DescriptorImpl>
