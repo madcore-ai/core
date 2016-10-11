@@ -60,7 +60,8 @@ sudo su -c "cp /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins/seed-dls_c
 sudo service jenkins restart
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build seed-dsl" jenkins
-sudo su -c "mkdir -p /opt/certs" jenkins
+sudo mkdir -p /opt/certs
+chown -R jenkins /opt/certs
 
 # PROXY,REGISTRIES, KUBERNETES
 
