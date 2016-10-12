@@ -1,8 +1,8 @@
 job('df.redis.token') {
     parameters {
-        stringParam('Type', '', '')
-        stringParam('Token', '', '')
-        stringParam('action', '', '')
+        stringParam('TYPE', '', '')
+        stringParam('TOKEN', '', '')
+        stringParam('ACTION', '', '')
         
     }
     
