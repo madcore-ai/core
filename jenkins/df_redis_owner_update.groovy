@@ -16,9 +16,7 @@ echo "OrganizationalUnitName: \$OrganizationalUnitName"
 echo "LocalityName: \$LocalityName"
 echo "Country: \$Country"
 
-pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
-    python df_redis_owner_update.py \$Hostname \$Email \$OrganizationName \$OrganizationalUnitName \$LocalityName \$Country
-popd
+    python /opt/controlbox/bin/owner_update_redis.py \$Hostname \$Email \$OrganizationName \$OrganizationalUnitName \$LocalityName \$Country
 """
         shell(command)
     }

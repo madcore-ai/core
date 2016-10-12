@@ -12,7 +12,7 @@ pushd /tmp
     sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
     sudo apt-get update
     sudo apt-get install openjdk-8-jdk git jenkins python-pip awscli haproxy letsencrypt -y
-    sudo pip install boto redis jinja2
+    sudo pip install boto redis jinja2 json
     sudo groupadd hab && useradd -g hab -s /bin/bash -m hab
     sudo curl -fsSL https://get.docker.com/ | sh
     sudo usermod -aG docker jenkins
@@ -62,6 +62,7 @@ sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /de
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build seed-dsl" jenkins
 sudo mkdir -p /opt/certs
 chown -R jenkins /opt/certs
+sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/controlbox/bin/haproxy_get_ssl.py" > /etc/sudoers.d/jenkins
 
 # PROXY,REGISTRIES, KUBERNETES
 
