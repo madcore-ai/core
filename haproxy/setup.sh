@@ -1,12 +1,10 @@
 #!/bin/bash
-ping -q -c1 169.254.169.254 > /dev/null
-if [ $? -eq 0 ]; then
-HOSTNAME=$(wget -q -O -T 5 - http://169.254.169.254/latest/meta-data/public-hostname)
-else
-    HOSTNAME="vagrant.local"
+HOSTNAME_AWS=$(curl --connect-timeout 5 http://169.254.169.244/latest/meta-data/public-hostname)
+if [[ -z $HOSTNAME  ]]; then
+    HOSTNAME_AWS="localhost"
 fi
 mkdir -p /opt/haproxy
-cat /opt/controlbox/haproxy/haproxy.cfg.template | sed -e "s/\hostname_tmpl/${HOSTNAME}/" > /opt/haproxy/haproxy.cfg
+cat /opt/controlbox/haproxy/haproxy.cfg.template | sed -e "s/\hostname_tmpl/${HOSTNAME_AWS}/" > /opt/haproxy/haproxy.cfg
 sudo service haproxy stop
 sudo sh -c 'mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.old'
 sudo sh -c 'rm /etc/default/haproxy'

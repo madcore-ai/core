@@ -1,13 +1,8 @@
 job('df.ssl.letsencrypt.getandinstall') {
-    parameters {
-        stringParam('Email', '', '')
-    }
 
     steps {
         def command = """#!/bin/bash
-pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
-    bash df_ssl_letsencrypt_getandinstall.sh
-popd
+	sudo /opt/controlbox/bin/haproxy_get_ssl.py
 """
         shell(command)
     }

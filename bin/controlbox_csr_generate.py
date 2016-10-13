@@ -8,8 +8,8 @@ y = json.loads(x)
 config_template=open('/opt/controlbox/bin/templates/openssl.conf').read()
 template = Template(config_template)
 config = (template.render(OrganizationName=y['OrganizationName'],OrganizationalUnitName=y['OrganizationalUnitName'],Email=y['Email'],LocalityName=y['LocalityName'],Hostname=y['Hostname'],Country=y['Country']))
-open("/etc/pki/tls/certs/openssl.cnf", "w").write(config)
+open("/opt/certs/openssl.cnf", "w").write(config)
 
-os.system("openssl req -nodes -newkey rsa:2048 -keyout /etc/pki/tls/certs/server.key -out  /etc/pki/tls/certs/server.csr -config /etc/pki/tls/certs/openssl.cnf -sha256 -batch -reqexts SAN")
+os.system("openssl req -nodes -newkey rsa:2048 -keyout /opt/certs/server.key -out  /opt/certs/server.csr -config /opt/certs/openssl.cnf -sha256 -batch -reqexts SAN")
 
 
