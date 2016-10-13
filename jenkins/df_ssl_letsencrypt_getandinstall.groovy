@@ -1,7 +1,4 @@
 job('df.ssl.letsencrypt.getandinstall') {
-    parameters {
-        stringParam('Email', '', '')
-    }
 
     steps {
         def command = """#!/bin/bash

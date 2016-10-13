@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/usr/bin/letsencrypt", line 9, in <module>
+    load_entry_point('letsencrypt==0.4.1', 'console_scripts', 'letsencrypt')()
+  File "/usr/lib/python2.7/dist-packages/letsencrypt/cli.py", line 1946, in main
+    args = prepare_and_parse_args(plugins, cli_args)
+  File "/usr/lib/python2.7/dist-packages/letsencrypt/cli.py", line 1638, in prepare_and_parse_args
+    return helpful.parse_args()
+  File "/usr/lib/python2.7/dist-packages/letsencrypt/cli.py", line 1240, in parse_args
+    self.handle_csr(parsed_args)
+  File "/usr/lib/python2.7/dist-packages/letsencrypt/cli.py", line 1253, in handle_csr
+    raise errors.Error("Currently, a CSR file may only be specified "
+Error: Currently, a CSR file may only be specified when obtaining a new or replacement via the certonly command. Please try the certonly command instead.
