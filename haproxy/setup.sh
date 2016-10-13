@@ -1,5 +1,5 @@
 #!/bin/bash
-HOSTNAME_AWS=$(curl --connect-timeout 5 http://169.254.169.244/latest/meta-data/public-hostname)
+HOSTNAME_AWS=$(curl --connect-timeout 5 http://169.254.169.254/latest/meta-data/public-hostname)
 if [[ -z $HOSTNAME  ]]; then
     HOSTNAME_AWS="localhost"
 fi
