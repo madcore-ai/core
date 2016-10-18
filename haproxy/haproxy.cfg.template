@@ -30,6 +30,14 @@ global
     bind *:80 
     default_backend  jenkins-mstr
     reqadd  X-Forwarded-Proto:\ http
+    
+    acl host_jenkins hdr(host) -i hostname_tmpl
+    acl host_flask hdr(host) -i controlbox.polska.madcore.cloud
+
+    use_backend jenkins-mstr if host_jenkins
+    use_backend flask if host_flask
+
+
  
   backend jenkins-mstr
     balance  roundrobin
@@ -37,3 +45,8 @@ global
     reqirep  ^([^\ \t:]*:)\ https://hostname_tmpl/(.*) \1\ http://127.0.0.1:8880/\2
     rspirep  ^([^\ \t:]*:)\ http://127.0.0.1:8880/(.*) \1\ https://hostname_tmpl/\2
     server jenkins01 127.0.0.1:8880 check
+
+
+  backend flask
+    balance roundrobin
+    server flask01 127.0.0.1:9001 check
