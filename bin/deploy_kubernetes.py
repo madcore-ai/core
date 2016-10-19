@@ -3,7 +3,7 @@ from jinja2 import Template
 ##### variables
 job_name='test'
 appname='flask-test'
-workspace = '/var/lib/jenkins/workspace/' + job_name + "/"
+workspace = '/var/lib/jenkins/workspace/' + job_name + "/" + appname + "/"
 repo_path = workspace + 'repo/'
 repo_url = 'https://hantden@bitbucket.org/hantden/python-hello.git'
 kub_config_path = workspace + 'kube_config/'
@@ -36,9 +36,9 @@ template = Template(config_template)
 config = (template.render(name=appname, image=appname, registry_secret=registry_secret))
 open(kub_config_path+'rc.yaml', "w").write(config)
 
-config_template2=open('/opt/controlbox/bin/templates/keb_service_template.yaml').read()
+config_template2=open('/opt/controlbox/bin/templates/kub_service_template.yaml').read()
 template2 = Template(config_template2)
-config2 = (template.render(name=appname, out_port=app_out_port, internal_port=app_internal_port, rc_name=appname))
+config2 = (template2.render(name=appname, out_port=app_out_port, internal_port=app_internal_port, rc_name=appname))
 open(kub_config_path+'svc.yaml', "w").write(config2)
 
 
