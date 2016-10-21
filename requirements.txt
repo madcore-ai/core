@@ -1,3 +1,4 @@
 boto==2.42.0
 redis==2.10.5
 jinja2==2.8
+pycurl==7.43
