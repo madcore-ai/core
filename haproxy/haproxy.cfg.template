@@ -30,10 +30,12 @@ global
     bind *:80 
     default_backend  jenkins-mstr
     reqadd  X-Forwarded-Proto:\ http
- 
+    
   backend jenkins-mstr
     balance  roundrobin
     http-request  set-header Host 127.0.0.1:8880
     reqirep  ^([^\ \t:]*:)\ https://hostname_tmpl/(.*) \1\ http://127.0.0.1:8880/\2
     rspirep  ^([^\ \t:]*:)\ http://127.0.0.1:8880/(.*) \1\ https://hostname_tmpl/\2
     server jenkins01 127.0.0.1:8880 check
+
+
