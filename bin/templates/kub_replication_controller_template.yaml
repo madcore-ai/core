@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: {{name}}
+  name: {{name}}
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    name: {{name}}
+  template:
+    metadata:
+      labels:
+        name: {{name}}
+    spec:
+      hostNetwork: true
+      containers:
+      - name: {{name}}
+        image: localhost:5000/{{image}}
+      imagePullSecrets:
+      - name: {{registry_secret}}
+

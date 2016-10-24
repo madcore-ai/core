@@ -1,4 +1,4 @@
-job('dummyproject') {
+job('df.dummyproject') {
     steps {
         def command = """#!/bin/bash
 pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
