@@ -49,7 +49,7 @@ i_key = "apps"
 
 i_data='{"apps":["%s"]}' % (appname)
 r_server.set(i_key,i_data)
-
+r_server.bgsave
 
 #### regenerate CSR and get new cert
 os.system("python /opt/controlbox/bin/controlbox_csr_generate.py %s" % appname)
