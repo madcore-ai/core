@@ -9,11 +9,13 @@ email = data['Email']
 hostname = data['Hostname']
 
 #### get certificate
-#os.system("cd /opt/certs && openssl req -inform pem -outform der -in server.csr -out server.der")
-#os.system("service haproxy stop")
-#request = ("cd /opt/certs && letsencrypt certonly --csr server.der --standalone --non-interactive --agree-tos --email %s --standalone-supported-challenges http-01" % email)
-#os.system(request)
-#os.system(" cd /opt/certs && cat 0001_chain.pem server.key > server.bundle.pem")
+os.system("mkdir -p /opt/certs/letsencrypt")
+os.system("cd /opt/certs && openssl req -inform pem -outform der -in server.csr -out ./letsencrypt/server.der")
+os.system("service haproxy stop")
+request = ("cd /opt/certs/letsencrypt && letsencrypt certonly --csr server.der --standalone --non-interactive --agree-tos --email %s --standalone-supported-challenges http-01" % email)
+os.system(request)
+os.system(" cd /opt/certs/letsencrypt && cat 0001_chain.pem ../server.key > ../server.bundle.pem")
+os.system("rm -rf /opt/certs/letsencrypt")
 
 
 ### reconfigure haproxy

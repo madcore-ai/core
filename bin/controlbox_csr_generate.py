@@ -5,7 +5,7 @@ i_key = "owner-info"
 x = r_server.get(i_key)
 y = json.loads(x)
 if len (sys.argv) > 1:
-    subdomain=sys.argv[1]
+    appname=sys.argv[1]
 
 config_template=open('/opt/controlbox/bin/templates/openssl.conf').read()
 template = Template(config_template)
