@@ -9,4 +9,5 @@ LocalityName = sys.argv[5]
 Country  = sys.argv[6]
 i_data='{"Hostname":"%s", "Email":"%s", "OrganizationName":"%s", "OrganizationalUnitName":"%s", "LocalityName":"%s", "Country":"%s"}' % (Hostname, Email, OrganizationName, OrganizationalUnitName, LocalityName, Country)
 r_server.set(i_key,i_data)
+r_server.set("need_CSR", "1")
 r_server.bgsave
