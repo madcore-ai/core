@@ -7,6 +7,9 @@ i_key = "owner-info"
 data=json.loads (r_server.get(i_key))
 email = data['Email']
 hostname = data['Hostname']
+frontend_conf = ""
+backend_conf = ""
+
 
 #### get certificate
 os.system("mkdir -p /opt/certs/letsencrypt")
@@ -20,15 +23,17 @@ os.system("rm -rf /opt/certs/letsencrypt")
 
 ### reconfigure haproxy
 app_key="apps"
-data_r=r_server.get(app_key)
+data_apps=r_server.get(app_key)
 os.system("rm -rf /opt/haproxy/haproxy.cfg")
 config_template=open('/opt/controlbox/bin/templates/haproxy.cfg').read()
 
-if data_r:
-    apps=json.JSONDecoder().decode(data_r)
-    app=apps["apps"]
-    frontend_conf="use_backend %s if { hdr_end(host) -i %s }" % (app[0], app[0]+"."+data['Hostname'])
-    backend_conf=("backend %s\n    balance roundrobin\n    server %s 127.0.0.1:%s check" % (app[0], app[0], "9001"))
+if data_apps:
+    apps=json.loads(data_apps)
+    for app in apps:
+	i = "use_backend %s if { hdr_end(host) -i %s }\n    " % (app["name"], app["name"] + "." + data['Hostname']) 
+	frontend_conf = frontend_conf + i
+	ii = ("backend %s\n    balance roundrobin\n    server %s 127.0.0.1:%s check\n    " % (app["name"], app["name"], app["port"]))
+	backend_conf = backend_conf + ii
     template = Template(config_template)
     config = (template.render(hostname=hostname, crt_path="/opt/certs/server.bundle.pem", subdomain1=frontend_conf, backend2=backend_conf))
 else:
