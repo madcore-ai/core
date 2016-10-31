@@ -36,7 +36,7 @@ if check == "1":
         for app in apps:
 		i = "use_backend %s if { hdr_end(host) -i %s }\n    " % (app["name"], app["name"] + "." + data['Hostname']) 
 		frontend_conf = frontend_conf + i
-		ii = ("backend %s\n    balance roundrobin\n    server %s 127.0.0.1:%s check\n    " % (app["name"], app["name"], app["port"]))
+		ii = ("backend %s\n    balance roundrobin\n    server %s 127.0.0.1:%s check\n  " % (app["name"], app["name"], app["port"]))
 		backend_conf = backend_conf + ii
         template = Template(config_template)
 	config = (template.render(hostname=hostname, crt_path="/opt/certs/server.bundle.pem", subdomain1=frontend_conf, backend2=backend_conf))
