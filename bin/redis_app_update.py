@@ -4,10 +4,9 @@ r_server = redis.StrictRedis('127.0.0.1', db=2)
 app_key = "apps"
 x = r_server.get(app_key)
 app_info = json.loads(x)
-#appname=sys.argv[1]
-appname="test"
-#app_port=sys.argv[2]
-app_port="2222"
+appname=sys.argv[1]
+app_port=sys.argv[2]
+check = False
 
 for app in app_info:
     if app["name"] == appname:

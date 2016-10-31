@@ -2,7 +2,7 @@ import redis, sys, os, json, jinja2
 from jinja2 import Template
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 check = r_server.get("need_CSR")
-if check == 1:
+if check == "1":
     i_key = "owner-info"
     app_key = "apps"
     x = r_server.get(i_key)

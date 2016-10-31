@@ -4,7 +4,7 @@ from jinja2 import Template
 
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 check = r_server.get("need_CSR")
-if check == 1:
+if check == "1":
     i_key = "owner-info"
     data=json.loads (r_server.get(i_key))
     email = data['Email']
@@ -21,6 +21,8 @@ if check == 1:
     os.system(request)
     os.system(" cd /opt/certs/letsencrypt && cat 0001_chain.pem ../server.key > ../server.bundle.pem")
     os.system("rm -rf /opt/certs/letsencrypt")
+    r_server.set("need_CSR", "0")
+    r_server.bgsave
 
 
 ### reconfigure haproxy
@@ -33,7 +35,7 @@ if check == 1:
 	apps=json.loads(data_apps)
         for app in apps:
 		i = "use_backend %s if { hdr_end(host) -i %s }\n    " % (app["name"], app["name"] + "." + data['Hostname']) 
-	    frontend_conf = frontend_conf + i
+		frontend_conf = frontend_conf + i
 		ii = ("backend %s\n    balance roundrobin\n    server %s 127.0.0.1:%s check\n    " % (app["name"], app["name"], app["port"]))
 		backend_conf = backend_conf + ii
         template = Template(config_template)
@@ -44,5 +46,6 @@ if check == 1:
 
     open("/opt/haproxy/haproxy.cfg", "w").write(config)
     os.system("service haproxy start")
+    
 else:
     print "Don't need new certificate"
