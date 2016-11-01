@@ -16,7 +16,6 @@ if check == "1":
 #### get certificate
     os.system("mkdir -p /opt/certs/letsencrypt")
     os.system("cd /opt/certs && openssl req -inform pem -outform der -in server.csr -out ./letsencrypt/server.der")
-    os.system("service haproxy stop")
     request = ("cd /opt/certs/letsencrypt && letsencrypt certonly --csr server.der --standalone --non-interactive --agree-tos --email %s --standalone-supported-challenges http-01" % email)
     os.system(request)
     os.system(" cd /opt/certs/letsencrypt && cat 0001_chain.pem ../server.key > ../server.bundle.pem")
@@ -45,7 +44,7 @@ if check == "1":
         config = (template.render(hostname=hostname, crt_path="/opt/certs/server.bundle.pem"))
 
     open("/opt/haproxy/haproxy.cfg", "w").write(config)
-    os.system("service haproxy start")
+    os.system("haproxy -f /opt/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)")
     
 else:
     print "Don't need new certificate"
