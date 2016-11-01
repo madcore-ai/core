@@ -6,7 +6,7 @@ sudo docker run --rm --entrypoint htpasswd registry:2.5 -Bbn peter redhat  >> /o
 size=$(wc -l /opt/auth/htpasswd | grep -o '[0-9]*')
 if (($size < 2));
 then
-sudo docker run --rm --entrypoint htpasswd registry:2.5 -Bbn peter redhat  >> /opt/auth/htpasswd
+sudo htpasswd -b /opt/auth/htpasswd peter redhat
 fi
 sudo chmod +x /usr/local/bin/docker-compose
 cd /opt/controlbox/registrydocker
