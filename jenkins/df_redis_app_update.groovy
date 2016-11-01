@@ -9,7 +9,7 @@ job('df.redis.app.update') {
 echo "APP_NAME: '\$APP_NAME'"
 echo "APP_PORT: '\$APP_PORT'"
 
-    python /opt/controlbox/bin/redis_app_update.py "\$APPNAME" "\$APP_PORT"
+    python /opt/controlbox/bin/redis_app_update.py "\$APP_NAME" "\$APP_PORT"
 """
         shell(command)
     }
