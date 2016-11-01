@@ -9,14 +9,11 @@ then
 sudo htpasswd -b /opt/auth/htpasswd peter redhat
 fi
 sudo chmod +x /usr/local/bin/docker-compose
-cd /opt/controlbox/registrydocker
-sudo docker-compose up &
-cp /opt/controlbox/registrydocker/docker-compose.service /etc/systemd/system/docker-compose.service
+sudo cp /opt/controlbox/registrydocker/docker-compose.service /etc/systemd/system/docker-compose.service
 # systemd reload
-systemctl daemon-reload
+sudo systemctl daemon-reload
 # Enable the service
 cd /etc/systemd/system/
 systemctl enable docker-compose.service
 # Start the service
 systemctl start docker-compose
-
