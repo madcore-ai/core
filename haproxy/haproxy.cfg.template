@@ -24,11 +24,22 @@ global
     timeout  client 1m
     timeout  server 1m
     timeout  check 10s
+
+  userlist auth_list
+    group docker_registry users root
+    user root insecure-password controlbox
+
  
   frontend jenkins
     bind *:443 ssl crt /etc/pki/tls/certs/server.bundle.pem
     default_backend  jenkins-mstr
     reqadd  X-Forwarded-Proto:\ http
+
+    acl registry hdr(host) -i registry.hostname_tmpl
+    redirect scheme https if !{ ssl_fc } registry
+    acl auth_docker_registry_root http_auth(auth_list) root
+    use_backend docker-registry if registry
+
     
   backend jenkins-mstr
     balance  roundrobin
@@ -37,4 +48,9 @@ global
     rspirep  ^([^\ \t:]*:)\ http://127.0.0.1:8880/(.*) \1\ https://hostname_tmpl/\2
     server jenkins01 127.0.0.1:8880 check
 
+  backend docker-registry
+    http-request  set-header Host 127.0.0.1:5000
+    reqirep  ^([^\ \t:]*:)\ https://registry.hostname_tmpl/(.*) \1\ http://127.0.0.1:5000/\2
+    rspirep  ^([^\ \t:]*:)\ http://127.0.0.1:5000/(.*) \1\ https://registry.hostname_tmpl/\2
+    server registry 127.0.0.1:5000 check
 
