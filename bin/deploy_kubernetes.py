@@ -8,8 +8,8 @@ workspace = '/var/lib/jenkins/workspace/' + job_name + "/" + appname + "/"
 repo_path = workspace + 'repo/'
 repo_url = sys.argv[1]
 kub_config_path = workspace + 'kube_config/'
-registry_user='peter'
-registry_pass='redhat'
+registry_user='root'
+registry_pass='controlbox'
 registry_secret='myregistrykey'
 app_port=sys.argv[3]
 
