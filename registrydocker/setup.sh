@@ -1,7 +1,11 @@
 #!/bin/bash
-echo "Waiting for docker daemon (may take few minutes) …"
-sudo su -c "until docker info | grep 'Containers'; do : ; done" jenkins
-echo “docker daemon confirmed.”
+if pgrep "docker" > /dev/null
+then
+    echo "Running"
+else
+    echo "Stopped. Restarting..."
+    systemctl restart docker
+fi
 
 sudo mkdir -p /opt/auth
 sudo docker run --rm --entrypoint htpasswd registry:2.5 -Bbn root controlbox  >> /opt/auth/htpasswd
