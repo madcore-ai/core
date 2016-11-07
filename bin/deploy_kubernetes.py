@@ -8,8 +8,8 @@ workspace = '/var/lib/jenkins/workspace/' + job_name + "/" + appname + "/"
 repo_path = workspace + 'repo/'
 repo_url = sys.argv[1]
 kub_config_path = workspace + 'kube_config/'
-registry_user='peter'
-registry_pass='redhat'
+registry_user='root'
+registry_pass='controlbox'
 registry_secret='myregistrykey'
 app_port=sys.argv[3]
 
@@ -23,9 +23,9 @@ os.system("docker build -t %s %s" % (appname, repo_path))
 
 #### Push image to local docker registry
 
-os.system("docker tag %s localhost:5000/%s" % (appname, appname))
+os.system("docker tag %s localhost:5000/%s:image" % (appname, appname))
 os.system("docker login -u%s -p%s localhost:5000" % (registry_user, registry_pass))
-os.system("docker push localhost:5000/%s" % appname)
+os.system("docker push localhost:5000/%s:image" % appname)
 
 #### Crete kubernetes pods and service
 os.system("mkdir -p %s" % kub_config_path)
@@ -33,7 +33,7 @@ os.system("kubectl create secret docker-registry %s --docker-server=localhost:50
 
 config_template=open('/opt/controlbox/bin/templates/kub_replication_controller_template.yaml').read()
 template = Template(config_template)
-config = (template.render(name=appname, image=appname, registry_secret=registry_secret))
+config = (template.render(name=appname, image=appname+':image', registry_secret=registry_secret))
 open(kub_config_path+'rc.yaml', "w").write(config)
 
 config_template2=open('/opt/controlbox/bin/templates/kub_service_template.yaml').read()
