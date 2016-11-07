@@ -23,3 +23,7 @@ cd /etc/systemd/system/
 systemctl enable docker-compose.service
 # Start the service
 systemctl start docker-compose
+
+#restart registry
+docker rm -f registrydocker_registry_1
+systemctl start docker-compose
