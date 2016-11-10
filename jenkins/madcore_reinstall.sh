@@ -29,17 +29,11 @@ sudo rm -rf /opt/kubernetes
 
 
 #start new installation
-pushd /opt
-    sudo git clone https://bitbucket.org/ronaanimation/controlbox.git
-    sudo chown -R ubuntu:ubuntu /opt/controlbox
-popd
-pushd /opt/controlbox
-    sudo git fetch
-    sudo git branch -v -a
-    sudo git checkout -b Denis-test-job origin/Denis-test-job
-    sudo chmod +x cb-install.sh
-    sudo bash cb-install.sh
-popd
+sudo mkdir -p /opt/controlbox
+sudo chown ubuntu:ubuntu /opt/controlbox
+git clone https://bitbucket.org/ronaanimation/controlbox.git /opt/controlbox
+sudo chmod +x /opt/controlbox/cb-install.sh
+sudo "/opt/controlbox/cb-install.sh"
 
 #restore dockerstorage
 sudo mv /opt/backup/dockerstorage /opt/dockerstorage
