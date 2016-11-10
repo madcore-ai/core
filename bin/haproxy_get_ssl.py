@@ -4,6 +4,7 @@ from jinja2 import Template
 
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 check = r_server.get("need_CSR")
+check = "1"
 if check == "1":
     i_key = "owner-info"
     data=json.loads (r_server.get(i_key))
@@ -11,6 +12,8 @@ if check == "1":
     hostname = data['Hostname']
     frontend_conf = ""
     backend_conf = ""
+    acl = ""
+    redirect = ""
 
 
 #### get certificate
@@ -33,12 +36,23 @@ if check == "1":
     if data_apps:
 	apps=json.loads(data_apps)
         for app in apps:
-		i = "use_backend %s if { hdr_end(host) -i %s }\n    " % (app["name"], app["name"] + "." + data['Hostname']) 
-		frontend_conf = frontend_conf + i
-		ii = ("backend %s\n    balance roundrobin\n    server %s 127.0.0.1:%s check\n  " % (app["name"], app["name"], app["port"]))
-		backend_conf = backend_conf + ii
+		if app["name"]=='kubedash':
+		    ai = "acl is_%s hdr_end(host) -i %s.%s \n    " % (app["name"], app["name"], data["Hostname"] )
+		    acl = acl + ai
+		    ri = "redirect  code 301 location https://kubeapi.%s/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard/ if is_%s \n    " % (data["Hostname"], app["name"])
+		    redirect = redirect + ri
+		elif app["name"] == 'grafana':
+		    ai = "acl is_%s hdr_end(host) -i %s.%s \n    " % (app["name"], app["name"], data["Hostname"] )
+		    acl = acl + ai
+		    ri = "redirect  code 301 location https://kubeapi.%s/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/ if is_%s \n    " % (data["Hostname"], app["name"])
+		    redirect = redirect + ri
+		else:
+		    i = "use_backend %s if { hdr_end(host) -i %s }\n    " % (app["name"], app["name"] + "." + data['Hostname']) 
+		    frontend_conf = frontend_conf + i
+		    i = ("backend %s\n    balance roundrobin\n    server %s 127.0.0.1:%s check\n  " % (app["name"], app["name"], app["port"]))
+		    backend_conf = backend_conf + i
         template = Template(config_template)
-	config = (template.render(hostname=hostname, crt_path="/opt/certs/server.bundle.pem", subdomain1=frontend_conf, backend2=backend_conf))
+	config = (template.render(hostname=hostname, crt_path="/opt/certs/server.bundle.pem", subdomain=frontend_conf, backend=backend_conf, acl=acl, redirect=redirect))
     else:
 	template = Template(config_template)
         config = (template.render(hostname=hostname, crt_path="/opt/certs/server.bundle.pem"))
