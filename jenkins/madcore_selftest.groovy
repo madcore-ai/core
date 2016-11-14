@@ -6,17 +6,17 @@ pipelineJob('madcore.selftest') {
 	    script("""
 		node {
 		    stage 'Test Kubernetes API'
-		    build job: 'df.selftesf.kubeapi'
+		    build 'df.selftest.kubeapi'
                     stage 'Test Kubernetes Dashboard'
-		    build job: 'df.selftesf.dashboard'
+		    build 'df.selftest.dashboard'
 		    stage 'Test Grafana'
-		    build job: 'df.selftesf.grafana'
+		    build 'df.selftest.grafana'
 		    stage 'Test InfluxDB'
-		    build job: 'df.selftesf.influxdb'
+		    build 'df.selftest.influxdb'
 		    stage 'Test Docker registry'
-		    build job: 'df.selftesf.docker.registry'
+		    build 'df.selftest.docker.registry'
 		    stage 'Test Habitat'
-		    build job: 'df.selftesf.habitat'
+		    build 'df.selftest.habitat'
 
                 }
 	    """.stripIndent())
