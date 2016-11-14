@@ -1,4 +1,4 @@
-pipelineJob('madcore.deploy') {
+pipelineJob('madcore.selftest') {
     parameters {
     }
 
