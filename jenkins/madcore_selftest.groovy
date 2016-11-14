@@ -1,6 +1,4 @@
 pipelineJob('madcore.selftest') {
-    parameters {
-    }
 
     definition {
 	cps {
