@@ -1,12 +1,29 @@
-job('madcore.selftest') {
-    wrappers { preBuildCleanup() }
-    steps {
-        def command = """#!/bin/bash
-	pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
-	    bash madcore_selftest.sh
-	popd
+pipelineJob('madcore.selftest') {
 
-"""
-        shell(command)
+    definition {
+	cps {
+	    sandbox()
+	    script("""
+		node {
+		    stage 'Test Kubernetes API'
+		    build 'madcore.selftest.kubeapi'
+                    stage 'Test Kubernetes Dashboard'
+		    build ''madcore.selftest.kubedash'
+		    stage 'Test Grafana'
+		    build 'madcore.selftest.grafana'
+		    stage 'Test InfluxDB'
+		    build 'madcore.selftest.influxdb'
+		    stage 'Test Docker registry'
+		    build 'madcore.selftest.docker.registry'
+		    stage 'Test Habitat'
+		    build 'madcore.selftest.habitat'
+
+                }
+	    """.stripIndent())
+	    }
     }
+
 }
+
+
+
