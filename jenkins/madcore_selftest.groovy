@@ -8,7 +8,7 @@ pipelineJob('madcore.selftest') {
 		    stage 'Test Kubernetes API'
 		    build 'madcore.selftest.kubeapi'
                     stage 'Test Kubernetes Dashboard'
-		    build ''madcore.selftest.kubedash'
+		    build 'madcore.selftest.kubedash'
 		    stage 'Test Grafana'
 		    build 'madcore.selftest.grafana'
 		    stage 'Test InfluxDB'
