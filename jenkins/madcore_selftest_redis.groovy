@@ -1,9 +1,9 @@
-job('df.selftest.redis') {
+job('madcore.selftest.redis') {
     wrappers { preBuildCleanup() }
     steps {
         def command = """#!/bin/bash
 	pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
-	    bash df_selftest_redis.sh
+	    bash madcore_selftest_redis.sh
 	popd
 
 """

@@ -1,9 +1,9 @@
-job('df.selftest.habitat') {
+job('madcore.selftest.grafana') {
     wrappers { preBuildCleanup() }
     steps {
         def command = """#!/bin/bash
 	pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
-	    bash df_selftest_habitat.sh
+	    bash madcore_selftest_grafana.sh
 	popd
 
 """
