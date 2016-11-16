@@ -6,6 +6,7 @@ if [ ! -z $grafana ]; then
 echo 'grafana works'
 else
 echo 'grafana down'
+exit 1
 fi
 
 echo 'finished testing Grafana Dashboard'

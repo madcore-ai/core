@@ -6,6 +6,7 @@ if [ ! -z $registry ]; then
 echo 'Docker registry works'
 else
 echo 'Docker registry down'
+exit 1
 fi
 
 echo 'finished testing Docker registry'

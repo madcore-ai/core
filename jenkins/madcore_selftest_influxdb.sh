@@ -6,6 +6,7 @@ if [ ! -z $influxdb ]; then
 echo 'influxdb works'
 else
 echo 'influxdb down'
+exit 1
 fi
 
 echo 'finished testing InfluxDB'
