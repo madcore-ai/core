@@ -6,6 +6,7 @@ if [ ! -z $kubedash ]; then
 echo 'kubernetes doshboard works'
 else
 echo 'kubernetes dashboard down'
+exit 1
 fi
 
 echo 'finished testing kubernetes dashboard'
