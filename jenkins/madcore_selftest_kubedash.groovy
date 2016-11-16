@@ -3,7 +3,7 @@ job('madcore.selftest.kubedash') {
     steps {
         def command = """#!/bin/bash
 	pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
-	    bash df_selftest_kubedash.sh
+	    bash madcore_selftest_kubedash.sh
             CODE=\$?
             if [[ \$CODE -ne 0 ]]; then
                 echo "BASH FAILED WITH POSITIVE CODE. FORCING JENKINS BASH EXIT AS -1 (TO SHOW THE FAIL)"
