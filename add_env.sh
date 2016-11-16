@@ -1,4 +1,3 @@
 #!/bin/bash
 
-sudo su -c "export ENV=$1" jenkins
-
+echo ENV=$1 >> /etc/environment 

@@ -5,7 +5,6 @@ from jinja2 import Template
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 check = r_server.get("need_CSR")
 check = "1"
-print os.environ["ENV"]
 if check == "1":
     i_key = "owner-info"
     data=json.loads (r_server.get(i_key))
@@ -38,7 +37,6 @@ if check == "1":
 	crt_path="/opt/certs/server.bundle.pem"
     else:
 	crt_path="/etc/pki/tls/certs/server.bundle.pem"
-    print crt_path
 
     if data_apps:
 	apps=json.loads(data_apps)
