@@ -17,14 +17,15 @@ if check == "1":
 
 
 #### get certificate
-    os.system("mkdir -p /opt/certs/letsencrypt")
-    os.system("cd /opt/certs && openssl req -inform pem -outform der -in server.csr -out ./letsencrypt/server.der")
-    request = ("cd /opt/certs/letsencrypt && letsencrypt certonly --csr server.der --standalone --non-interactive --agree-tos --email %s --standalone-supported-challenges http-01" % email)
-    os.system(request)
-    os.system(" cd /opt/certs/letsencrypt && cat 0001_chain.pem ../server.key > ../server.bundle.pem")
-    os.system("rm -rf /opt/certs/letsencrypt")
-    r_server.set("need_CSR", "0")
-    r_server.bgsave
+    if os.environ["ENV"] == 'AWS':
+        os.system("mkdir -p /opt/certs/letsencrypt")
+        os.system("cd /opt/certs && openssl req -inform pem -outform der -in server.csr -out ./letsencrypt/server.der")
+        request = ("cd /opt/certs/letsencrypt && letsencrypt certonly --csr server.der --standalone --non-interactive --agree-tos --email %s --standalone-supported-challenges http-01" % email)
+        os.system(request)
+        os.system(" cd /opt/certs/letsencrypt && cat 0001_chain.pem ../server.key > ../server.bundle.pem")
+        os.system("rm -rf /opt/certs/letsencrypt")
+        r_server.set("need_CSR", "0")
+        r_server.bgsave
 
 
 ### reconfigure haproxy
@@ -32,6 +33,10 @@ if check == "1":
     data_apps=r_server.get(app_key)
     os.system("rm -rf /opt/haproxy/haproxy.cfg")
     config_template=open('/opt/controlbox/bin/templates/haproxy.cfg').read()
+    if os.environ["ENV"] == 'AWS':
+	crt_path="/opt/certs/server.bundle.pem"
+    else:
+	crt_path="/etc/pki/tls/certs/server.bundle.pem"
 
     if data_apps:
 	apps=json.loads(data_apps)
@@ -52,10 +57,10 @@ if check == "1":
 		    i = ("backend %s\n    balance roundrobin\n    server %s 127.0.0.1:%s check\n  " % (app["name"], app["name"], app["port"]))
 		    backend_conf = backend_conf + i
         template = Template(config_template)
-	config = (template.render(hostname=hostname, crt_path="/opt/certs/server.bundle.pem", subdomain=frontend_conf, backend=backend_conf, acl=acl, redirect=redirect))
+	config = (template.render(hostname=hostname, crt_path=crt_path, subdomain=frontend_conf, backend=backend_conf, acl=acl, redirect=redirect))
     else:
 	template = Template(config_template)
-        config = (template.render(hostname=hostname, crt_path="/opt/certs/server.bundle.pem"))
+        config = (template.render(hostname=hostname, crt_path=crt_path))
 
     open("/opt/haproxy/haproxy.cfg", "w").write(config)
     os.system("haproxy -f /opt/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)")
