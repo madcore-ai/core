@@ -3,6 +3,7 @@
 # Devops Factory Pre Configure
 # Maintained by Peter Styk (devopsfactory@styk.tv)
 
+. /opt/controlbox/add_env.sh AWS
 # PRECONFIGURE CONTROLBOX
 sudo apt-get update
 sudo apt-get install git -y

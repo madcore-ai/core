@@ -1,5 +1,6 @@
 #!/bin/bash 
 
+. /opt/controlbox/add_env.sh VAGRANT
 
 echo 'Updating'
 
