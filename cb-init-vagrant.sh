@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-echo ENV=VAGRANT >> /etc/environment
+sudo echo ENV=VAGRANT >> /etc/environment
 
 echo 'Updating'
 

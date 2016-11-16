@@ -3,7 +3,7 @@
 # Devops Factory Pre Configure
 # Maintained by Peter Styk (devopsfactory@styk.tv)
 
-echo ENV=AWS >> /etc/environment
+sudo echo ENV=AWS >> /etc/environment
 
 # PRECONFIGURE CONTROLBOX
 sudo apt-get update
