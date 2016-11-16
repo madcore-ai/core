@@ -7,6 +7,7 @@ then
     echo "Habitat works"
 else
     echo "Habitat down"
+    exit 1
 fi
 
 echo 'finished testing Habitat'

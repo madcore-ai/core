@@ -6,6 +6,7 @@ if [ ! -z $kubeapi ]; then
 echo 'kubernetes works'
 else
 echo 'kubernetes down'
+exit 1
 fi
 
 echo 'finished testing kubernetes API'
