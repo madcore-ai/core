@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-. /opt/controlbox/add_env.sh VAGRANT
+sudo echo ENV=VAGRANT >> /etc/environment
 
 echo 'Updating'
 
