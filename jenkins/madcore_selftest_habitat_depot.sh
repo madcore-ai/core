@@ -7,6 +7,7 @@ then
     echo "Habitat works"
 else
     echo "Habitat down"
+    systemctl status habitat-depot
     exit 1
 fi
 
