@@ -6,6 +6,7 @@ if [ ! -z $kubedash ]; then
 echo 'kubernetes doshboard works'
 else
 echo 'kubernetes dashboard down'
+curl -L http://localhost:8080/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard
 exit 1
 fi
 

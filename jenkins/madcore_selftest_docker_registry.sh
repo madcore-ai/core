@@ -6,6 +6,7 @@ if [ ! -z $registry ]; then
 echo 'Docker registry works'
 else
 echo 'Docker registry down'
+curl -Lk https://root:controlbox@127.0.0.1:5000/v2
 exit 1
 fi
 

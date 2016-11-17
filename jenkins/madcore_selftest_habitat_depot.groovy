@@ -1,4 +1,4 @@
-job('madcore.selftest.habitat') {
+job('madcore.selftest.habitat.depot') {
     wrappers { preBuildCleanup() }
     steps {
         def command = """#!/bin/bash

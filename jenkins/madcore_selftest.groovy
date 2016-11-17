@@ -16,9 +16,9 @@ pipelineJob('madcore.selftest') {
 		    stage 'Test Docker registry'
 		    build 'madcore.selftest.docker.registry'
 		    stage 'Test Habitat'
-		    build 'madcore.selftest.habitat'
+		    build 'madcore.selftest.habitat.depot'
 		    stage 'Test Redis'
-		    build 'madcore.selftest.redis'
+		    build 'madcore.selftest.habitat.redis'
 
                 }
 	    """.stripIndent())

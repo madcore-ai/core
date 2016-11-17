@@ -1,4 +1,4 @@
-job('madcore.selftest.redis') {
+job('madcore.selftest.habitat.redis') {
     wrappers { preBuildCleanup() }
     steps {
         def command = """#!/bin/bash
