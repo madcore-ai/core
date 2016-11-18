@@ -14,19 +14,23 @@ ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 
 mkdir -p /opt/spark
 pushd /opt/controlbox/spark/
-    kubectl create -f namespace-spark-cluster.yaml
-    CURRENT_CONTEXT=$(kubectl config view -o jsonpath='{.current-context}')
-    USER_NAME=$(kubectl config view -o jsonpath='{.contexts[?(@.name == "'"${CURRENT_CONTEXT}"'")].context.user}')
-    CLUSTER_NAME=$(kubectl config view -o jsonpath='{.contexts[?(@.name == "'"${CURRENT_CONTEXT}"'")].context.cluster}')
-    kubectl config set-context spark --namespace=spark-cluster --cluster=${CLUSTER_NAME} --user=${USER_NAME}
-    kubectl config use-context spark
+    cp namespace-spark-cluster.yaml /opt/spark/namespace-spark-cluster.yaml
     cp spark-master-controller.yaml /opt/spark/spark-master-controller.yaml
     cp spark-master-service.yaml /opt/spark/spark-master-service.yaml
     cp spark-ui-proxy-controller.yaml /opt/spark/spark-ui-proxy-controller.yaml
     cp spark-worker-controller.yaml /opt/spark/spark-worker-controller.yaml
     cp zeppelin-controller.yaml /opt/spark/zeppelin-controller.yaml
 popd
-kubectl create -f /opt/spark
-
+kubectl create -f /opt/spark/namespace-spark-cluster.yaml
+CURRENT_CONTEXT=$(kubectl config view -o jsonpath='{.current-context}')
+USER_NAME=$(kubectl config view -o jsonpath='{.contexts[?(@.name == "'"${CURRENT_CONTEXT}"'")].context.user}')
+CLUSTER_NAME=$(kubectl config view -o jsonpath='{.contexts[?(@.name == "'"${CURRENT_CONTEXT}"'")].context.cluster}')
+kubectl config set-context spark --namespace=spark-cluster --cluster=${CLUSTER_NAME} --user=${USER_NAME}
+kubectl config use-context spark
+kubectl create -f /opt/spark/spark-master-controller.yaml
+kubectl create -f /opt/spark/spark-master-service.yaml
+kubectl create -f /opt/spark/spark-ui-proxy-controller.yaml
+kubectl create -f /opt/spark/spark-worker-controller.yaml
+kubectl create -f /opt/spark/zeppelin-controller.yaml
 
 
