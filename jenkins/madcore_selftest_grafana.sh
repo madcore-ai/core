@@ -6,6 +6,7 @@ if [ ! -z $grafana ]; then
 echo 'grafana works'
 else
 echo 'grafana down'
+curl -L http://127.0.0.1:8080/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/
 exit 1
 fi
 

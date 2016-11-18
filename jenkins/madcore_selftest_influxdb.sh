@@ -6,6 +6,7 @@ if [ ! -z $influxdb ]; then
 echo 'influxdb works'
 else
 echo 'influxdb down'
+curl -L http://127.0.0.1:8083
 exit 1
 fi
 
