@@ -6,6 +6,7 @@ if [ "$redis" == "PONG" ]; then
 echo 'redis works'
 else
 echo 'redis down'
+systemctl status habitat-depot
 exit 1
 fi
 

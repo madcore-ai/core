@@ -6,6 +6,7 @@ if [ ! -z $kubeapi ]; then
 echo 'kubernetes works'
 else
 echo 'kubernetes down'
+curl -L -w http://127.0.0.1:8080
 exit 1
 fi
 
