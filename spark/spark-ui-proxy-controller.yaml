@@ -2,6 +2,7 @@ kind: ReplicationController
 apiVersion: v1
 metadata:
   name: spark-ui-proxy-controller
+  namespace: spark-cluster
 spec:
   replicas: 1
   selector:
@@ -20,7 +21,7 @@ spec:
             requests:
               cpu: 100m
           args:
-            - spark-master:8080
+            - spark-master:8088
           livenessProbe:
               httpGet:
                 path: /

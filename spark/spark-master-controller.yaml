@@ -2,6 +2,7 @@ kind: ReplicationController
 apiVersion: v1
 metadata:
   name: spark-master-controller
+  namespace: spark-cluster
 spec:
   replicas: 1
   selector:
@@ -14,7 +15,7 @@ spec:
       containers:
         - name: spark-master
           image: gcr.io/google_containers/spark:1.5.2_v1
-          command: ['cat /start-master | sed -e "s/\$\(hostname -i\)/0.0.0.0/" > /start-master; /start-master']
+          command: ["/start-master"]
           ports:
             - containerPort: 7077
             - containerPort: 8080
