@@ -19,3 +19,13 @@ pushd /opt/controlbox/spark/
 popd
 kubectl create -f /opt/spark
 
+echo "Waiting for spark (may take few minutes) …"
+sudo su -c "until curl -sL -w '%{http_code}' 'http://localhost:8080/api/v1/proxy/namespaces/spark-cluster/services/spark-master:8080/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
+echo “spark  confirmed.”
+
+echo "Waiting for zeppelin (may take few minutes) …"
+sudo su -c "until curl -sL -w '%{http_code}' 'http://localhost:8080/api/v1/proxy/namespaces/spark-cluster/services/zeppelin/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
+echo “zeppelin  confirmed.”
+
+
+
