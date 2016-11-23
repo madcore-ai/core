@@ -12,9 +12,10 @@ spec:
       labels:
         component: spark-ui-proxy
     spec:
+      hostNetwork: true
       containers:
         - name: spark-ui-proxy
-          image: elsonrodriguez/spark-ui-proxy:1.0
+          image: ursuad/spark-ui-proxy
           ports:
             - containerPort: 80
           resources:
@@ -22,6 +23,10 @@ spec:
               cpu: 100m
           args:
             - spark-master:8080
+          env:
+            - name : URL_PREFIX
+              value : "/api/v1/proxy/namespaces/spark-cluster/services/spark-ui-proxy"
+
           livenessProbe:
               httpGet:
                 path: /
