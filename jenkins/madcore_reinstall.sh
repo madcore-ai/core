@@ -82,4 +82,5 @@ systemctl start docker-compose
 cp -R /opt/backup/certs /opt/certs
 
 # start haproxy
+mkdir -p /opt/haproxy
 /opt/controlbox/bin/haproxy_get_ssl.py yes

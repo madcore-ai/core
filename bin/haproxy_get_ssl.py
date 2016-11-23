@@ -1,6 +1,7 @@
 #!/usr/bin/env python  
-import redis, sys, os, json, jinja2
+import redis, sys, os, json, jinja2, pycurl
 from jinja2 import Template
+from StringIO import StringIO
 
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 check = r_server.get("need_CSR")
@@ -12,6 +13,20 @@ if len(sys.argv) > 1:
 else:
     need_haproxy='no'
 
+#### get hostname
+try:
+    buffer = StringIO()
+    c = pycurl.Curl()
+    c.setopt(c.URL, 'http://169.254.169.253/latest/meta-data/public-hostname')
+    c.setopt(pycurl.CONNECTTIMEOUT, 5)
+    c.setopt(c.WRITEDATA, buffer)
+    c.perform()
+    c.close()
+    hostname = buffer.getvalue()
+except:
+    hostname = "localhost"
+
+
 i_key = "owner-info"
 json_data = r_server.get(i_key)
 if json_data != None:
@@ -22,9 +37,6 @@ frontend_conf = ""
 backend_conf = ""
 acl = ""
 redirect = ""
-
-if hostname == None:
-    hostname = os.environ["HOSTNAME"]
 
 if check == "1":
 #### get certificate
