@@ -75,3 +75,8 @@ sudo bash "/opt/controlbox/registrydocker/setup.sh"
 sudo bash "/opt/controlbox/kubernetes/setup.sh"
 sudo bash "/opt/controlbox/registryhabitat/setup.sh"
 sudo bash "/opt/controlbox/heapster/setup.sh"
+
+# Run only if we are on VAGRANT env
+if [[ "$ENV" == "VAGRANT" ]]; then
+    sudo bash "/opt/controlbox/spark/setup.sh" # this setup needs 15-20 min to completely finish
+fi
