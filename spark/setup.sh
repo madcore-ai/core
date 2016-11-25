@@ -7,6 +7,13 @@ ln -s /opt/bin/kubectl /usr/local/bin/kubectl
 fi
 
 mkdir -p /opt/spark
+# install spark on the machine
+mkdir -p /opt/spark/spark-bin
+pushd /tmp
+    wget -O spark-bin.tgz http://d3kbcqa49mib13.cloudfront.net/spark-2.0.2-bin-hadoop2.7.tgz
+    tar -xf spark-bin.tgz -C /opt/spark/spark-bin --strip-components 1
+popd
+
 pushd /opt/controlbox/spark/
     cp namespace-spark-cluster.yaml /opt/spark/namespace-spark-cluster.yaml
     cp spark-master-controller.yaml /opt/spark/spark-master-controller.yaml

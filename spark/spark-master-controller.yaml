@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: spark-master
-          image: gcr.io/google_containers/spark:1.5.2_v1
+          image: gcr.io/google_containers/spark:latest
           command: ["/start-master"]
           ports:
             - containerPort: 7077
