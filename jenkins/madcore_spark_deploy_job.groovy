@@ -1,7 +1,8 @@
-pipelineJob('madcore.spark.py.job') {
+pipelineJob('madcore.spark.submit') {
     parameters {
-	    stringParam('FILE_NAME', 'pi.py', '')
-        stringParam('ARGS', '2', '')
+	    stringParam('APP_FILE_NAME', 'pi.py', '')
+        stringParam('APP_ARGS', '2', '')
+        stringParam('SPARK_ARGS', '--executor-memory 1G', '')
     }
 
     definition {
@@ -10,7 +11,7 @@ pipelineJob('madcore.spark.py.job') {
 	    script("""
 		node {
 		    stage 'start spark job in kubernetes spark cluster'
-		    build job: 'df.deploy.spark', parameters: [string(name: 'FILE_NAME', value: params.FILE_NAME), string(name: 'ARGS', value: params.ARGS)]
+		    build job: 'df.deploy.spark', parameters: [string(name: 'APP_FILE_NAME', value: params.APP_FILE_NAME), string(name: 'APP_ARGS', value: params.APP_ARGS), string(name: 'SPARK_ARGS', value: params.SPARK_ARGS)]
                 }
 	    """.stripIndent())
 	    }
