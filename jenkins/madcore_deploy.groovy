@@ -1,6 +1,6 @@
 pipelineJob('madcore.deploy') {
     parameters {
-	stringParam('REPO_URL', '', '')
+	    stringParam('REPO_URL', '', '')
         stringParam('APP_NAME', '', '')
         stringParam('APP_PORT', '', '')
     }
