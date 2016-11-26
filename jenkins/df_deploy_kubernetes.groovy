@@ -2,7 +2,7 @@ job('df.deploy.kubernetes') {
     wrappers { preBuildCleanup() }
     parameters {
         stringParam('REPO_URL', '', '')
-	stringParam('APPNAME', '', '')
+	    stringParam('APPNAME', '', '')
         stringParam('PORT', '', '')
     }
     steps {

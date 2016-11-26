@@ -9,6 +9,7 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 8081, host: 8081
   config.vm.network "forwarded_port", guest: 8880, host: 8880
   config.vm.network "forwarded_port", guest: 9090, host: 9090
+  config.vm.network "forwarded_port", guest: 4040, host: 4040
 
 # config.vm.synced_folder "/Users/polfilm/git_df/controlbox", "/opt/controlbox"
 
