@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: {{name}}
+  name: {{name}}
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    name: {{name}}
+  template:
+    metadata:
+      labels:
+        name: {{name}}
+    spec:
+      hostNetwork: true
+      containers:
+      - name: {{name}}
+        image: {{docker_server}}/{{image}}
+        volumeMounts:
+         - mountPath: /offlineimap_data
+           name: offlineimap-data-path
+      volums:
+      - name: offlineimap-data-path
+        hostPath:
+          path: /opt/offlineimap_data
+      imagePullSecrets:
+      - name: {{registry_secret}}
+
