@@ -4,16 +4,19 @@ from utils import run_cmd
 from consts import *
 
 # variables
-job_name = 'df.deploy.offlineimap'
+job_name = 'madcore.deploy.offlineimap'
 app_name = 'offlineimap'
 workspace = '/var/lib/jenkins/workspace/' + job_name + "/" + app_name + "/"
 repo_path = 'https://raw.githubusercontent.com/styk-tv/offlineimap/docker/Dockerfile'
 kub_config_path = workspace + 'kube_config/'
+registry_secret = 'keyofflineimap'
+# Not user for now
+app_port = 8080
 
 # Crete image
 run_cmd("docker build -t %s %s" % (app_name, repo_path))
 # Push image to local docker registry
-run_cmd("docker tag {0} {1}/{1}:image".format(docker_server, app_name))
+run_cmd("docker tag {1} {0}/{1}:image".format(docker_server, app_name))
 run_cmd("docker login -u{0} -p{1} {2}".format(registry_user, registry_pass, docker_server))
 run_cmd("docker push {0}/{1}:image".format(docker_server, app_name))
 
@@ -24,12 +27,13 @@ run_cmd("kubectl create secret docker-registry {0} --docker-server={1} --docker-
 
 config_template = open('/opt/controlbox/bin/templates/kub_replication_controller_template_with_volume.yaml').read()
 template = Template(config_template)
-config = (template.render(name=app_name, image=app_name + ':image', registry_secret=registry_secret))
+config = (template.render(name=app_name, image=app_name + ':image', registry_secret=registry_secret,
+                          docker_server=docker_server, namespace=namespace))
 open(kub_config_path + 'rc.yaml', "w").write(config)
 
-# config_template2 = open('/opt/controlbox/bin/templates/kub_service_template.yaml').read()
-# template2 = Template(config_template2)
-# config2 = (template2.render(name=app_name, port=app_port, rc_name=app_name))
-# open(kub_config_path + 'svc.yaml', "w").write(config2)
+config_template2 = open('/opt/controlbox/bin/templates/kub_service_template.yaml').read()
+template2 = Template(config_template2)
+config2 = (template2.render(name=app_name, port=app_port, rc_name=app_name, namespace=namespace))
+open(kub_config_path + 'svc.yaml', "w").write(config2)
 
-run_cmd("kubectl create -f %s" % kub_config_path)
+print(run_cmd("kubectl create -f %s" % kub_config_path))

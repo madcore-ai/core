@@ -2,6 +2,7 @@ from __future__ import print_function
 import os, sys, jinja2, redis, json, pycurl
 from jinja2 import Template
 from StringIO import StringIO
+from utils import run_cmd
 
 ##### variables
 job_name = 'df.deploy.kubernetes'
@@ -14,12 +15,6 @@ registry_user = 'root'
 registry_pass = 'controlbox'
 registry_secret = 'myregistrykey'
 app_port = sys.argv[3]
-
-
-def run_cmd(cmd):
-    print("Running cmd: %s" % cmd)
-    os.system(cmd)
-    sys.stdout.flush()
 
 
 ##### clone repository
@@ -43,12 +38,12 @@ run_cmd(
 
 config_template = open('/opt/controlbox/bin/templates/kub_replication_controller_template.yaml').read()
 template = Template(config_template)
-config = (template.render(name=appname, image=appname + ':image', registry_secret=registry_secret))
+config = (template.render(name=appname, image=appname + ':image', registry_secret=registry_secret, namespace='default'))
 open(kub_config_path + 'rc.yaml', "w").write(config)
 
 config_template2 = open('/opt/controlbox/bin/templates/kub_service_template.yaml').read()
 template2 = Template(config_template2)
-config2 = (template2.render(name=appname, port=app_port, rc_name=appname))
+config2 = (template2.render(name=appname, port=app_port, rc_name=appname, namespace='default'))
 open(kub_config_path + 'svc.yaml', "w").write(config2)
 
 run_cmd("kubectl create -f %s" % kub_config_path)

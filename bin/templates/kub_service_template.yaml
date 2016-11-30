@@ -4,7 +4,7 @@ metadata:
   labels:
     name: {{name}}-service
   name: {{name}}-service
-  namespace: default
+  namespace: {{namespace}}
 spec:
   ports:
   - port: {{port}}

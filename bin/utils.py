@@ -17,3 +17,7 @@ def run_cmd(cmd, debug=True):
         print("    OK")
 
     return out.strip()
+
+
+def run_cmd_no_debug(cmd):
+    run_cmd(cmd, debug=False)

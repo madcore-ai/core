@@ -4,7 +4,7 @@ metadata:
   labels:
     name: {{name}}
   name: {{name}}
-  namespace: default
+  namespace: {{namespace}}
 spec:
   replicas: 1
   selector:
@@ -19,12 +19,11 @@ spec:
       - name: {{name}}
         image: {{docker_server}}/{{image}}
         volumeMounts:
-         - mountPath: /offlineimap_data
-           name: offlineimap-data-path
-      volums:
+        - mountPath: /offlineimap_data
+          name: offlineimap-data-path
+      volumes:
       - name: offlineimap-data-path
         hostPath:
           path: /opt/offlineimap_data
       imagePullSecrets:
       - name: {{registry_secret}}
-
