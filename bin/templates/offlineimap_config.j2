@@ -1,0 +1,76 @@
+[general]
+
+dry-run = False
+
+ui = ttyui
+
+accounts = gmail2
+
+fsync = False
+
+
+
+[Account gmail2]
+
+localrepository = gmail-local2
+
+remoterepository = gmail-remote2
+
+status_backend = sqlite
+
+
+
+[Repository gmail-local2]
+
+sep = .
+
+type = Maildir
+
+remoteuser = {{ remote_user }}
+
+localfolders = {{ volume_mount_path }}
+
+
+
+[Repository gmail-remote2]
+
+readonly = True
+
+maxconnections = 1
+
+type = Gmail
+
+remoteuser = {{ remote_user }}
+
+oauth2_client_id = {{ oauth2_client_id }}
+
+oauth2_client_secret = {{ oauth2_client_secret }}
+
+oauth2_refresh_token = {{ oauth2_refresh_token }}
+
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+realdelete = no
+
+nametrans: lambda s: {  '[Gmail]/Starred' : 'starred',
+
+                        '[Gmail]/Trash'   : 'trash',
+
+                        '[Gmail]/Spam'    : 'spam',
+
+                        '[Gmail]/Sent Mail' : 'sent',
+
+                        '[Gmail]/Important' : 'important',
+
+                        '[Gmail]/Drafts'    : 'drafts',
+
+                        '[Gmail]/All Mail'  : 'allmail',
+
+                        '[Google Mail]/All Mail'  : 'allmail',
+
+                        'INBOX'             : 'inbox',
+
+                      }.get (s, s).decode ('imap4-utf-7').encode ('utf8')
+
+
+folderfilter = lambda foldername: foldername in ['[Gmail]/All Mail', '[Google Mail]/All Mail']

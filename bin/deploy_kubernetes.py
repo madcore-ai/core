@@ -15,10 +15,11 @@ registry_user = 'root'
 registry_pass = 'controlbox'
 registry_secret = 'myregistrykey'
 app_port = sys.argv[3]
+branch_name = sys.argv[4]
 
 
 ##### clone repository
-run_cmd("git clone %s %s" % (repo_url, repo_path))
+run_cmd("git clone -b %s %s %s" % (branch_name, repo_url, repo_path))
 
 ##### Crete image 
 

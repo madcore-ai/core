@@ -12,7 +12,6 @@ app_args = sys.argv[3]
 example_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'spark_examples', app_file_name)
 spark_example_file_path = '/tmp/%s' % app_file_name
 
-
 zepplin_controller = run_cmd(
     "kubectl get pods --namespace=%s | grep zeppelin-controller | awk '{print $1}'" % (NAMESPACE,))
 
