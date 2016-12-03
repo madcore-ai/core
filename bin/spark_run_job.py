@@ -1,7 +1,7 @@
 from __future__ import print_function
-import subprocess
 import sys
 import os
+from utils import run_cmd
 
 NAMESPACE = 'spark-cluster'
 
@@ -20,23 +20,6 @@ else:
 example_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../spark/benchmark', example_subfold,
                                  app_file_name)
 spark_example_file_path = '/tmp/%s' % app_file_name
-
-
-def run_cmd(cmd, debug=True):
-    if debug:
-        print("Running cmd: %s" % cmd)
-        sys.stdout.flush()
-
-    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-    out, err = process.communicate()
-
-    if err:
-        print("ERROR: ", err)
-    else:
-        print("OK")
-
-    return out.strip()
-
 
 zepplin_controller = run_cmd(
     "kubectl get pods --namespace=%s | grep zeppelin-controller | awk '{print $1}'" % (NAMESPACE,))

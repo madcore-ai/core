@@ -17,7 +17,13 @@ spec:
       hostNetwork: true
       containers:
       - name: {{name}}
-        image: localhost:5000/{{image}}
+        image: {{docker_server}}/{{image}}
+        volumeMounts:
+        - mountPath: {{volume_mount_path}}
+          name: offlineimap-data-path
+      volumes:
+      - name: offlineimap-data-path
+        hostPath:
+          path: {{volume_host_path}}
       imagePullSecrets:
       - name: {{registry_secret}}
-
