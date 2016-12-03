@@ -7,9 +7,18 @@ NAMESPACE = 'spark-cluster'
 
 # TODO@geo validate this
 sparks_args = sys.argv[1]
+# this can be
 app_file_name = sys.argv[2]
 app_args = sys.argv[3]
-example_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'spark_examples', app_file_name)
+
+example_subfold = None
+if app_file_name.endswith('.py'):
+    example_subfold = 'python'
+else:
+    example_subfold = 'java'
+
+example_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../spark/benchmark', example_subfold,
+                                 app_file_name)
 spark_example_file_path = '/tmp/%s' % app_file_name
 
 
