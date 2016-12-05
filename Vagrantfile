@@ -15,7 +15,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provider "virtualbox" do |vb|
      vb.name = "xenial2"
-     vb.memory = "2048"
+     vb.memory = "6144"
   end
 
   config.vm.provision "shell", path: "https://bitbucket.org/ronaanimation/controlbox/raw/development/cb-init-vagrant.sh"
