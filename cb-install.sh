@@ -66,6 +66,7 @@ sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://1
 sudo mkdir -p /opt/certs
 chown -R jenkins /opt/certs
 sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/controlbox/bin/haproxy_get_ssl.py" > /etc/sudoers.d/jenkins
+sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/controlbox/jenkins/madcore_reinstall.sh" >> /etc/sudoers.d/jenkins
 
 # PROXY,REGISTRIES, KUBERNETES
 
@@ -75,3 +76,8 @@ sudo bash "/opt/controlbox/registrydocker/setup.sh"
 sudo bash "/opt/controlbox/kubernetes/setup.sh"
 sudo bash "/opt/controlbox/registryhabitat/setup.sh"
 sudo bash "/opt/controlbox/heapster/setup.sh"
+
+# Run only if we are on VAGRANT env
+if [[ "$ENV" == "VAGRANT" ]]; then
+    sudo bash "/opt/controlbox/spark/setup.sh" # this setup needs 15-20 min to completely finish
+fi

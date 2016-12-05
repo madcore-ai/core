@@ -8,6 +8,6 @@ metadata:
 spec:
   ports:
   - port: {{port}}
-    targetPort: {{port}} 
+    targetPort: {{port}}
   selector:
     name: {{rc_name}}
