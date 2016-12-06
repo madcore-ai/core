@@ -1,7 +1,7 @@
 
 #!/bin/bash -v
-# Devops Factory Pre Configure
-# Maintained by Peter Styk (devopsfactory@styk.tv)
+# Madcore Pre Configure
+# Maintained by Peter Styk (humans@madcore.ai)
 
 sudo echo ENV=AWS >> /etc/environment
 
