@@ -1,14 +1,15 @@
 version: '2'
 services:
   etcd:
-    image: gcr.io/google_containers/etcd:2.0.13
+    image: gcr.io/google_containers/etcd:3.0.4
     container_name: etcd
-    command: ['/usr/local/bin/etcd', '--addr=0.0.0.0:4001', '--data-dir=/var/etcd/data']
+    entrypoint:
+      - etcd
     network_mode: "host"
     pid: host
 
   master:
-    image: gcr.io/google_containers/hyperkube:v1.3.6
+    image: gcr.io/google_containers/hyperkube:v1.4.6
     command: /bin/sh -c "/hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://${ip}:8080 --cluster_dns=10.0.0.10 --cluster_domain=cluster.local --config=/etc/kubernetes/manifests-multi"
     volumes:
       - /:/rootfs:ro
@@ -26,7 +27,7 @@ services:
       - "affinity:container!=*kubelet*"
 
   proxy:
-    image: gcr.io/google_containers/hyperkube:v1.3.6
+    image: gcr.io/google_containers/hyperkube:v1.4.6
     command: ['/hyperkube', 'proxy', '--master=http://${ip}:8080', '--masquerade-all', '--v=2']
     privileged: true
     # A proxy should run alongside another kubelet but not alongside another proxy

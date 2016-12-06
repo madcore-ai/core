@@ -9,7 +9,6 @@ pushd /opt/controlbox/kubernetes/
     cp docker-compose.service /etc/systemd/system/docker-compose-kubernetes.service
     mkdir -p /opt/kubernetes
     cat docker-compose.yml.template | sed -e "s/\${ip}/${ip}/" > /opt/kubernetes/docker-compose.yml
-    cat dashboard.yaml.template | sed -e "s/\${ip}/${ip}/" > /opt/kubernetes/dashboard.yaml
 popd
 
 # systemd reload
