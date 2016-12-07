@@ -1,0 +1,38 @@
+version: '2'
+services:
+  etcd:
+    image: gcr.io/google_containers/etcd:2.0.13
+    container_name: etcd
+    command: ['/usr/local/bin/etcd', '--addr=0.0.0.0:4001', '--data-dir=/var/etcd/data']
+    network_mode: "host"
+    pid: host
+
+  master:
+    image: gcr.io/google_containers/hyperkube:v1.3.6
+    command: /bin/sh -c "/hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://${ip}:8080 --cluster_dns=10.0.0.10 --cluster_domain=cluster.local --config=/etc/kubernetes/manifests-multi"
+    volumes:
+      - /:/rootfs:ro
+      - /sys:/sys:ro
+      - /dev:/dev
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/lib/kubelet/:/var/lib/kubelet:rw,rslave
+      - /var/run:/var/run:rw
+    privileged: true
+    network_mode: "host"
+    pid: host
+    # A kubelet shouldn't run alongside another kubelet - One privileged kubelet per node
+    environment:
+      - "affinity:container!=*kubelet*"
+
+  proxy:
+    image: gcr.io/google_containers/hyperkube:v1.3.6
+    command: ['/hyperkube', 'proxy', '--master=http://${ip}:8080', '--masquerade-all', '--v=2']
+    privileged: true
+    # A proxy should run alongside another kubelet but not alongside another proxy
+    network_mode: "host"
+    pid: host
+    environment:
+      - "affinity:container==*kubelet*"
+      - "affinity:container!=*proxy*"
+
