@@ -1,8 +1,10 @@
 #!/bin/bash -v
-# Devops Factory Pre Configure
-# Maintained by Peter Styk (devopsfactory@styk.tv)
+# Madcore Kubernetes Node Pre Configure
+# Maintained by Madcore Ltd (humans@madcore.ai)
 
 sudo echo ENV=AWS >> /etc/environment
+
+KUB_MASTER_IP="${KUB_MASTER_IP:-10.99.101.99}"
 
 # PRECONFIGURE CONTROLBOX
 sudo apt-get update

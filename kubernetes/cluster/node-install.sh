@@ -4,7 +4,7 @@
 # Maintained by Peter Styk (devopsfactory@styk.tv)
 
 
-echo "Kub Node Setup Test"
+echo "Kub Node Setup"
 
 # PREREQUESITES
 pushd /tmp
