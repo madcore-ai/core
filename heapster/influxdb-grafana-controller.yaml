@@ -17,12 +17,12 @@ spec:
       hostNetwork: true
       containers:
       - name: influxdb
-        image: kubernetes/heapster_influxdb:v0.5
+        image: gcr.io/google_containers/heapster_influxdb:v0.7
         volumeMounts:
         - mountPath: /data
           name: influxdb-storage
       - name: grafana
-        image: gcr.io/google_containers/heapster_grafana:v2.6.0-2
+        image: gcr.io/google_containers/heapster_grafana:v3.1.1
         env:
           - name: INFLUXDB_SERVICE_URL
             value: http://127.0.0.1:8086
