@@ -1,4 +1,4 @@
-job('madcore.spark.cluster') {
+job('madcore.spark.setup') {
     wrappers { preBuildCleanup() }
     steps {
         def command = """#!/bin/bash
