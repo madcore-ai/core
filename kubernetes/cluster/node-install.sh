@@ -16,4 +16,4 @@ pushd /tmp
 popd
 
 # PROXY,REGISTRIES, KUBERNETES
-sudo bash "/opt/controlbox/kubernetes/setup_nodes.sh"
+sudo bash "/opt/controlbox/kubernetes/cluster/setup.sh"
