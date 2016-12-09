@@ -1,3 +1,5 @@
 .idea/
 .cb-init.sh.swp
 controlbox.iml
+
+.py[co]
