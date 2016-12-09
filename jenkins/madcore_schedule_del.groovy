@@ -4,8 +4,8 @@ job('madcore.schedule.del') {
     }    
     steps {
         def command = """#!/bin/bash
-pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
-    sudo bash madcore_schedule_del.sh
+pushd /opt/controlbox/jenkins/
+    bash madcore_schedule_del.sh
 popd
 """
         shell(command)
