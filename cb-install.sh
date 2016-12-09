@@ -59,9 +59,12 @@ sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://1
 sudo su -c "mkdir -p /var/lib/jenkins/jobs/seed-dsl" jenkins
 sudo su -c "mkdir -p /var/lib/jenkins/workspace/seed-dsl" jenkins
 sudo su -c "ln -s /opt/controlbox /var/lib/jenkins/workspace/seed-dsl/controlbox" jenkins
+# CREATE JENKINS SCHEDULE FOLDER
+sudo su -c "mkdir -p /opt/jenkins/schedules" jenkins
 sudo su -c "cp /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins/seed-dls_config.xml /var/lib/jenkins/jobs/seed-dsl/config.xml" jenkins
 sudo service jenkins restart
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
+
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build seed-dsl" jenkins
 sudo mkdir -p /opt/certs
 chown -R jenkins /opt/certs
@@ -76,7 +79,6 @@ sudo bash "/opt/controlbox/registrydocker/setup.sh"
 sudo bash "/opt/controlbox/kubernetes/setup.sh"
 sudo bash "/opt/controlbox/registryhabitat/setup.sh"
 sudo bash "/opt/controlbox/heapster/setup.sh"
-sudo bash "/opt/controlbox/jenkins/setup.sh"
 
 # Run only if we are on VAGRANT env
 if [[ "$ENV" == "VAGRANT" ]]; then

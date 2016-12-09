@@ -12,4 +12,7 @@ python /opt/controlbox/bin/schgen.py --json "\$SchedulerData" -d
 """
         shell(command)
     }
+    publishers {
+        downstream('madcore.scheduler.seed', 'SUCCESS')
+    }
 }

@@ -10,4 +10,7 @@ popd
 """
         shell(command)
     }
+    publishers {
+        downstream('madcore.scheduler.seed', 'SUCCESS')
+    }
 }

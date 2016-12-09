@@ -1,6 +1,8 @@
 from jinja2 import Environment, PackageLoader
 import os
 
+JOB_NAME_TEMPLATE = "madcore_schedule_{0}_{1}.groovy"
+
 
 class Struct:
     def __init__(self, **entries):
@@ -30,7 +32,7 @@ class Template(object):
         if not os.path.exists(output_template_path):
             os.makedirs(output_template_path)
 
-        fi = "madcore.schedule.{0}.{1}.groovy".format(self.name, job_type)
+        fi = JOB_NAME_TEMPLATE.format(self.name, job_type)
         si = len(rendered)
         template_save_path = os.path.join(output_template_path, fi)
         with open(template_save_path, "wb") as f:
