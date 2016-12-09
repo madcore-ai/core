@@ -8,7 +8,6 @@ job('madcore.schedule.set') {
     steps {
         def command = """#!/bin/bash
 echo "SchedulerData: '\$SchedulerData'"
-sudo mkdir -p /opt/jenkins/schedules
 python /opt/controlbox/bin/schgen.py --json "\$SchedulerData" -d
 """
         shell(command)

@@ -76,6 +76,7 @@ sudo bash "/opt/controlbox/registrydocker/setup.sh"
 sudo bash "/opt/controlbox/kubernetes/setup.sh"
 sudo bash "/opt/controlbox/registryhabitat/setup.sh"
 sudo bash "/opt/controlbox/heapster/setup.sh"
+sudo bash "/opt/controlbox/jenkins/setup.sh"
 
 # Run only if we are on VAGRANT env
 if [[ "$ENV" == "VAGRANT" ]]; then
