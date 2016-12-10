@@ -61,6 +61,8 @@ sudo su -c "mkdir -p /var/lib/jenkins/workspace/seed-dsl" jenkins
 sudo su -c "ln -s /opt/controlbox /var/lib/jenkins/workspace/seed-dsl/controlbox" jenkins
 # CREATE JENKINS SCHEDULE FOLDER
 sudo su -c "mkdir -p /opt/jenkins/schedules" jenkins
+# CREATE A DUMMY JOB SO THAT DSL PLUGIN DOES NOT ENCOUNTER EMPTY WORKSPACE
+sudo su -c "cp /opt/controlbox/bin/templates/my_dummy_scheduler.groovy /opt/jenkins/schedules/" jenkins
 sudo su -c "cp /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins/seed-dls_config.xml /var/lib/jenkins/jobs/seed-dsl/config.xml" jenkins
 sudo service jenkins restart
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
