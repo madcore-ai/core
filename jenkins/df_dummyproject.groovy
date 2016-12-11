@@ -1,4 +1,4 @@
-job('df.dummyproject') {
+job('123df.test_metrics') {
     steps {
         def command = """#!/bin/bash
 pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins

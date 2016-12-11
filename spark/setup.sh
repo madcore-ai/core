@@ -35,4 +35,8 @@ sudo su -c "until curl -sL -w '%{http_code}' 'http://localhost:8080/api/v1/proxy
 echo “zeppelin  confirmed.”
 
 
+curl -XDELETE http://127.0.0.1:8080/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/api/dashboards/db/pods
+curl --user admin:admin -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary @dashboard.json  "http://127.0.0.1:8080/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/api/dashboards/db"
+
+
 
