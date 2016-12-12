@@ -1,4 +1,4 @@
-job('123df.test_metrics') {
+job('123madcore.test_metrics') {
     steps {
         def command = """#!/bin/bash
 pushd /var/lib/jenkins/workspace/seed-dsl/madcore/jenkins

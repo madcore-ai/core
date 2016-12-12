@@ -1,4 +1,4 @@
-job('df.ssl.letsencrypt.getandinstall') {
+job('madcore.ssl.letsencrypt.getandinstall') {
 
     steps {
         def command = """#!/bin/bash

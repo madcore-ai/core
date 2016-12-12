@@ -1,4 +1,4 @@
-job('df.redis.app.update') {
+job('madcore.redis.app.update') {
     wrappers { preBuildCleanup() }
     parameters {
 	stringParam('APP_NAME', '', '')

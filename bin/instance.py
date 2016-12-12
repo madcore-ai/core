@@ -4,7 +4,7 @@ import sys
 import argparse
 from settings import Settings
 
-EC2_actions = ['start', 'stop']
+EC2_actions = ['start', 'stop', 'list']
 
 
 def parse_args():
@@ -72,6 +72,8 @@ class Instance(object):
             self.instances_start()
         elif self.settings.args.action in ['stop']:
             self.instances_stop()
+        elif self.settings.args.action in ['list']:
+            self.instances_list()
 
 
 if __name__ == '__main__':

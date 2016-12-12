@@ -12,7 +12,7 @@ pipelineJob('madcore.deploy.spark') {
 	    script("""
 		node {
 		    stage 'deploy spark container to kubernetes'
-		    build job: 'df.deploy.kubernetes', parameters: [string(name: 'REPO_URL', value: params.REPO_URL), string(name: 'APPNAME', value: params.APP_NAME), string(name: 'PORT', value: params.APP_PORT), string(name: 'REPO_BRANCH', value: params.REPO_BRANCH)]
+		    build job: 'madcore.deploy.kubernetes', parameters: [string(name: 'REPO_URL', value: params.REPO_URL), string(name: 'APPNAME', value: params.APP_NAME), string(name: 'PORT', value: params.APP_PORT), string(name: 'REPO_BRANCH', value: params.REPO_BRANCH)]
                 }
 	    """.stripIndent())
 	    }

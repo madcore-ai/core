@@ -1,4 +1,4 @@
-job('df.redis.token') {
+job('madcore.redis.token') {
     parameters {
         stringParam('TYPE', '', '')
         stringParam('TOKEN', '', '')
@@ -9,7 +9,7 @@ job('df.redis.token') {
     steps {
         def command = """#!/bin/bash
 pushd /var/lib/jenkins/workspace/seed-dsl/madcore/jenkins
-    bash df.redis.token.sh
+    bash madcore.redis.token.sh
 popd
 """
         shell(command)

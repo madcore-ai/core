@@ -1,4 +1,4 @@
-job('df.redis.owner.update') {
+job('madcore.redis.owner.update') {
     parameters {
         stringParam('Hostname', '', '')
         stringParam('Email', '', '')

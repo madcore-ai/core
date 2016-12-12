@@ -1,4 +1,4 @@
-job('df.deploy.kubernetes') {
+job('madcore.deploy.kubernetes') {
     wrappers { preBuildCleanup() }
     parameters {
         stringParam('REPO_URL', '', '')

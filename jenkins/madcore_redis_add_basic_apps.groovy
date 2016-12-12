@@ -1,4 +1,4 @@
-job('df.redis.add.basic.apps') {
+job('madcore.redis.add.basic.apps') {
     wrappers { preBuildCleanup() }
     steps {
         def command = """#!/bin/bash

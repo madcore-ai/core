@@ -11,11 +11,11 @@ pipelineJob('madcore.application') {
 		node {
 		    paramAValue = "paramAValue"
                     stage 'Update app info in redis'
-		    build job: 'df.redis.app.update', parameters: [string(name: 'APP_NAME', value: params.APP_NAME), string(name: 'APP_PORT', value: params.APP_PORT)]
+		    build job: 'madcore.redis.app.update', parameters: [string(name: 'APP_NAME', value: params.APP_NAME), string(name: 'APP_PORT', value: params.APP_PORT)]
 		    stage 'generate csr'
-		    build 'df.ssl.csr.generate'
+		    build 'madcore.ssl.csr.generate'
 		    stage 'get certificate and reconfigure haproxy'
-		    build 'df.ssl.letsencrypt.getandinstall'
+		    build 'madcore.ssl.letsencrypt.getandinstall'
                 }
 	    """.stripIndent())
 	    }

@@ -1,4 +1,4 @@
-job('df.docker.setup') {
+job('madcore.docker.setup') {
     scm {
         github('jenkinsci/job-dsl-plugin', 'master')
     }

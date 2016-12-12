@@ -5,7 +5,7 @@ from StringIO import StringIO
 from utils import run_cmd
 
 ##### variables
-job_name = 'df.deploy.kubernetes'
+job_name = 'madcore.deploy.kubernetes'
 appname = sys.argv[2]
 workspace = '/var/lib/jenkins/workspace/' + job_name + "/" + appname + "/"
 repo_path = workspace + 'repo/'
