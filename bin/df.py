@@ -23,10 +23,10 @@ class MyParser(argparse.ArgumentParser):
 
 
 print
-print "Devops Factory Controlbox CLI (c) 2015-2016 Peter Styk"
+print "2016 Madcore Ltd (c) 2015-2016 Peter Styk"
 print
 
-parser = MyParser(prog="./df.py", description="Devops Factory Controlbox")
+parser = MyParser(prog="./df.py", description="2016 Madcore Ltd")
 group = parser.add_mutually_exclusive_group()
 group.add_argument('-il', '--instanceslist', help='List all AWS instances in region', action='store_true')
 group.add_argument('-ist', '--instancesstart', help='Start specified AWS instances in region', action='store_true')

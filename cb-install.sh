@@ -13,7 +13,7 @@ pushd /tmp
     sudo apt-get update
     sudo apt-get install openjdk-8-jdk git jenkins python-pip awscli haproxy letsencrypt libcurl4-gnutls-dev librtmp-dev apache2-utils -y
     sudo pip install --upgrade pip
-    sudo pip install -r /opt/controlbox/requirements.txt
+    sudo pip install -r /opt/madcore/requirements.txt
     sudo groupadd hab && useradd -g hab -s /bin/bash -m hab
     sudo curl -fsSL https://get.docker.com/ | sh
     sudo usermod -aG docker jenkins
@@ -40,9 +40,9 @@ sudo hab pkg binlink core/hab-director hab-director
 
 # JENKINS PLUGINS
 sudo service jenkins stop
-sudo chown -R jenkins:jenkins /opt/controlbox
-sudo su -c "cp -f /opt/controlbox/jenkins/config.xml /var/lib/jenkins/config.xml"
-sudo su -c "cp -f /opt/controlbox/jenkins/jenkins /etc/init.d/jenkins"
+sudo chown -R jenkins:jenkins /opt/madcore
+sudo su -c "cp -f /opt/madcore/jenkins/config.xml /var/lib/jenkins/config.xml"
+sudo su -c "cp -f /opt/madcore/jenkins/jenkins /etc/init.d/jenkins"
 sudo sed -i '/^JAVA_ARGS=/c\JAVA_ARGS=\"-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false\"' /etc/default/jenkins
 sudo su -c "sed -i '/<useSecurity>/c\<useSecurity>false</useSecurity>' /var/lib/jenkins/config.xml" jenkins
 sudo systemctl daemon-reload
@@ -58,31 +58,31 @@ sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://1
 # CONFIGURE AND RUN 1ST SEED JOB (WILL CREATE ALL OTHER JOBS FROM REPO)
 sudo su -c "mkdir -p /var/lib/jenkins/jobs/seed-dsl" jenkins
 sudo su -c "mkdir -p /var/lib/jenkins/workspace/seed-dsl" jenkins
-sudo su -c "ln -s /opt/controlbox /var/lib/jenkins/workspace/seed-dsl/controlbox" jenkins
+sudo su -c "ln -s /opt/madcore /var/lib/jenkins/workspace/seed-dsl/madcore" jenkins
 # CREATE JENKINS SCHEDULE FOLDER
 sudo su -c "mkdir -p /opt/jenkins/schedules" jenkins
 # CREATE A DUMMY JOB SO THAT DSL PLUGIN DOES NOT ENCOUNTER EMPTY WORKSPACE
-sudo su -c "cp /opt/controlbox/bin/templates/my_dummy_scheduler.groovy /opt/jenkins/schedules/" jenkins
-sudo su -c "cp /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins/seed-dls_config.xml /var/lib/jenkins/jobs/seed-dsl/config.xml" jenkins
+sudo su -c "cp /opt/madcore/bin/templates/my_dummy_scheduler.groovy /opt/jenkins/schedules/" jenkins
+sudo su -c "cp /var/lib/jenkins/workspace/seed-dsl/madcore/jenkins/seed-dls_config.xml /var/lib/jenkins/jobs/seed-dsl/config.xml" jenkins
 sudo service jenkins restart
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build seed-dsl" jenkins
 sudo mkdir -p /opt/certs
 chown -R jenkins /opt/certs
-sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/controlbox/bin/haproxy_get_ssl.py" > /etc/sudoers.d/jenkins
-sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/controlbox/jenkins/madcore_reinstall.sh" >> /etc/sudoers.d/jenkins
+sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/bin/haproxy_get_ssl.py" > /etc/sudoers.d/jenkins
+sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/jenkins/madcore_reinstall.sh" >> /etc/sudoers.d/jenkins
 
 # PROXY,REGISTRIES, KUBERNETES
 
-sudo bash "/opt/controlbox/sslselfsigned/setup.sh"
-sudo bash "/opt/controlbox/haproxy/setup.sh"
-sudo bash "/opt/controlbox/registrydocker/setup.sh"
-sudo bash "/opt/controlbox/kubernetes/setup.sh"
-sudo bash "/opt/controlbox/registryhabitat/setup.sh"
-sudo bash "/opt/controlbox/heapster/setup.sh"
+sudo bash "/opt/madcore/sslselfsigned/setup.sh"
+sudo bash "/opt/madcore/haproxy/setup.sh"
+sudo bash "/opt/madcore/registrydocker/setup.sh"
+sudo bash "/opt/madcore/kubernetes/setup.sh"
+sudo bash "/opt/madcore/registryhabitat/setup.sh"
+sudo bash "/opt/madcore/heapster/setup.sh"
 
 # Run only if we are on VAGRANT env
 if [[ "$ENV" == "VAGRANT" ]]; then
-    sudo bash "/opt/controlbox/spark/setup.sh" # this setup needs 15-20 min to completely finish
+    sudo bash "/opt/madcore/spark/setup.sh" # this setup needs 15-20 min to completely finish
 fi

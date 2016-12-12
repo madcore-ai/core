@@ -12,7 +12,7 @@ repo_path = workspace + 'repo/'
 repo_url = sys.argv[1]
 kub_config_path = workspace + 'kube_config/'
 registry_user = 'root'
-registry_pass = 'controlbox'
+registry_pass = 'madcore'
 registry_secret = 'myregistrykey'
 app_port = sys.argv[3]
 branch_name = sys.argv[4]
@@ -37,12 +37,12 @@ run_cmd(
     "kubectl create secret docker-registry %s --docker-server=localhost:5000 --docker-username=%s --docker-password=%s --docker-email=test@test.com" % (
     registry_secret, registry_user, registry_pass))
 
-config_template = open('/opt/controlbox/bin/templates/kub_replication_controller_template.yaml').read()
+config_template = open('/opt/madcore/bin/templates/kub_replication_controller_template.yaml').read()
 template = Template(config_template)
 config = (template.render(name=appname, image=appname + ':image', registry_secret=registry_secret, namespace='default'))
 open(kub_config_path + 'rc.yaml', "w").write(config)
 
-config_template2 = open('/opt/controlbox/bin/templates/kub_service_template.yaml').read()
+config_template2 = open('/opt/madcore/bin/templates/kub_service_template.yaml').read()
 template2 = Template(config_template2)
 config2 = (template2.render(name=appname, port=app_port, rc_name=appname, namespace='default'))
 open(kub_config_path + 'svc.yaml', "w").write(config2)

@@ -16,7 +16,7 @@ app_name = APP_NAME
 workspace = '/var/lib/jenkins/workspace/' + job_name + "/" + app_name + "/"
 repo_path = workspace + 'repo/'
 docker_file = 'https://raw.githubusercontent.com/styk-tv/offlineimap/docker/Dockerfile'
-# docker_file = '/opt/controlbox/bin/templates/Dockerfile'
+# docker_file = '/opt/madcore/bin/templates/Dockerfile'
 kub_config_path = workspace + 'kube_config/'
 registry_secret = 'keyofflineimap'
 volume_mount_path = '/offlineimap_data'
@@ -47,7 +47,7 @@ run_cmd("kubectl create secret docker-registry {0} --docker-server={1} --docker-
 data_ns = {
     'namespace': namespace
 }
-j2_render('/opt/controlbox/bin/templates/offlineimap-namespace.yaml', kub_config_path + 'ns.yaml', data_ns)
+j2_render('/opt/madcore/bin/templates/offlineimap-namespace.yaml', kub_config_path + 'ns.yaml', data_ns)
 
 data_rc = {
     'name': app_name,
@@ -58,7 +58,7 @@ data_rc = {
     'volume_mount_path': volume_mount_path,
     'volume_host_path': volume_host_path
 }
-j2_render('/opt/controlbox/bin/templates/kub_replication_controller_template_with_volume.yaml',
+j2_render('/opt/madcore/bin/templates/kub_replication_controller_template_with_volume.yaml',
           kub_config_path + 'rc.yaml', data_rc)
 
 data_srv = {
@@ -67,7 +67,7 @@ data_srv = {
     'rc_name': app_name,
     'namespace': namespace
 }
-j2_render('/opt/controlbox/bin/templates/offlineimap_kub_service_template.yaml', kub_config_path + 'svc.yaml', data_srv)
+j2_render('/opt/madcore/bin/templates/offlineimap_kub_service_template.yaml', kub_config_path + 'svc.yaml', data_srv)
 
 print(run_cmd("kubectl create -f %s" % kub_config_path))
 
@@ -82,7 +82,7 @@ data_conf = {
     'volume_mount_path': volume_mount_path,
 }
 
-j2_render('/opt/controlbox/bin/templates/offlineimap_config.j2', offlineimap_config_path, data_conf)
+j2_render('/opt/madcore/bin/templates/offlineimap_config.j2', offlineimap_config_path, data_conf)
 pod_name = get_pod(app_name, namespace, wait_until_created=True)
 copy_file_to_pod(pod_name, offlineimap_config_path, '~/.offlineimaprc', namespace)
 print(execute_cmd_on_pod(pod_name, 'offlineimap', namespace))

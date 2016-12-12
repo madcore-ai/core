@@ -13,7 +13,7 @@ echo “kubernetes-dashboard confirmed.”
 ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 
 mkdir -p /opt/heapster
-pushd /opt/controlbox/heapster/
+pushd /opt/madcore/heapster/
    cat heapster-controller.yaml | sed -e "s/\${ip}/${ip}/" > /opt/heapster/heapster-controller.yaml
    cp grafana-service.yaml /opt/heapster/grafana-service.yaml
    cp influxdb-grafana-controller.yaml /opt/heapster/influxdb-grafana-controller.yaml

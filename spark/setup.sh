@@ -14,7 +14,7 @@ pushd /tmp
     tar -xf spark-bin.tgz -C /opt/spark/spark-bin --strip-components 1
 popd
 
-pushd /opt/controlbox/spark/
+pushd /opt/madcore/spark/
     cp namespace-spark-cluster.yaml /opt/spark/namespace-spark-cluster.yaml
     cp spark-master-controller.yaml /opt/spark/spark-master-controller.yaml
     cp spark-master-service.yaml /opt/spark/spark-master-service.yaml

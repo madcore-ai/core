@@ -5,11 +5,11 @@ if [[ -z $HOSTNAME_AWS ]]; then
 fi
 mkdir -p /opt/haproxy
 chown jenkins /opt/haproxy
-cat /opt/controlbox/haproxy/haproxy.cfg.template | sed -e "s/\hostname_tmpl/${HOSTNAME_AWS}/" > /opt/haproxy/haproxy.cfg
+cat /opt/madcore/haproxy/haproxy.cfg.template | sed -e "s/\hostname_tmpl/${HOSTNAME_AWS}/" > /opt/haproxy/haproxy.cfg
 sudo service haproxy stop
 sudo sh -c 'mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.old'
 sudo sh -c 'rm /etc/default/haproxy'
-sudo sh -c 'cp /opt/controlbox/haproxy/haproxy /etc/default/haproxy'
+sudo sh -c 'cp /opt/madcore/haproxy/haproxy /etc/default/haproxy'
 sudo sh -c 'ln -s /opt/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg'
 sudo service haproxy start
 sudo chown -R jenkins /opt/haproxy

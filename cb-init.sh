@@ -5,12 +5,12 @@
 
 sudo echo ENV=AWS >> /etc/environment
 
-# PRECONFIGURE CONTROLBOX
+# PRECONFIGURE madcore
 sudo apt-get update
 sudo apt-get install git -y
-sudo mkdir -p /opt/controlbox
-sudo chown ubuntu:ubuntu /opt/controlbox
-git clone https://bitbucket.org/ronaanimation/controlbox.git /opt/controlbox
-sudo chmod +x /opt/controlbox/cb-install.sh
-sudo "/opt/controlbox/cb-install.sh"
+sudo mkdir -p /opt/madcore
+sudo chown ubuntu:ubuntu /opt/madcore
+git clone https://github.com/madcore-ai/core.git /opt/madcore
+sudo chmod +x /opt/madcore/cb-install.sh
+sudo "/opt/madcore/cb-install.sh"
 

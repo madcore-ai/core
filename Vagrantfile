@@ -11,12 +11,12 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 9090, host: 9090
   config.vm.network "forwarded_port", guest: 4040, host: 4040
 
-# config.vm.synced_folder "/Users/polfilm/git_df/controlbox", "/opt/controlbox"
+# config.vm.synced_folder "/Users/polfilm/git_df/madcore", "/opt/madcore"
 
   config.vm.provider "virtualbox" do |vb|
      vb.name = "xenial2"
      vb.memory = "6144"
   end
 
-  config.vm.provision "shell", path: "https://bitbucket.org/ronaanimation/controlbox/raw/development/cb-init-vagrant.sh"
+  config.vm.provision "shell", path: "https://raw.githubusercontent.com/madcore-ai/core/development/cb-init-vagrant.sh"
 end

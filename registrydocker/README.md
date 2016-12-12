@@ -1,5 +1,5 @@
 Steps for Docker Registry Start .
-1.First chanage directory to /opt/controlbox/registrydocker
+1.First chanage directory to /opt/madcore/registrydocker
 2.Run sudo bash setup.sh  (this will start docker registry )
 3.check Docker registry is running or not  using docker ps 
 

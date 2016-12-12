@@ -36,7 +36,7 @@ subjectAltName = @SAN
 
 
 [ SAN ]
-subjectAltName=DNS:controlbox.$SERVER, DNS:grafana.$SERVER, DNS:influxdb.$SERVER, DNS:jenkins.$SERVER, DNS:kubeapi.$SERVER, DNS:kubedash.$SERVER" > /etc/pki/tls/certs/openssl.cnf
+subjectAltName=DNS:madcore.$SERVER, DNS:grafana.$SERVER, DNS:influxdb.$SERVER, DNS:jenkins.$SERVER, DNS:kubeapi.$SERVER, DNS:kubedash.$SERVER" > /etc/pki/tls/certs/openssl.cnf
 
 pushd /etc/pki/tls/certs
     sudo openssl req -nodes -newkey rsa:2048 -keyout server.key -out server.csr -config openssl.cnf -sha256 -batch -reqexts SAN

@@ -8,7 +8,7 @@ job('df.redis.token') {
     
     steps {
         def command = """#!/bin/bash
-pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
+pushd /var/lib/jenkins/workspace/seed-dsl/madcore/jenkins
     bash df.redis.token.sh
 popd
 """

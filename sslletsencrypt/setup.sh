@@ -5,7 +5,7 @@ email=devopsfactory@styk.tv
 
 sudo apt-get install letsencrypt -y
 
-/opt/controlbox/sslselfsigned/generate_CSR.sh
+/opt/madcore/sslselfsigned/generate_CSR.sh
 
 pushd /etc/pki/tls/certs
     openssl req -inform pem -outform der -in server.csr -out server.der

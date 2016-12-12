@@ -2,7 +2,7 @@ job('madcore.selftest.grafana') {
     wrappers { preBuildCleanup() }
     steps {
         def command = """#!/bin/bash
-	pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
+	pushd /var/lib/jenkins/workspace/seed-dsl/madcore/jenkins
 	    bash madcore_selftest_grafana.sh
             CODE=\$?
             if [[ \$CODE -ne 0 ]]; then

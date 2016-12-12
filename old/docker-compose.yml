@@ -5,4 +5,4 @@ registry:
   environment:
     DIR: /opt/dockerstorage
   volumes:
-    - /opt/controlbox:/opt/dockerstorage
+    - /opt/madcore:/opt/dockerstorage

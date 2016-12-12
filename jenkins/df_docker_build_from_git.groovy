@@ -9,7 +9,7 @@ job('df_docker_build_from_git') {
     }
     steps {
         def command = """#!/bin/bash
-pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
+pushd /var/lib/jenkins/workspace/seed-dsl/madcore/jenkins
     bash df_docker_build_from_git.sh
 popd
 """
