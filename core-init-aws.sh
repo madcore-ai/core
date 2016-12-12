@@ -1,7 +1,7 @@
 
 #!/bin/bash -v
-# Madcore Pre Configure
-# Maintained by Peter Styk (humans@madcore.ai)
+#  2016 Madcore Ltd (c)
+# Maintained by Peter Styk (devopsfactory@styk.tv)
 
 sudo echo ENV=AWS >> /etc/environment
 
