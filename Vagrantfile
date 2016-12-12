@@ -18,5 +18,5 @@ Vagrant.configure(2) do |config|
      vb.memory = "6144"
   end
 
-  config.vm.provision "shell", path: "https://raw.githubusercontent.com/madcore-ai/core/development/cb-init-vagrant.sh"
+  config.vm.provision "shell", path: "https://raw.githubusercontent.com/madcore-ai/core/development/core-init-vagrant.sh"
 end
