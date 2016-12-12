@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+branch = ENV.has_key?('MADCORE_DEV_BRANCH') ? ENV['MADCORE_DEV_BRANCH'] : "development"
+
 Vagrant.configure(2) do |config|
   config.vm.box = "xenial2"
   config.vm.hostname = "xenial2"
@@ -18,5 +20,5 @@ Vagrant.configure(2) do |config|
      vb.memory = "6144"
   end
 
-  config.vm.provision "shell", path: "https://raw.githubusercontent.com/madcore-ai/core/development/core-init-vagrant.sh"
+  config.vm.provision "shell", path: "https://raw.githubusercontent.com/madcore-ai/core/#{branch}/core-init-vagrant.sh"
 end
