@@ -1,22 +1,27 @@
+from __future__ import print_function
 import template
+import argparse
+import json
 
-name = 'testschedule'
-s_mo = '100000000001111110000000'
-s_tu = '000000000001111110000000'
-s_we = '000000000000000000001111'
-s_th = '111111000000000000000000'
-s_fr = '000000000000000000000000'
-s_sa = '000000000000000000000000'
-s_su = '000000000000000000000001'
-region = 'eu-west-1'
-instanceslist = 'i-39dc50dd,i-4d9b3ac7'
-enabled = True
+OUTPUT_TEMPLATES_DIR = '/opt/jenkins/schedules'
 
 
+def parse_args():
+    """
+    Parse arguments for input params
+    """
+
+    parser = argparse.ArgumentParser(prog="Jenkins Scheduler Generator")
+
+    parser.add_argument('-j', '--json', required=True, help='Json input with scheduler data')
+    parser.add_argument('-ot', '--out_templates_dir', default=OUTPUT_TEMPLATES_DIR,
+                        help='Directory to store templates')
+    parser.add_argument('-d', '--debug', default=False, action='store_true')
+
+    return parser.parse_args()
 
 
 class Cycle:
-
     mon = None
     tue = None
     wed = None
@@ -63,13 +68,13 @@ class Cycle:
 
     def verify_day(self, day):
         if len(day) != 24:
-            raise "Day not 24 h."
+            raise Exception("Day not 24 h.")
         return day
 
     def get_week(self):
         return self.week
 
-    def get_week_day_ints (self, index):
+    def get_week_day_ints(self, index):
         i_day_of_week = (index / 24) + 1
         i_hour_of_day = index % 24
         i_sched = self.get_week()[index]
@@ -79,12 +84,24 @@ class Cycle:
         if index is 0:
             index = 167
         else:
-            index = index-1
+            index -= 1
         return self.get_week_day_ints(index)
 
-c = Cycle(s_mo, s_tu, s_we, s_th, s_fr, s_sa, s_su)
-for x in c.scheds_all:
-    print x
 
-template = template.Template(name, c)
-template.generate_dsl_schedule()
+if __name__ == '__main__':
+    args = parse_args()
+    input_data = json.loads(args.json)
+
+    c = Cycle(input_data['s_mo'], input_data['s_tu'], input_data['s_we'], input_data['s_th'], input_data['s_fr'],
+              input_data['s_sa'], input_data['s_su'])
+
+    if args.debug:
+        for x in c.scheds_all:
+            print(x)
+
+    if isinstance(input_data['instances_list'], list):
+        input_data['instances_list'] = ','.join(input_data['instances_list'])
+
+    tmpl_data = {"region": input_data['region'], 'instances_list': input_data['instances_list']}
+    template = template.Template(input_data['name'], c)
+    template.generate_dsl_schedule(args.out_templates_dir, tmpl_data)
