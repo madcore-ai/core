@@ -7,7 +7,7 @@ job('madcore.schedule.{{name}}.start') {
     }
     steps {
         def command = """#!/bin/bash
-python /opt/controlbox/bin/instance.py -r {{region}} -il {{instances_list}} -a start
+python /opt/madcore/bin/instance.py -r {{region}} -il {{instances_list}} -a start
 """
         shell(command)
     }

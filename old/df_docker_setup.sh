@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /opt/controlbox
+cd /opt/madcore
 docker-compose up &

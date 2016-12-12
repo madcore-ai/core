@@ -15,7 +15,7 @@ echo "OAUTH2_CLIENT_SECRET: '\$OAUTH2_CLIENT_SECRET'"
 echo "OAUTH2_REFRESH_TOKEN: '\$OAUTH2_REFRESH_TOKEN'"
 echo "APP_NAME: '\$APP_NAME'"
 
-    python /opt/controlbox/bin/deploy_offlineimap.py "\$REMOTE_USER" "\$OAUTH2_CLIENT_ID" "\$OAUTH2_CLIENT_SECRET" "\$OAUTH2_REFRESH_TOKEN" "\$APP_NAME"
+    python /opt/madcore/bin/deploy_offlineimap.py "\$REMOTE_USER" "\$OAUTH2_CLIENT_ID" "\$OAUTH2_CLIENT_SECRET" "\$OAUTH2_REFRESH_TOKEN" "\$APP_NAME"
 """
         shell(command)
     }

@@ -50,7 +50,7 @@ hab pkg binlink core/hab-sup hab-sup
 hab pkg binlink core/redis redis-cli
 hab pkg binlink core/hab-depot hab-depot
 hab pkg binlink core/hab-director hab-director
-/opt/controlbox/registryhabitat/setup.sh
+/opt/madcore/registryhabitat/setup.sh
 sleep 10
 pkill -f hab
 sleep 10
@@ -58,29 +58,29 @@ rm -rf /hab/svc/redis/data/dump.rdb
 cp /opt/backup/redis/dump.rdb /hab/svc/redis/data/dump.rdb
 systemctl start habitat-depot
 
-pushd /opt/controlbox
+pushd /opt/madcore
     git pull
 popd
 
 # Docker registry
-/opt/controlbox/registrydocker/setup.sh
+/opt/madcore/registrydocker/setup.sh
 docker rm -f registrydocker_registry_1
 mv /opt/backup/dockerstorage /opt/dockerstorage
 docker stop registrydocker_registry_1
 systemctl start docker-compose
 
 # start kubernetes
-/opt/controlbox/kubernetes/setup.sh
+/opt/madcore/kubernetes/setup.sh
 
 # start heapster
-/opt/controlbox/heapster/setup.sh
+/opt/madcore/heapster/setup.sh
 
 # start spark
-/opt/controlbox/spark/setup.sh
+/opt/madcore/spark/setup.sh
 
 #restore certs
 cp -R /opt/backup/certs /opt/certs
 
 # start haproxy
 mkdir -p /opt/haproxy
-/opt/controlbox/bin/haproxy_get_ssl.py yes
+/opt/madcore/bin/haproxy_get_ssl.py yes

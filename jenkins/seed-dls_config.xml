@@ -14,12 +14,12 @@
   <builders>
     <hudson.tasks.Shell>
       <command>#!/bin/bash 
-pushd /opt/controlbox
+pushd /opt/madcore
     git pull
 popd</command>
     </hudson.tasks.Shell>
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.51">
-      <targets>controlbox/jenkins/**/*.groovy</targets>
+      <targets>madcore/jenkins/**/*.groovy</targets>
       <usingScriptText>false</usingScriptText>
       <ignoreExisting>false</ignoreExisting>
       <ignoreMissingFiles>false</ignoreMissingFiles>

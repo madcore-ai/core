@@ -1,4 +1,4 @@
-job('df.redis.owner.update') {
+job('madcore.redis.owner.update') {
     parameters {
         stringParam('Hostname', '', '')
         stringParam('Email', '', '')
@@ -16,7 +16,7 @@ echo "OrganizationalUnitName: '\$OrganizationalUnitName'"
 echo "LocalityName: '\$LocalityName'"
 echo "Country: '\$Country'"
 
-    python /opt/controlbox/bin/owner_update_redis.py "\$Hostname" "\$Email" "\$OrganizationName" "\$OrganizationalUnitName" "\$LocalityName" "\$Country"
+    python /opt/madcore/bin/owner_update_redis.py "\$Hostname" "\$Email" "\$OrganizationName" "\$OrganizationalUnitName" "\$LocalityName" "\$Country"
 """
         shell(command)
     }

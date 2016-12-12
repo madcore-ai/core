@@ -6,7 +6,7 @@ ln -s /opt/bin/kubectl /usr/local/bin/kubectl
 #ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 
 sudo chmod +x /usr/local/bin/docker-compose
-pushd /opt/controlbox/kubernetes/cluster/
+pushd /opt/madcore/kubernetes/cluster/
     sudo mkdir -p /opt/docker-compose
     cp docker-compose.service /opt/docker-compose/docker-compose-kubernetes.service
     ln -s /opt/docker-compose/docker-compose-kubernetes.service /etc/systemd/system/docker-compose-kubernetes.service

@@ -4,6 +4,7 @@ import os
 from utils import run_cmd
 
 NAMESPACE = 'spark-cluster'
+SPARK_PATH = '/opt/spark/spark-bin'
 
 # TODO@geo validate this
 sparks_args = sys.argv[1]
@@ -13,12 +14,11 @@ app_args = sys.argv[3]
 
 example_subfold = None
 if app_file_name.endswith('.py'):
-    example_subfold = 'python'
+    example_file_path = os.path.join(SPARK_PATH, 'examples/src/main/python', app_file_name)
 else:
-    example_subfold = 'java'
+    # Load jar files with examples
+    example_file_path = os.path.join(SPARK_PATH, 'lib', app_file_name)
 
-example_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../spark/benchmark', example_subfold,
-                                 app_file_name)
 spark_example_file_path = '/tmp/%s' % app_file_name
 
 zepplin_controller = run_cmd(

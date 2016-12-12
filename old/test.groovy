@@ -8,7 +8,7 @@ job('test_job') {
     }
     steps {
         def command = """#!/bin/bash
-pushd /var/lib/jenkins/workspace/seed-dsl/controlbox
+pushd /var/lib/jenkins/workspace/seed-dsl/madcore
     bash test.sh
 popd
 """

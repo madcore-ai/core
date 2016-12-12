@@ -1,4 +1,4 @@
-job('df.deploy.kubernetes') {
+job('madcore.deploy.kubernetes') {
     wrappers { preBuildCleanup() }
     parameters {
         stringParam('REPO_URL', '', '')
@@ -13,7 +13,7 @@ echo "REPO_BRANCH: '\$REPO_BRANCH'"
 echo "APPNAME: '\$APPNAME'"
 echo "PORT: '\$PORT'"
 
-    python /opt/controlbox/bin/deploy_kubernetes.py "\$REPO_URL" "\$APPNAME" "\$PORT" "\$REPO_BRANCH"
+    python /opt/madcore/bin/deploy_kubernetes.py "\$REPO_URL" "\$APPNAME" "\$PORT" "\$REPO_BRANCH"
 """
         shell(command)
     }

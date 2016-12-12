@@ -8,7 +8,7 @@ job('madcore.schedule.set') {
     steps {
         def command = """#!/bin/bash
 echo "SchedulerData: '\$SchedulerData'"
-python /opt/controlbox/bin/schgen.py --json "\$SchedulerData" -d
+python /opt/madcore/bin/schgen.py --json "\$SchedulerData" -d
 """
         shell(command)
     }

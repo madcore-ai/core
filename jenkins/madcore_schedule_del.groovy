@@ -4,7 +4,7 @@ job('madcore.schedule.del') {
     }    
     steps {
         def command = """#!/bin/bash
-pushd /opt/controlbox/jenkins/
+pushd /opt/madcore/jenkins/
     bash madcore_schedule_del.sh
 popd
 """

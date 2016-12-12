@@ -1,4 +1,4 @@
-job('df.aws.instance') {
+job('madcore.aws.instance') {
     parameters {
         stringParam('InstanceId', '', '')
         stringParam('StateName', '', '')        
@@ -8,8 +8,8 @@ job('df.aws.instance') {
     }
     steps {
         def command = """#!/bin/bash
-pushd /var/lib/jenkins/workspace/seed-dsl/controlbox/jenkins
-    bash df_aws_instance.sh
+pushd /var/lib/jenkins/workspace/seed-dsl/madcore/jenkins
+    bash madcore_aws_instance.sh
 popd
 """
         shell(command)

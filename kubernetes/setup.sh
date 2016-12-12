@@ -5,7 +5,7 @@ chmod +x /opt/bin/kubectl
 ln -s /opt/bin/kubectl /usr/local/bin/kubectl
 ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 sudo chmod +x /usr/local/bin/docker-compose
-pushd /opt/controlbox/kubernetes/
+pushd /opt/madcore/kubernetes/
     cp docker-compose.service /etc/systemd/system/docker-compose-kubernetes.service
     mkdir -p /opt/kubernetes
     cat docker-compose.yml.template | sed -e "s/\${ip}/${ip}/" > /opt/kubernetes/docker-compose.yml

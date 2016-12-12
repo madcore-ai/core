@@ -7,7 +7,7 @@ job('madcore.schedule.{{name}}.stop') {
     }
     steps {
         def command = """#!/bin/bash
-python /opt/controlbox/bin/instance.py -r {{region}} -il {{instances_list}} -a stop
+python /opt/madcore/bin/instance.py -r {{region}} -il {{instances_list}} -a stop
 """
         shell(command)
     }
