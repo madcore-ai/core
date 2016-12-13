@@ -7,6 +7,7 @@ ln -s /opt/bin/kubectl /usr/local/bin/kubectl
 fi
 
 mkdir -p /opt/spark
+sudo chown -R jenkins:jenkins /opt/spark
 # install spark on the machine
 mkdir -p /opt/spark/spark-bin
 pushd /tmp
