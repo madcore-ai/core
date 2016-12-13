@@ -7,7 +7,7 @@ sudo pip install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootst
 
 # TODO make this configurable
 sudo /usr/local/bin/cfn-init \
-               --stack Madcore-Cluster \
+               --stack MADCORE-Cluster \
                --resource MadcoreClusterAutoScalingLaunchConfiguration \
                --configsets ClusterConfig \
                --region eu-west-1
