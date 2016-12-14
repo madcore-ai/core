@@ -4,9 +4,6 @@ job('madcore_docker_build_from_git') {
         stringParam('REPO_HTTPS', '', '')  
         stringParam('DOCKER_NAME_LABEL', '', '') 
     }   
-    triggers {
-        cron("@minutes")
-    }
     steps {
         def command = """#!/bin/bash
 pushd /var/lib/jenkins/workspace/seed-dsl/madcore/jenkins
