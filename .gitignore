@@ -2,4 +2,4 @@
 .core-init.sh.swp
 madcore.iml
 
-.py[co]
+*.py[co]
