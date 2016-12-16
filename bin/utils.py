@@ -111,6 +111,15 @@ def docker_build_from_repo(repo_url, app_name, repo_dest, branch_name='master', 
     run_cmd("docker push {0}/{1}:image".format(docker_server, app_name))
 
 
-def kubectl_create_secret():
+def kubectl_create_secret_for_docker_registry():
     run_cmd("kubectl create secret docker-registry {0} --docker-server={1} --docker-username={2} --docker-password={3} "
             "--docker-email=test@test.com".format(registry_secret, docker_server, registry_user, registry_pass))
+
+
+def create_secrete(secrets, app_name, namespace):
+    if secrets:
+        secrets = secrets.split(';')
+        kub_secrets = ['--from-literal={0}'.format(i) for i in secrets]
+        # create secrete for
+        run_cmd("kubectl create secret generic {0}-secret {1} --namespace={2}".format(app_name, ' '.join(kub_secrets),
+                                                                                      namespace))
