@@ -20,9 +20,9 @@ spec:
         image: {{docker_server}}/{{image}}
         volumeMounts:
         - mountPath: {{volume_mount_path}}
-          name: offlineimap-data-path
+          name: {{name}}
       volumes:
-      - name: offlineimap-data-path
+      - name: {{name}}
         hostPath:
           path: {{volume_host_path}}
       imagePullSecrets:
