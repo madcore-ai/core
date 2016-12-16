@@ -47,7 +47,7 @@ run_cmd("kubectl create secret docker-registry {0} --docker-server={1} --docker-
 data_ns = {
     'namespace': namespace
 }
-j2_render('/opt/madcore/bin/templates/offlineimap-namespace.yaml', kub_config_path + 'ns.yaml', data_ns)
+j2_render('/opt/madcore/bin/templates/namespace.yaml', kub_config_path + 'ns.yaml', data_ns)
 
 data_rc = {
     'name': app_name,

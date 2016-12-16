@@ -19,11 +19,17 @@ spec:
       - name: {{name}}
         image: {{docker_server}}/{{image}}
         volumeMounts:
-        - mountPath: {{volume_mount_path}}
-          name: {{name}}
+        - name: {{name}}
+          mountPath: {{volume_mount_path}}
+        - name: {{name}}-secret-volume
+          readOnly: true
+          mountPath: /opt/secrets/{{name}}
       volumes:
       - name: {{name}}
         hostPath:
           path: {{volume_host_path}}
+      - name: {{name}}-secret-volume
+        secret:
+          secretName: {{name}}-secret
       imagePullSecrets:
       - name: {{registry_secret}}
