@@ -85,6 +85,7 @@ sudo bash "/opt/madcore/registrydocker/setup.sh"
 sudo bash "/opt/madcore/kubernetes/setup.sh"
 sudo bash "/opt/madcore/registryhabitat/setup.sh"
 sudo bash "/opt/madcore/heapster/setup.sh"
+sudo bash "/opt/madcore/helm/setup.sh"
 
 # Run only if we are on VAGRANT env
 if [[ "$ENV" == "VAGRANT" ]]; then
