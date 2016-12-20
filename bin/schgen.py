@@ -91,7 +91,6 @@ class Cycle:
 if __name__ == '__main__':
     args = parse_args()
     input_data = json.loads(args.json)
-
     c = Cycle(input_data['s_mo'], input_data['s_tu'], input_data['s_we'], input_data['s_th'], input_data['s_fr'],
               input_data['s_sa'], input_data['s_su'])
 
@@ -102,6 +101,7 @@ if __name__ == '__main__':
     if isinstance(input_data['instances_list'], list):
         input_data['instances_list'] = ','.join(input_data['instances_list'])
 
-    tmpl_data = {"region": input_data['region'], 'instances_list': input_data['instances_list']}
+    tmpl_data = {"region": input_data['region'], 'instances_list': input_data['instances_list'],
+                 "disabled": str(not input_data['enabled']).lower()}
     template = template.Template(input_data['name'], c)
     template.generate_dsl_schedule(args.out_templates_dir, tmpl_data)
