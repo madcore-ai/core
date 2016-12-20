@@ -56,22 +56,26 @@ sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://1
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin workflow-aggregator  -deploy" jenkins
 
 # CONFIGURE AND RUN 1ST SEED JOB (WILL CREATE ALL OTHER JOBS FROM REPO)
-sudo su -c "mkdir -p /var/lib/jenkins/jobs/seed-dsl" jenkins
-sudo su -c "mkdir -p /var/lib/jenkins/workspace/seed-dsl" jenkins
-sudo su -c "ln -s /opt/madcore /var/lib/jenkins/workspace/seed-dsl/madcore" jenkins
+SEED_DSL_MASTER_JOB_NAME="madcore.jenkins.dsl.seed.master"
+sudo su -c "mkdir -p /var/lib/jenkins/jobs/${SEED_DSL_MASTER_JOB_NAME}" jenkins
+sudo su -c "mkdir -p /var/lib/jenkins/workspace/${SEED_DSL_MASTER_JOB_NAME}" jenkins
+sudo su -c "ln -s /opt/madcore /var/lib/jenkins/workspace/${SEED_DSL_MASTER_JOB_NAME}/madcore" jenkins
 # CREATE JENKINS SCHEDULE FOLDER
 sudo su -c "mkdir -p /opt/jenkins/schedules" jenkins
 # CREATE A DUMMY JOB SO THAT DSL PLUGIN DOES NOT ENCOUNTER EMPTY WORKSPACE
 sudo su -c "cp /opt/madcore/bin/templates/my_dummy_scheduler.groovy /opt/jenkins/schedules/" jenkins
-sudo su -c "cp /var/lib/jenkins/workspace/seed-dsl/madcore/jenkins/seed-dls_config.xml /var/lib/jenkins/jobs/seed-dsl/config.xml" jenkins
+sudo su -c "cp /var/lib/jenkins/workspace/${SEED_DSL_MASTER_JOB_NAME}/madcore/jenkins/seed-dls_config.xml /var/lib/jenkins/jobs/${SEED_DSL_MASTER_JOB_NAME}/config.xml" jenkins
 sudo service jenkins restart
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 
-sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build seed-dsl" jenkins
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build ${SEED_DSL_MASTER_JOB_NAME}" jenkins
 sudo mkdir -p /opt/certs
 chown -R jenkins /opt/certs
 sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/bin/haproxy_get_ssl.py" > /etc/sudoers.d/jenkins
 sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/jenkins/madcore_reinstall.sh" >> /etc/sudoers.d/jenkins
+
+# PLUGINS SETUP
+sudo su -c "mkdir -p /opt/plugins" jenkins
 
 # PROXY,REGISTRIES, KUBERNETES
 
