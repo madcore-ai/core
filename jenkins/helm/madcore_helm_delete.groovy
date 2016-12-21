@@ -1,6 +1,4 @@
 job('madcore.helm.delete') {
-   customWorkspace('/opt/plugins/charts')
-
     parameters {
 	    stringParam('RELEASE_NAME', '', '')
     }

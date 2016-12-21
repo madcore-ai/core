@@ -1,6 +1,4 @@
 job('madcore.helm.upgrade') {
-   customWorkspace('/opt/plugins/charts')
-
     parameters {
 	    stringParam('RELEASE_NAME', '', '')
 	    stringParam('CHART', '', '')
@@ -9,7 +7,7 @@ job('madcore.helm.upgrade') {
     steps {
         def command = """#!/bin/bash
 pushd /opt/madcore/helm
-    bash upgrade.sh "\$RELEASE_NAME" "\$CHART"
+    bash upgrade.sh "\$RELEASE_NAME" /opt/plugins/charts/"\$CHART"
 popd
 """
         shell(command)

@@ -1,6 +1,4 @@
 job('madcore.helm.install') {
-   customWorkspace('/opt/plugins/charts')
-
     parameters {
 	    stringParam('CHART', '', '')
 	    stringParam('RELEASE_NAME', '', '')
@@ -9,7 +7,7 @@ job('madcore.helm.install') {
     steps {
         def command = """#!/bin/bash
 pushd /opt/madcore/helm
-    bash install.sh "\$CHART" --name "\$RELEASE_NAME"
+    bash install.sh /opt/plugins/charts/"\$CHART" --name "\$RELEASE_NAME"
 popd
 """
         shell(command)

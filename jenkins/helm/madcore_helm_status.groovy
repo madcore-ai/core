@@ -1,6 +1,4 @@
 job('madcore.helm.status') {
-   customWorkspace('/opt/plugins/charts')
-
     parameters {
 	    stringParam('RELEASE_NAME', '', '')
     }
