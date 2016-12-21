@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-helm delete "$@"
+helm delete --purge "$@"
