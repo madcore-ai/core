@@ -1,4 +1,5 @@
 job('madcore.docker.image.build') {
+    wrappers { preBuildCleanup() }
     parameters {
         stringParam('REPO_URL', '', '')
 	    stringParam('APP_NAME', '', '')
