@@ -6,7 +6,7 @@ job('madcore.docker.registry.status') {
     steps {
         def command = """#!/bin/bash
 pushd /opt/madcore/bin
-    # TODO
+    echo \$(curl -k https://root:madcore@localhost:5000/v2/_catalog)
 popd
 """
         shell(command)
