@@ -92,23 +92,29 @@ def execute_cmd_on_pod(pod_name, cmd, namespace='default'):
         pod_name, namespace, cmd))
 
 
-def docker_build_from_repo(repo_url, app_name, repo_dest, branch_name='master', repo_folder=None):
+def docker_push(app_name):
+    run_cmd("docker tag {0} {1}/{0}:image".format(app_name, docker_server))
+    run_cmd("docker login -u{0} -p{1} {2}".format(registry_user, registry_pass, docker_server))
+    run_cmd("docker push {0}/{1}:image".format(docker_server, app_name))
+
+
+def docker_pull(app_name):
+    run_cmd("docker pull {0}/{1}:image".format(docker_server, app_name))
+
+
+def docker_build_from_repo(repo_url, app_name, repo_dest, branch_name='master', dockerfile_path=None):
     """Clone a repo, cd to specific folder if needed and build docker from there.
     Also put image into local registry
     """
 
     run_cmd("git clone -b {0} {1} {2}".format(branch_name, repo_url, repo_dest))
-    if repo_folder:
-        build_path = os.path.join(repo_dest, repo_folder)
+    if dockerfile_path:
+        build_path = os.path.join(repo_dest, dockerfile_path)
     else:
         build_path = repo_dest
 
     # Crete image
     run_cmd("docker build -t {0} {1}".format(app_name, build_path))
-    # Push image to local docker registry
-    run_cmd("docker tag {0} {1}/{0}:image".format(app_name, docker_server))
-    run_cmd("docker login -u{0} -p{1} {2}".format(registry_user, registry_pass, docker_server))
-    run_cmd("docker push {0}/{1}:image".format(docker_server, app_name))
 
 
 def kubectl_create_secret_for_docker_registry():

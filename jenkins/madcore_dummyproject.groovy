@@ -1,7 +1,7 @@
 job('123madcore.test_metrics') {
     steps {
         def command = """#!/bin/bash
-pushd /var/lib/jenkins/workspace/seed-dsl/madcore/jenkins
+pushd /opt/madcore/jenkins
     bash dummyproject.sh
 popd	    
 """	
