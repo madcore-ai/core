@@ -75,7 +75,8 @@ sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/bin/haproxy_get_ssl.py" > /e
 sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/jenkins/madcore_reinstall.sh" >> /etc/sudoers.d/jenkins
 
 # PLUGINS SETUP
-sudo su -c "mkdir -p /opt/plugins" jenkins
+sudo mkdir -p /opt/plugins
+sudo chown -R jenkins /opt/plugins
 
 # PROXY,REGISTRIES, KUBERNETES
 

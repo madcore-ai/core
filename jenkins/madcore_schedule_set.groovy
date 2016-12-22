@@ -9,7 +9,7 @@ job('madcore.schedule.set') {
         stringParam('Friday', '000000000000000000000000', '')
         stringParam('Saturday', '000000000000000000000000', '')
         stringParam('Sunday', '000000000000000000000001', '')
-        stringParam('InstanceList', 'i-39dc50dd', '')
+        stringParam('InstanceList', 'i-39dc50dd', 'Comma separated list of EC2 instances ID')
         booleanParam('IsEnabled', true, '')
     }
     steps {
