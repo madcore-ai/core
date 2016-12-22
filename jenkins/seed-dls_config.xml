@@ -28,6 +28,15 @@ popd</command>
       <lookupStrategy>JENKINS_ROOT</lookupStrategy>
     </javaposse.jobdsl.plugin.ExecuteDslScripts>
   </builders>
-  <publishers/>
+  <publishers>
+        <hudson.tasks.BuildTrigger>
+            <childProjects>madcore.jenkins.dsl.seed.plugins</childProjects>
+            <threshold>
+                <name>SUCCESS</name>
+                <ordinal>0</ordinal>
+                <color>BLUE</color>
+            </threshold>
+        </hudson.tasks.BuildTrigger>
+    </publishers>
   <buildWrappers/>
 </project>
