@@ -61,6 +61,8 @@ sudo su -c "mkdir -p /var/lib/jenkins/jobs/${SEED_DSL_MASTER_JOB_NAME}" jenkins
 sudo su -c "mkdir -p /var/lib/jenkins/workspace/${SEED_DSL_MASTER_JOB_NAME}" jenkins
 sudo su -c "ln -s /opt/madcore /var/lib/jenkins/workspace/${SEED_DSL_MASTER_JOB_NAME}/madcore" jenkins
 # CREATE JENKINS SCHEDULE FOLDER
+sudo mkdir -p /opt/jenkins
+sudo chown -R jenkins:jenkins /opt/jenkins
 sudo su -c "mkdir -p /opt/jenkins/schedules" jenkins
 # CREATE A DUMMY JOB SO THAT DSL PLUGIN DOES NOT ENCOUNTER EMPTY WORKSPACE
 sudo su -c "cp /opt/madcore/bin/templates/my_dummy_scheduler.groovy /opt/jenkins/schedules/" jenkins
