@@ -93,6 +93,6 @@ sudo bash "/opt/madcore/heapster/setup.sh"
 sudo bash "/opt/madcore/helm/setup.sh"
 
 # Run only if we are on VAGRANT env
-if [[ "$ENV" == "VAGRANT" ]]; then
-    sudo bash "/opt/madcore/spark/setup.sh" # this setup needs 15-20 min to completely finish
-fi
+##if [[ "$ENV" == "VAGRANT" ]]; then
+##    sudo bash "/opt/madcore/spark/setup.sh" # this setup needs 15-20 min to completely finish
+##fi
