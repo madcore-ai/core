@@ -1,4 +1,6 @@
-import redis, sys, os
+import redis
+import sys
+
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 i_key = "owner-info"
 Hostname = sys.argv[1]

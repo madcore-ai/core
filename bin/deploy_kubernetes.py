@@ -1,7 +1,9 @@
 from __future__ import print_function
-import os, sys, jinja2, redis, json, pycurl
+
+import sys
+
 from jinja2 import Template
-from StringIO import StringIO
+
 from utils import run_cmd
 
 ##### variables

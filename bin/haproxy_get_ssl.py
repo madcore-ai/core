@@ -1,7 +1,12 @@
 #!/usr/bin/env python  
-import redis, sys, os, json, jinja2, pycurl
-from jinja2 import Template
 from StringIO import StringIO
+
+import json
+import os
+import pycurl
+import redis
+import sys
+from jinja2 import Template
 
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 check = r_server.get("need_CSR")

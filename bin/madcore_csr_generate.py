@@ -1,4 +1,6 @@
-import redis, sys, os, json, jinja2
+import json
+import os
+import redis
 from jinja2 import Template
 
 r_server = redis.StrictRedis('127.0.0.1', db=2)

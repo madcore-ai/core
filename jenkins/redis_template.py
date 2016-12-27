@@ -1,4 +1,5 @@
-import redis, sys
+import redis
+
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 
 
