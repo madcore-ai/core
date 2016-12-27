@@ -3,10 +3,9 @@ import sys
 from utils import wait_until_pod_is_ready, get_pod, execute_cmd_on_pod
 
 app_name = sys.argv[1]
-cmd = sys.argv[2]
+namespace = sys.argv[2]
+cmd = sys.argv[3]
 
-# TODO@geo we need to make namespace consistent
-namespace = '%s-plugin' % app_name
 wait_until_pod_is_ready(namespace)
 
 pod_name = get_pod(app_name, namespace, wait_until_created=True)
