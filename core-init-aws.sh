@@ -1,4 +1,3 @@
-
 #!/bin/bash -v
 #  2016 Madcore Ltd (c)
 # Maintained by Peter Styk (devopsfactory@styk.tv)
