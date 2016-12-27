@@ -20,6 +20,3 @@ habitat         |9632. 8000, 8001, 9000, 9001
 jenkins         |          8880
 
 
-cluster/setup.sh - basic setup of cluster (no job for that) this is automatic on launch of cluster cloud formation
-spark/setup.sh - master setup of spark - madcore.spark.setup job in jenkins
-spark/cluster.sh - cluster setup of spark - madcore.spark.cluster job in jenkins
