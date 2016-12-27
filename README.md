@@ -2,6 +2,8 @@ Welcome to MadCore repo
 |
          PORT TABLES
 ----------------------------------------------
+
+[![Join the chat at https://gitter.im/madcore-ai/core](https://badges.gitter.im/madcore-ai/core.svg)](https://gitter.im/madcore-ai/core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
    SERVICE      |           PORT
 ----------------|-----------------------------
 docker registry |           5000
