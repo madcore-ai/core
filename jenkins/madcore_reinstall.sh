@@ -29,34 +29,34 @@ rm -rf /opt/kubernetes
 rm -rf /opt/spark
 
 ##delete habitat
-echo "started deleting habitat...."
-pkill -f hab
-rm -rf /var/lib/jenkins/git/habitat
-rm -rf /hab
-echo "habitat deleted"
-sleep 10
-
-
-#start new installation
-# HABITAT
-sudo su -c "mkdir -p /var/lib/jenkins/git/habitat" jenkins
-sudo su -c "git clone https://github.com/habitat-sh/habitat /var/lib/jenkins/git/habitat" jenkins
-bash /var/lib/jenkins/git/habitat/components/hab/install.sh
-hab install core/hab-sup
-hab install core/redis
-hab install core/hab-depot
-hab install core/hab-director
-hab pkg binlink core/hab-sup hab-sup
-hab pkg binlink core/redis redis-cli
-hab pkg binlink core/hab-depot hab-depot
-hab pkg binlink core/hab-director hab-director
-/opt/madcore/registryhabitat/setup.sh
-sleep 10
-pkill -f hab
-sleep 10
-rm -rf /hab/svc/redis/data/dump.rdb
-cp /opt/backup/redis/dump.rdb /hab/svc/redis/data/dump.rdb
-systemctl start habitat-depot
+#echo "started deleting habitat...."
+#pkill -f hab
+#rm -rf /var/lib/jenkins/git/habitat
+#rm -rf /hab
+#echo "habitat deleted"
+#sleep 10
+#
+#
+##start new installation
+## HABITAT
+#sudo su -c "mkdir -p /var/lib/jenkins/git/habitat" jenkins
+#sudo su -c "git clone https://github.com/habitat-sh/habitat /var/lib/jenkins/git/habitat" jenkins
+#bash /var/lib/jenkins/git/habitat/components/hab/install.sh
+#hab install core/hab-sup
+#hab install core/redis
+#hab install core/hab-depot
+#hab install core/hab-director
+#hab pkg binlink core/hab-sup hab-sup
+#hab pkg binlink core/redis redis-cli
+#hab pkg binlink core/hab-depot hab-depot
+#hab pkg binlink core/hab-director hab-director
+#/opt/madcore/registryhabitat/setup.sh
+#sleep 10
+#pkill -f hab
+#sleep 10
+#rm -rf /hab/svc/redis/data/dump.rdb
+#cp /opt/backup/redis/dump.rdb /hab/svc/redis/data/dump.rdb
+#systemctl start habitat-depot
 
 pushd /opt/madcore
     git pull

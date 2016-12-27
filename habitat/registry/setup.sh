@@ -10,14 +10,12 @@ ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 # write toml file with ip address
 # write directly to proper folder, do not ever write anything into repo folder as it will conflict later with pulls
 mkdir -p /hab/svc/hab-director
-cat /opt/madcore/registryhabitat/hab.director-madcore.toml.template  | sed -e "s/\${ip}/${ip}/" >  /hab/svc/hab-director/madcore.toml
+cat /opt/madcore/habitat/registry/hab.director-madcore.toml.template  | sed -e "s/\${ip}/${ip}/" >  /hab/svc/hab-director/madcore.toml
 
 # Service Setup
 # Copy Files to Proper Locaiton
 # Location to Copy Files into /etc/systemd/system
-cp /opt/madcore/registryhabitat/habitat-depot.service /etc/systemd/system/habitat-depot.service
-#not required
-#cp /opt/madcore/registryhabitat/madcore.toml /hab/svc/hab-director/madcore.toml
+cp /opt/madcore/habitat/registry/habitat-depot.service /etc/systemd/system/habitat-depot.service
 
 # systemd reload
 systemctl daemon-reload
