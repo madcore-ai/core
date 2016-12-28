@@ -2,7 +2,7 @@ job('madcore.selftest.habitat.depot') {
     wrappers { preBuildCleanup() }
     steps {
         def command = """#!/bin/bash
-	pushd /opt/madcore/jenkins
+	pushd /opt/madcore/jenkins/selftests
 	    bash madcore_selftest_habitat_depot.sh
 	    CODE=\$?
 	    if [[ \$CODE -ne 0 ]]; then

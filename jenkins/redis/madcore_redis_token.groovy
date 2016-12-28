@@ -8,7 +8,7 @@ job('madcore.redis.token') {
     
     steps {
         def command = """#!/bin/bash
-pushd /opt/madcore/jenkins
+pushd /opt/madcore/jenkins/redis
     bash madcore.redis.token.sh
 popd
 """

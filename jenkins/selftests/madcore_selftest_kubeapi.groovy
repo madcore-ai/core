@@ -2,7 +2,7 @@ job('madcore.selftest.kubeapi') {
     wrappers { preBuildCleanup() }
     steps {
         def command = """#!/bin/bash
-	pushd /opt/madcore/jenkins
+	pushd /opt/madcore/jenkins/selftests
 	    bash madcore_selftest_kubeapi.sh
             CODE=\$?
             if [[ \$CODE -ne 0 ]]; then
