@@ -1,9 +1,9 @@
-job('madcore.selftest.habitat.redis') {
+job('madcore.selftest.grafana') {
     wrappers { preBuildCleanup() }
     steps {
         def command = """#!/bin/bash
-	pushd /opt/madcore/jenkins
-	    bash madcore_selftest_habitat_redis.sh
+	pushd /opt/madcore/jenkins/selftests
+	    bash madcore_selftest_grafana.sh
             CODE=\$?
             if [[ \$CODE -ne 0 ]]; then
                 echo "BASH FAILED WITH POSITIVE CODE. FORCING JENKINS BASH EXIT AS -1 (TO SHOW THE FAIL)"

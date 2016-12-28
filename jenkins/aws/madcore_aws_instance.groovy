@@ -5,7 +5,7 @@ job('madcore.aws.instance') {
     }
     steps {
         def command = """#!/bin/bash
-pushd /opt/madcore/jenkins
+pushd /opt/madcore/jenkins/aws
     bash madcore_aws_instance.sh
 popd
 """
