@@ -1,6 +1,10 @@
-Welcome to MadCore repo
-|
-         PORT TABLES
+[![Join the chat at https://gitter.im/madcore-ai/core](https://badges.gitter.im/madcore-ai/core.svg)](https://gitter.im/madcore-ai/core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+
+# Welcome to Madcore Core repo
+https://wiki.madcore.ai
+
+
 ----------------------------------------------
    SERVICE      |           PORT
 ----------------|-----------------------------
@@ -16,8 +20,3 @@ habitat         |9632. 8000, 8001, 9000, 9001
 jenkins         |          8880
 
 
-cluster/setup.sh - basic setup of cluster (no job for that) this is automatic on launch of cluster cloud formation
-
-spark/setup.sh - master setup of spark - madcore.spark.setup job in jenkins
-
-spark/cluster.sh - cluster setup of spark - madcore.spark.cluster job in jenkins
