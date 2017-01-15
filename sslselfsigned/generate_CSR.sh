@@ -25,7 +25,7 @@ commonName_max = 64
 
 countryName_default = GB
 localityName_default = London
-0.organizationName_default = Madcore Ltd.
+0.organizationName_default = Rona Animation Studios
 organizationalUnitName_default = Development
 commonName_default = $SERVER
 
