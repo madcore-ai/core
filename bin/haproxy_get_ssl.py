@@ -55,9 +55,6 @@ if check == "1":
 else:
     print "Don't need new certificate"
 
-if !os.path.exists("/opt/certs/letsencrypt/0001_chain.pem"):
-    sys.exet(2)
-
 ### reconfigure haproxy
 if (check == "1") or (need_haproxy == "yes"):
 
