@@ -14,7 +14,7 @@ fi
 
 # backup cert files
 mkdir -p ${BACKUP_DIR}/certs
-cp -R /opt/certs ${BACKUP_DIR}/certs
+cp -R /opt/certs/* ${BACKUP_DIR}/certs
 
 # backup redis data
 mkdir -p ${BACKUP_DIR}/redis

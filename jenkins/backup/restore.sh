@@ -15,8 +15,9 @@ fi
 aws s3 sync s3://${S3_BUCKET_NAME}/backup ${BACKUP_DIR}
 
 if [ -d "${BACKUP_DIR}/certs" ]; then
+    rm -rfv /opt/certs/*
     # restore cert files
-    cp -R ${BACKUP_DIR}/certs /opt/certs
+    cp -R ${BACKUP_DIR}/certs/* /opt/certs
 fi
 
 if [ -d "${BACKUP_DIR}/redis" ]; then

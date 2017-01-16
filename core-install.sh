@@ -83,6 +83,9 @@ sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/jenkins/backup/restore.sh" >
 sudo mkdir -p /opt/plugins
 sudo chown -R jenkins /opt/plugins
 
+# Create  BACKUP folder
+sudo mkdir -p /opt/backup
+sudo chown -R jenkins:jenkins /opt/backup
 # PROXY,REGISTRIES, KUBERNETES
 
 sudo bash "/opt/madcore/sslselfsigned/setup.sh"
