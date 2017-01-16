@@ -3,7 +3,7 @@ job('madcore.deploy.kubernetes') {
     parameters {
         stringParam('REPO_URL', '', '')
         stringParam('REPO_BRANCH', 'master', '')
-	    stringParam('APPNAME', '', '')
+        stringParam('APPNAME', '', '')
         stringParam('PORT', '', '')
     }
     steps {
@@ -17,11 +17,4 @@ echo "PORT: '\$PORT'"
 """
         shell(command)
     }
-
-    configure { project ->
-	project / 'InfluxDbPublisher' << 'jenkinsci.plugins.influxdb.InfluxDbPublisher plugin="influxdb@1.8.1"' {
-    	    selectedTarget 'http://127.0.0.1:8086,jenkins_logs'
-      }
-    }
-
 }

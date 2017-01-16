@@ -1,4 +1,4 @@
-#!/usr/bin/env python  
+#!/usr/bin/env python
 import redis, sys, os, json, jinja2, pycurl
 from jinja2 import Template
 from StringIO import StringIO
@@ -45,6 +45,9 @@ if check == "1":
         request = (
         "cd /opt/certs/letsencrypt && letsencrypt certonly --csr server.der --standalone --non-interactive --agree-tos --email %s --standalone-supported-challenges http-01" % email)
         os.system(request)
+        cert_file = os.path.exists("/opt/certs/letsencrypt/0001_chain.pem")
+        if cert_file == False:
+            sys.exit(2)
         os.system(" cd /opt/certs/letsencrypt && cat 0001_chain.pem ../server.key > ../server.bundle.pem")
         os.system("rm -rf /opt/certs/letsencrypt")
         r_server.set("need_CSR", "0")
