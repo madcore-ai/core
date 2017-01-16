@@ -27,4 +27,4 @@ if check == "1":
     os.system(
         "openssl req -nodes -newkey rsa:2048 -keyout /opt/certs/server.key -out  /opt/certs/server.csr -config /opt/certs/openssl.cnf -sha256 -batch -reqexts SAN")
 else:
-    print "Dont need CSR"
+    print "Don't need CSR"
