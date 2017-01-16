@@ -76,11 +76,16 @@ chown -R jenkins /opt/certs
 sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/bin/haproxy_get_ssl.py" > /etc/sudoers.d/jenkins
 sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/jenkins/madcore_reinstall.sh" >> /etc/sudoers.d/jenkins
 sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/spark/setup.sh" >> /etc/sudoers.d/jenkins
+sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/jenkins/backup/backup.sh" >> /etc/sudoers.d/jenkins
+sudo echo "jenkins ALL=(ALL) NOPASSWD: /opt/madcore/jenkins/backup/restore.sh" >> /etc/sudoers.d/jenkins
 
 # PLUGINS SETUP
 sudo mkdir -p /opt/plugins
 sudo chown -R jenkins /opt/plugins
 
+# Create  BACKUP folder
+sudo mkdir -p /opt/backup
+sudo chown -R jenkins:jenkins /opt/backup
 # PROXY,REGISTRIES, KUBERNETES
 
 sudo bash "/opt/madcore/sslselfsigned/setup.sh"
