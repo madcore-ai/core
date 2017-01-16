@@ -22,10 +22,7 @@ pipelineJob('madcore.registration') {
 		    stage 'generate csr'
 		    build 'madcore.ssl.csr.generate'
 		    stage 'get certificate and reconfigure haproxy'
-		    build 'madcore.ssl.letsencrypt.getandinstall'
-		    stage('backup data') {
-		        build job: 'madcore.backup', parameters: [string(name: 'S3BucketName', value: params.S3BucketName)]
-		    }
+		    build job: 'madcore.ssl.letsencrypt.getandinstall', parameters: [string(name: 'S3BucketName', value: params.S3BucketName)]
             }
 	    """.stripIndent())
 	    }
