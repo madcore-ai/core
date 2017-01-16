@@ -6,6 +6,7 @@ pipelineJob('madcore.registration') {
         stringParam('OrganizationalUnitName', '', '')
         stringParam('LocalityName', '', '')
         stringParam('Country', '', '')
+        stringParam('S3BucketName', '', '')
     }
 
     definition {
@@ -22,7 +23,10 @@ pipelineJob('madcore.registration') {
 		    build 'madcore.ssl.csr.generate'
 		    stage 'get certificate and reconfigure haproxy'
 		    build 'madcore.ssl.letsencrypt.getandinstall'
-                }
+		    stage('backup data') {
+		        build job: 'madcore.backup', parameters: [string(name: 'S3BucketName', value: params.S3BucketName)]
+		    }
+            }
 	    """.stripIndent())
 	    }
     }
