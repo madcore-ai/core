@@ -4,9 +4,7 @@ job('madcore.backup') {
     }
     steps {
         def command = """#!/bin/bash
-pushd /opt/madcore/jenkins/backup
-    bash backup.sh "\$S3BucketName"
-popd
+        sudo /opt/madcore/jenkins/backup/backup.sh "\$S3BucketName"
 """
         shell(command)
     }

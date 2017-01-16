@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 S3_BUCKET_NAME="$1"
 BACKUP_DIR=/opt/backup
@@ -7,7 +7,7 @@ echo "Backup to S3 : ${S3_BUCKET_NAME}"
 
 if [ -d "${BACKUP_DIR}" ]; then
     # clear directory
-    rm -rf ${BACKUP_DIR}/*
+    rm -rfv ${BACKUP_DIR}/*
 else
     mkdir -p ${BACKUP_DIR}
 fi

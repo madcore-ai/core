@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import json
 import os
 import pycurl
@@ -11,7 +13,8 @@ from jinja2 import Template
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 check = r_server.get("need_CSR")
 if check is None:
-    print "need run registration job"
+    print("Need to run registration job.")
+    sys.exit(1)
 
 if len(sys.argv) > 1:
     need_haproxy = sys.argv[1]
@@ -57,8 +60,10 @@ if check == "1":
         os.system("rm -rf /opt/certs/letsencrypt")
         r_server.set("need_CSR", "0")
         r_server.bgsave()
+    else:
+        print("Certificate is generated only for AWS env. current env is: %s" % os.environ["ENV"])
 else:
-    print "Don't need new certificate"
+    print("Don't need new certificate")
 
 # reconfigure haproxy
 if (check == "1") or (need_haproxy == "yes"):
@@ -119,4 +124,4 @@ if (check == "1") or (need_haproxy == "yes"):
     os.system("haproxy -f /opt/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)")
 
 else:
-    print "Don't need reconfigure HAproxy"
+    print("Don't need reconfigure HAproxy")
