@@ -54,7 +54,7 @@ if check == "1":
             "cd /opt/certs/letsencrypt && letsencrypt certonly --csr server.der --standalone --non-interactive --agree-tos --email %s --standalone-supported-challenges http-01" % email)
         os.system(request)
         cert_file = os.path.exists("/opt/certs/letsencrypt/0001_chain.pem")
-        if cert_file == False:
+        if not cert_file:
             sys.exit(2)
         os.system(" cd /opt/certs/letsencrypt && cat 0001_chain.pem ../server.key > ../server.bundle.pem")
         os.system("rm -rf /opt/certs/letsencrypt")
