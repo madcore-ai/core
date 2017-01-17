@@ -6,7 +6,7 @@ r_server = redis.StrictRedis('127.0.0.1', db=2)
 i_key = "apps"
 
 data_apps = [
-    {"name": "influxdb", "port": "8086"},
+    {"name": "influxdb", "port": "8083"},
     {"name": "jenkins", "port": "8880"},
     {"name": "kubeapi", "port": "8080"},
     {"name": "kubedash", "port": "8080"},
