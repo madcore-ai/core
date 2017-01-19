@@ -15,25 +15,24 @@ pushd /tmp
     tar -xf spark-bin.tgz -C /opt/spark/spark-bin --strip-components 1
 popd
 
-pushd /opt/madcore/spark/
-    cp namespace-spark-cluster.yaml /opt/spark/namespace-spark-cluster.yaml
-    cp spark-master-controller.yaml /opt/spark/spark-master-controller.yaml
-    cp spark-master-service.yaml /opt/spark/spark-master-service.yaml
-    cp spark-ui-proxy-controller.yaml /opt/spark/spark-ui-proxy-controller.yaml
-    cp spark-ui-proxy-service.yaml /opt/spark/spark-ui-proxy-service.yaml
-    cp spark-worker-controller.yaml /opt/spark/spark-worker-controller.yaml
-    cp zeppelin-controller.yaml /opt/spark/zeppelin-controller.yaml
-    cp zeppelin-service.yaml  /opt/spark/zeppelin-service.yaml
-popd
-kubectl create -f /opt/spark
-
-echo "Waiting for spark (may take few minutes) …"
-sudo su -c "until curl -sL -w '%{http_code}' 'http://localhost:8080/api/v1/proxy/namespaces/spark-cluster/services/spark-master:8080/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
-echo “spark  confirmed.”
-
-echo "Waiting for zeppelin (may take few minutes) …"
-sudo su -c "until curl -sL -w '%{http_code}' 'http://localhost:8080/api/v1/proxy/namespaces/spark-cluster/services/zeppelin/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
-echo “zeppelin  confirmed.”
+#pushd /opt/madcore/spark/
+#    cp namespace-spark-cluster.yaml /opt/spark/namespace-spark-cluster.yaml
+#    cp spark-master-controller.yaml /opt/spark/spark-master-controller.yaml
+#    cp spark-master-service.yaml /opt/spark/spark-master-service.yaml
+#    cp spark-ui-proxy-controller.yaml /opt/spark/spark-ui-proxy-controller.yaml
+#    cp spark-ui-proxy-service.yaml /opt/spark/spark-ui-proxy-service.yaml
+#    cp spark-worker-controller.yaml /opt/spark/spark-worker-controller.yaml
+#    cp zeppelin-controller.yaml /opt/spark/zeppelin-controller.yaml
+#    cp zeppelin-service.yaml  /opt/spark/zeppelin-service.yaml
+#popd
+#kubectl create -f /opt/spark
+#echo "Waiting for spark (may take few minutes) …"
+#sudo su -c "until curl -sL -w '%{http_code}' 'http://localhost:8080/api/v1/proxy/namespaces/spark-cluster/services/spark-master:8080/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
+#echo “spark  confirmed.”
+#
+#echo "Waiting for zeppelin (may take few minutes) …"
+#sudo su -c "until curl -sL -w '%{http_code}' 'http://localhost:8080/api/v1/proxy/namespaces/spark-cluster/services/zeppelin/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
+#echo “zeppelin  confirmed.”
 
 
 curl -XDELETE http://127.0.0.1:8080/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/api/dashboards/db/pods
