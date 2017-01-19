@@ -1,4 +1,4 @@
-job('madcore.kubectl.wait.service.up) {
+job('madcore.kubectl.wait.service.up') {
     parameters {
         stringParam('APP_NAME', '', '')
         stringParam('SERVICE_NAME', '', '')
