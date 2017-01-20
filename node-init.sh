@@ -13,8 +13,5 @@ sudo mkdir -p /opt/madcore
 sudo chown ubuntu:ubuntu /opt/madcore
 git clone https://github.com/madcore-ai/core.git /opt/madcore
 
-sudo chmod +x /opt/madcore/kubernetes/cluster/cfn-init.sh
-sudo "/opt/madcore/kubernetes/cluster/cfn-init.sh"
-
 sudo chmod +x /opt/madcore/kubernetes/cluster/node-install.sh
 sudo "/opt/madcore/kubernetes/cluster/node-install.sh"
