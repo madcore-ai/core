@@ -6,7 +6,7 @@ job('madcore.kubectl.create') {
     steps {
         def command = """#!/bin/bash
 pushd /opt/madcore/kubernetes/kubectl
-    bash create.sh "/opt/plugins/pods/\$FILENAME"
+    bash create.sh "/opt/plugins/\$FILENAME"
 popd
 """
         shell(command)
