@@ -2,7 +2,7 @@
 
 NODE_IP=$1
 
-NODE_NAME=$(cat nodes.json | python -c "import sys, json; \
+NODE_NAME=$(kubectl get nodes -o json | python -c "import sys, json; \
 nodes=json.load(sys.stdin); \
 results = map(lambda item: item['metadata']['name'], filter( \
     lambda _item: filter(lambda addr: addr['type'] == 'InternalIP' and addr['address'] == \"${NODE_IP}\",\
