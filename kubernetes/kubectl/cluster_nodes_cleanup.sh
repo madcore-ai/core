@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# TODO@geo implement to filter nodes by label
+# for now we remove all nodes that have status=Unknown
+NODE_LABEL=$1
+
 UNKNOWN_STATUS_NODES=$(kubectl get nodes -o json | python -c "import sys, json; \
 nodes=json.load(sys.stdin); \
 results = map(lambda item: item['metadata']['name'], filter( \
