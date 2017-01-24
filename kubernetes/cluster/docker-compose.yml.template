@@ -10,7 +10,7 @@ services:
 
   master:
     image: gcr.io/google_containers/hyperkube:v1.4.6
-    command: /bin/sh -c "/hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://${ip}:8080 --cluster_dns=10.0.0.10 --cluster_domain=cluster.local --config=/etc/kubernetes/manifests-multi"
+    command: /bin/sh -c "/hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://${ip}:8080 --cluster_dns=10.0.0.10 --cluster_domain=cluster.local --config=/etc/kubernetes/manifests-multi --node-labels=cluster=${cluster_name}"
     volumes:
       - /:/rootfs:ro
       - /sys:/sys:ro
