@@ -1,6 +1,6 @@
 job('madcore.kubectl.cluster.nodes.cleanup') {
     parameters {
-        stringParam('NODE_LABEL', 'cluster=test', 'Set here the node label to filter by.')
+        stringParam('NODE_LABEL', '', 'Set here the node label to filter by.')
     }
     steps {
         def command = """#!/bin/bash

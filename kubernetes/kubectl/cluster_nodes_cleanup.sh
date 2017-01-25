@@ -4,7 +4,7 @@
 # for now we remove all nodes that have status=Unknown
 NODE_LABEL=$1
 
-UNKNOWN_STATUS_NODES=$(kubectl get nodes -o json | python -c "import sys, json; \
+UNKNOWN_STATUS_NODES=$(kubectl get nodes --selector="${NODE_LABEL}" -o json | python -c "import sys, json; \
 nodes=json.load(sys.stdin); \
 results = map(lambda item: item['metadata']['name'], filter( \
     lambda _item: filter(lambda cond: cond['type'] == 'Ready' and cond['status'] == 'Unknown',\
