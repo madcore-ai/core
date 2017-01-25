@@ -11,8 +11,9 @@ pushd /opt/madcore/kubernetes/cluster/
     cp docker-compose.service /opt/docker-compose/docker-compose-kubernetes.service
     ln -s /opt/docker-compose/docker-compose-kubernetes.service /etc/systemd/system/docker-compose-kubernetes.service
     mkdir -p /opt/kubernetes
-    cat docker-compose.yml.template | sed -e "s/\${ip}/${KUB_MASTER_IP}/" > /opt/kubernetes/docker-compose.yml
-    cat docker-compose.yml.template | sed -e "s/\${cluster_name}/${KUB_CLUSTER_NAME}/" > /opt/kubernetes/docker-compose.yml
+    cat docker-compose.yml.template | sed -e "s/\${ip}/${KUB_MASTER_IP}/" > docker-compose.yml.template
+    cat docker-compose.yml.template | sed -e "s/\${cluster_name}/${KUB_CLUSTER_NAME}/" > docker-compose.yml.template
+    cp docker-compose.yml.template /opt/kubernetes/docker-compose.yml
 popd
 
 # systemd reload
