@@ -6,7 +6,7 @@ job('madcore.kubectl.delete') {
     steps {
         def command = """#!/bin/bash
 pushd /opt/madcore/kubernetes/kubectl
-    bash delete.sh "/opt/plugins/pods/\$FILENAME"
+    bash delete.sh "/opt/plugins/\$FILENAME"
 popd
 """
         shell(command)
