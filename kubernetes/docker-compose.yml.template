@@ -7,12 +7,6 @@ services:
     pid: host
     entrypoint:
       - etcd
-#    environment:
-#      ETCD_ADVERTISE_CLIENT_URLS: http://127.0.0.1:2379
-#      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://127.0.0.1:2380
-#      ETCD_LISTEN_CLIENT_URLS=http: //0.0.0.0:2379,http://0.0.0.0:4001
-#      ETCD_LISTEN_PEER_URLS=http: //0.0.0.0:2380,http://0.0.0.0:7001
-#      ETCD_NAME: main
 
   kubelet:
     image: gcr.io/google_containers/hyperkube:v1.5.2
@@ -25,7 +19,6 @@ services:
       - /hyperkube
       - kubelet
       - --allow-privileged
-#      - --containerized
       - --address=0.0.0.0
       - --api-servers=http://127.0.0.1:8080
       - --config=/etc/kubernetes/manifests
@@ -33,7 +26,6 @@ services:
       - --cluster-domain=cluster.local
       - --v=2
     volumes:
-#      - /:/rootfs:ro
       - /sys:/sys:ro
       - /dev:/dev
       - /var/run/docker.sock:/var/run/docker.sock
