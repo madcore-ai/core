@@ -12,7 +12,7 @@ spec:
     command:
     - /hyperkube
     - proxy
-    - --master=https://54.154.201.60:8443
+    - --master=https://${ip}:8443
     - --kubeconfig=/etc/kubernetes/ssl/worker-kubeconfig.yaml
     - --proxy-mode=iptables
     securityContext:
