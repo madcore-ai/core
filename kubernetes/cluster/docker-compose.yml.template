@@ -10,7 +10,7 @@ services:
     entrypoint:
       - /hyperkube
       - kubelet
-      - --api-servers=https://${master_ip}:8443
+      - --api-servers=https://${ip}:8443
       - --allow-privileged
       - --address=0.0.0.0
       - --register-node=true

@@ -1,4 +1,5 @@
 #!/bin/bash
+ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 mkdir /opt/bin
 wget -O /opt/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.3.4/bin/linux/amd64/kubectl
 chmod +x /opt/bin/kubectl
@@ -11,7 +12,8 @@ pushd /opt/madcore/kubernetes/cluster/
     ln -s /opt/docker-compose/docker-compose-kubernetes.service /etc/systemd/system/docker-compose-kubernetes.service
     mkdir -p /opt/kubernetes
     -----------------------------=
-    cat docker-compose.yml.template | sed -e "s/\${ip}/${KUB_MASTER_IP}/" > /opt/kubernetes/docker-compose.yml
+    cat docker-compose.yml.template | sed -e "s/\${ip}/${KUB_MASTER_IP}/" | sed -e "s/\${ip}/$ip/" > /opt/kubernetes/docker-compose.yml
+    cp -R manifests /opt/kubernetes/
 popd
 
 # systemd reload

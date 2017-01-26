@@ -7,9 +7,13 @@ chmod +x /opt/bin/kubectl
 ln -s /opt/bin/kubectl /usr/local/bin/kubectl
 sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)"
 sudo chmod +x /usr/local/bin/docker-compose
+
+mkdir -p /opt/kubernetes
+chmod +x /opt/madcore/kubernetes/kubernetes_generate_ssl.sh
+/opt/madcore/kubernetes/kubernetes_generate_ssl.sh
+
 pushd /opt/madcore/kubernetes/
     cp docker-compose.service /etc/systemd/system/docker-compose-kubernetes.service
-    mkdir -p /opt/kubernetes
     cp docker-compose.yml.template  > /opt/kubernetes/docker-compose.yml
     cp -R manifests /opt/kubernetes
     cp -R addons /opt/kubernetes
