@@ -8,7 +8,7 @@ ln -s /opt/bin/kubectl /usr/local/bin/kubectl
 sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)"
 sudo chmod +x /usr/local/bin/docker-compose
 
-mkdir -p /opt/kubernetes
+mkdir -p /opt/kubernetes/
 chmod +x /opt/madcore/kubernetes/kubernetes_generate_ssl.sh
 /opt/madcore/kubernetes/kubernetes_generate_ssl.sh
 

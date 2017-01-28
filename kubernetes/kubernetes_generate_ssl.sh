@@ -1,8 +1,8 @@
 #!/bin/bash
 ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+mkdir -p /opt/kubernetes/ssl
 
 pushd /opt/madcore/kubernetes/ssl/
-
 # copy config and token
 cp kube.conf /opt/kubernetes/ssl/kube.conf
 cat openssl.cnf_template | sed -e "s/\${KUB_MASTER_IP}/$KUB_MASTER_IP/" > /opt/kubernetes/ssl/openssl.cnf
