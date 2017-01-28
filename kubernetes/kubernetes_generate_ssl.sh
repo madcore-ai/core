@@ -5,7 +5,11 @@ mkdir -p /opt/kubernetes/ssl
 pushd /opt/madcore/kubernetes/ssl/
 # copy config and token
 cp kube.conf /opt/kubernetes/ssl/kube.conf
-cat openssl.cnf_template | sed -e "s/\${KUB_MASTER_IP}/$KUB_MASTER_IP/" > /opt/kubernetes/ssl/openssl.cnf
+if [ "$ENV" = "VAGRANT" ]; then 
+cat openssl.cnf_template | sed -e "s/\${KUB_MASTER_IP}//" > /opt/kubernetes/ssl/openssl.cnf
+else
+cat openssl.cnf_template | sed -e "s/\${KUB_MASTER_IP}/IP.3=$KUB_MASTER_IP/" > /opt/kubernetes/ssl/openssl.cnf
+fi
 popd
 
 pushd /opt/kubernetes/ssl/

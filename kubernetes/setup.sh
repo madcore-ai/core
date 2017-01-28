@@ -33,6 +33,7 @@ systemctl start docker-compose-kubernetes
 
 # wait kubernetes api
 echo "waiting kubernetes api...."
+sleep 10
 api_ready="false"
 until [[ $api_ready != "running" ]]; do
 api_reary=$(kubectl get pods --all-namespaces | grep api | awk '{print $4}')
