@@ -14,7 +14,7 @@ chmod +x /opt/madcore/kubernetes/kubernetes_generate_ssl.sh
 
 pushd /opt/madcore/kubernetes/
     cp docker-compose.service /etc/systemd/system/docker-compose-kubernetes.service
-    cp docker-compose.yml.template  > /opt/kubernetes/docker-compose.yml
+    cp docker-compose.yml.template  /opt/kubernetes/docker-compose.yml
     cp -R manifests /opt/kubernetes
     cp -R addons /opt/kubernetes
     cp -R ssl /opt/kubernetes
@@ -30,3 +30,8 @@ popd
 
 # Start the service
 systemctl start docker-compose-kubernetes
+
+# wait kubernetes api
+echo "waiting kubernetes api...."
+
+# Start dashboard and dns
