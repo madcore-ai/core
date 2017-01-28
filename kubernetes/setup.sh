@@ -8,7 +8,7 @@ ln -s /opt/bin/kubectl /usr/local/bin/kubectl
 sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)"
 sudo chmod +x /usr/local/bin/docker-compose
 
-mkdir -p /opt/kubernetes
+mkdir -p /opt/kubernetes/
 chmod +x /opt/madcore/kubernetes/kubernetes_generate_ssl.sh
 /opt/madcore/kubernetes/kubernetes_generate_ssl.sh
 
@@ -33,5 +33,12 @@ systemctl start docker-compose-kubernetes
 
 # wait kubernetes api
 echo "waiting kubernetes api...."
-
+api_ready="false"
+until [[ $api_ready != "running" ]]; do
+api_reary=$(kubectl get pods --all-namespaces | grep api | awk '{print $4}')
+done
+sleep 30
+echo "kubernetes api server is ready"
 # Start dashboard and dns
+
+kubectl create -f /opt/kubernetes/addons

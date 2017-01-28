@@ -1,8 +1,8 @@
 #!/bin/bash
 ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+mkdir -p /opt/kubernetes/ssl
 
 pushd /opt/madcore/kubernetes/ssl/
-
 # copy config and token
 cp kube.conf /opt/kubernetes/ssl/kube.conf
 cat openssl.cnf_template | sed -e "s/\${KUB_MASTER_IP}/$KUB_MASTER_IP/" > /opt/kubernetes/ssl/openssl.cnf
@@ -19,8 +19,8 @@ openssl req -new -key apiserver-key.pem -out apiserver.csr -subj "/CN=kube-apise
 openssl x509 -req -in apiserver.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out apiserver.pem -days 365 -extensions v3_req -extfile openssl.cnf
 
 # Create static token
-dd if=/dev/urandom bs=128 count=1 2>/dev/null | base64 | tr -d "=+/" | dd bs=32 count=1 2 > tocken.csv
-echo ",kubeapi,kubeapi" >> tocken.csv
+dd if=/dev/urandom bs=128 count=1 2>/dev/null | base64 | tr -d "=+/" | dd bs=32 count=1 2>/dev/null > token.csv
+echo ",kubeapi,kubeapi" >> token.csv
 
 #Generate the Cluster Administrator Keypair
 openssl genrsa -out admin-key.pem 2048
