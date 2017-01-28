@@ -16,8 +16,8 @@ pushd /opt/madcore/kubernetes/cluster/
     cp docker-compose.service /opt/docker-compose/docker-compose-kubernetes.service
     ln -s /opt/docker-compose/docker-compose-kubernetes.service /etc/systemd/system/docker-compose-kubernetes.service
     -----------------------------=
-    cat docker-compose.yml.template | sed -e "s/\${ip}/${KUB_MASTER_IP}/" | sed -e "s/\${ip}/$ip/" > /opt/kubernetes/docker-compose.yml
-    cat manifests/proxy.yaml | sed -e "s/\${ip}/${KUB_MASTER_IP}/" > /opt/kubernetes/manifests/proxy.yaml
+    cat docker-compose.yml.template | sed -e "s/\${ip}/$KUB_MASTER_IP/" | sed -e "s/\${node_ip}/$ip/" > /opt/kubernetes/docker-compose.yml
+    cat manifests/proxy.yaml | sed -e "s/\${ip}/$KUB_MASTER_IP/" > /opt/kubernetes/manifests/proxy.yaml
 popd
 
 # systemd reload
