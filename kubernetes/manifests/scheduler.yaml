@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8s-scheduler
+  namespace: kube-system
+spec:
+  hostNetwork: true
+  containers:
+  - name: scheduler
+    image: gcr.io/google_containers/hyperkube-amd64:v1.5.2
+    command:
+    - "/hyperkube"
+    - scheduler
+    - "--master=127.0.0.1:8080"
+    - "--leader-elect=true"
+    - "--v=2"
+  - name: setup
+    image: gcr.io/google_containers/hyperkube-amd64:v1.5.2
+    command:
+    - "/setup-files.sh"
+    - IP:10.0.0.1,DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc,DNS:kubernetes.default.svc.cluster.local
