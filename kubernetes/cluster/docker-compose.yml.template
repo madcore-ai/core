@@ -1,33 +1,39 @@
 version: '2'
 services:
-  kubelet:
-    image: gcr.io/google_containers/hyperkube:v1.5.2
-    container_name: kubelet
+  etcd:
+    image: gcr.io/google_containers/etcd:3.0.4
+    container_name: etcd
+    entrypoint:
+      - etcd
     network_mode: "host"
     pid: host
-    privileged: true
-    tty: true
-    entrypoint:
-      - /hyperkube
-      - kubelet
-      - --api-servers=https://${ip}:8443
-      - --allow-privileged
-      - --address=0.0.0.0
-      - --register-node=true
-      - --node-ip=${node_ip}
-      - --config=/etc/kubernetes/manifests
-      - --cluster-dns=10.0.0.10
-      - --cluster-domain=cluster.local
-      - --kubeconfig=/etc/kubernetes/ssl/worker-kubeconfig.yaml
-      - --tls-cert-file=/etc/kubernetes/ssl/slave-worker.pem
-      - --tls-private-key-file=/etc/kubernetes/ssl/slave-worker-key.pem
-      - --v=2
+
+  master:
+    image: gcr.io/google_containers/hyperkube:v1.4.6
+    command: /bin/sh -c "/hyperkube kubelet --containerized --address=0.0.0.0 --api-servers=http://${ip}:8080 --cluster_dns=10.0.0.10 --cluster_domain=cluster.local --config=/etc/kubernetes/manifests-multi --node-labels=cluster=${cluster_name}"
     volumes:
+      - /:/rootfs:ro
       - /sys:/sys:ro
       - /dev:/dev
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/:/var/lib/docker:ro
       - /var/lib/kubelet/:/var/lib/kubelet:rw,rslave
       - /var/run:/var/run:rw
-      - /opt/kubernetes/manifests/:/etc/kubernetes/manifests/
-      - /opt/kubernetes/ssl/:/etc/kubernetes/ssl/
+    privileged: true
+    network_mode: "host"
+    pid: host
+    # A kubelet shouldn't run alongside another kubelet - One privileged kubelet per node
+    environment:
+      - "affinity:container!=*kubelet*"
+
+  proxy:
+    image: gcr.io/google_containers/hyperkube:v1.4.6
+    command: ['/hyperkube', 'proxy', '--master=http://${ip}:8080', '--masquerade-all', '--v=2']
+    privileged: true
+    # A proxy should run alongside another kubelet but not alongside another proxy
+    network_mode: "host"
+    pid: host
+    environment:
+      - "affinity:container==*kubelet*"
+      - "affinity:container!=*proxy*"
+
