@@ -6,7 +6,7 @@ job('madcore.kubectl.describe') {
     steps {
         def command = """#!/bin/bash
 pushd /opt/madcore/kubernetes/kubectl
-    bash describe.sh "/opt/plugins/pods/\$FILENAME"
+    bash describe.sh "/opt/plugins/\$FILENAME"
 popd
 """
         shell(command)

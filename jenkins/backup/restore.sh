@@ -18,6 +18,7 @@ if [ -d "${BACKUP_DIR}/certs" ]; then
     rm -rfv /opt/certs/*
     # restore cert files
     cp -R ${BACKUP_DIR}/certs/* /opt/certs
+    chown -R jenkins /opt/certs
 fi
 
 if [ -d "${BACKUP_DIR}/redis" ]; then
