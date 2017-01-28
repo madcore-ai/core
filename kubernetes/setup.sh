@@ -1,14 +1,23 @@
 #!/bin/bash
 mkdir /opt/bin
-wget -O /opt/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.3.4/bin/linux/amd64/kubectl
+pushd /opt/bin
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+popd
 chmod +x /opt/bin/kubectl
 ln -s /opt/bin/kubectl /usr/local/bin/kubectl
-ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)"
 sudo chmod +x /usr/local/bin/docker-compose
+
+mkdir -p /opt/kubernetes
+chmod +x /opt/madcore/kubernetes/kubernetes_generate_ssl.sh
+/opt/madcore/kubernetes/kubernetes_generate_ssl.sh
+
 pushd /opt/madcore/kubernetes/
     cp docker-compose.service /etc/systemd/system/docker-compose-kubernetes.service
-    mkdir -p /opt/kubernetes
-    cat docker-compose.yml.template | sed -e "s/\${ip}/${ip}/" > /opt/kubernetes/docker-compose.yml
+    cp docker-compose.yml.template  /opt/kubernetes/docker-compose.yml
+    cp -R manifests /opt/kubernetes
+    cp -R addons /opt/kubernetes
+    cp -R ssl /opt/kubernetes
 popd
 
 # systemd reload
@@ -22,3 +31,7 @@ popd
 # Start the service
 systemctl start docker-compose-kubernetes
 
+# wait kubernetes api
+echo "waiting kubernetes api...."
+
+# Start dashboard and dns

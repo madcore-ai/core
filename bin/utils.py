@@ -31,13 +31,14 @@ def run_cmd(cmd, debug=True):
     if err:
         print("    ERROR: ", err)
     else:
-        print("    OK")
+        if debug:
+            print("    OK")
 
     return out.strip()
 
 
 def run_cmd_no_debug(cmd):
-    run_cmd(cmd, debug=False)
+    return run_cmd(cmd, debug=False)
 
 
 def j2_render(in_template_path, out_file, data):
