@@ -1,14 +1,15 @@
 #!/bin/bash
 ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+public_ip=$(wget -q -O - http://169.254.169.254/latest/meta-data/public-ipv4)
 mkdir -p /opt/kubernetes/ssl
 
 pushd /opt/madcore/kubernetes/ssl/
 # copy config and token
 cp kube.conf /opt/kubernetes/ssl/kube.conf
 if [ "$ENV" = "VAGRANT" ]; then 
-cat openssl.cnf_template | sed -e "s/\${KUB_MASTER_IP}//" > /opt/kubernetes/ssl/openssl.cnf
+cat openssl.cnf_template | sed -e "s/\${KUB_MASTER_IP}//" | sed -e "s/\${KUB_MASTER__PUBLIC_IP}//" > /opt/kubernetes/ssl/openssl.cnf
 else
-cat openssl.cnf_template | sed -e "s/\${KUB_MASTER_IP}/IP.3=$KUB_MASTER_IP/" > /opt/kubernetes/ssl/openssl.cnf
+cat openssl.cnf_template | sed -e "s/\${KUB_MASTER_IP}/IP.3=$ip/" | sed -e "s/\${KUB_MASTER__PUBLIC_IP}/IP.4=$public_ip/" > /opt/kubernetes/ssl/openssl.cnf
 fi
 popd
 
