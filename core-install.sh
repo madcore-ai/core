@@ -34,8 +34,8 @@ sudo hab install core/hab-depot
 sudo hab install core/hab-director
 sudo hab pkg binlink core/hab-sup hab-sup
 sudo hab pkg binlink core/redis redis-cli
-sudo hab pkg binlink core/hab-depot hab-depot
-sudo hab pkg binlink core/hab-director bldr-director
+sudo hab pkg binlink core/hab-depot bldr-depot
+sudo hab pkg binlink core/hab-director hab-director
 
 # SETUP HABITAT DEPOT + REDIS (REUIQRED FOR JENKINS RESTORE)
 sudo bash "/opt/madcore/registryhabitat/setup.sh"
