@@ -34,7 +34,10 @@ systemctl start docker-compose-kubernetes
 # wait kubernetes api
 echo "waiting kubernetes api...."
 sleep 10
-until curl -sL -w '%{http_code}' 'http://127.0.0.1:8080' -o /dev/null | grep -m 1 '200'; do : ; done
+api_ready="false"
+until [[ $api_ready != "running" ]]; do
+api_reary=$(kubectl get pods --all-namespaces | grep api | awk '{print $4}')
+done
 sleep 30
 echo "kubernetes api server is ready"
 # Start dashboard and dns

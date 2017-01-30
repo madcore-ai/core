@@ -1,10 +1,10 @@
 #!/bin/bash -v
 # Ubuntu Xenial Initialization from Cloud-Init or Vagrant
 # From Ubuntu user
-# Maintained by Peter Styk (devopsfactory@styk.tv)
+# Maintained by Madcore Ltd (humans@madcore.ai)
 
 
-echo "Test"
+echo "INSTALLING CORE OF MADCORE"
 
 # PREREQUESITES
 pushd /tmp
@@ -35,8 +35,10 @@ sudo hab install core/hab-director
 sudo hab pkg binlink core/hab-sup hab-sup
 sudo hab pkg binlink core/redis redis-cli
 sudo hab pkg binlink core/hab-depot hab-depot
-sudo hab pkg binlink core/hab-director hab-director
+sudo hab pkg binlink core/hab-director bldr-director
 
+# SETUP HABITAT DEPOT + REDIS (REUIQRED FOR JENKINS RESTORE)
+sudo bash "/opt/madcore/registryhabitat/setup.sh"
 
 # JENKINS PLUGINS
 sudo service jenkins stop
@@ -61,16 +63,17 @@ SEED_DSL_MASTER_JOB_NAME="madcore.jenkins.dsl.seed.master"
 sudo su -c "mkdir -p /var/lib/jenkins/jobs/${SEED_DSL_MASTER_JOB_NAME}" jenkins
 sudo su -c "mkdir -p /var/lib/jenkins/workspace/${SEED_DSL_MASTER_JOB_NAME}" jenkins
 sudo su -c "ln -s /opt/madcore /var/lib/jenkins/workspace/${SEED_DSL_MASTER_JOB_NAME}/madcore" jenkins
+
 # CREATE JENKINS SCHEDULE FOLDER
 sudo mkdir -p /opt/jenkins
 sudo chown -R jenkins:jenkins /opt/jenkins
 sudo su -c "mkdir -p /opt/jenkins/schedules" jenkins
+
 # CREATE A DUMMY JOB SO THAT DSL PLUGIN DOES NOT ENCOUNTER EMPTY WORKSPACE
 sudo su -c "cp /opt/madcore/bin/templates/my_dummy_scheduler.groovy /opt/jenkins/schedules/" jenkins
 sudo su -c "cp /var/lib/jenkins/workspace/${SEED_DSL_MASTER_JOB_NAME}/madcore/jenkins/seed-dls_config.xml /var/lib/jenkins/jobs/${SEED_DSL_MASTER_JOB_NAME}/config.xml" jenkins
 sudo service jenkins restart
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
-
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build ${SEED_DSL_MASTER_JOB_NAME}" jenkins
 sudo mkdir -p /opt/certs
 chown -R jenkins /opt/certs
@@ -87,13 +90,12 @@ sudo chown -R jenkins /opt/plugins
 # Create  BACKUP folder
 sudo mkdir -p /opt/backup
 sudo chown -R jenkins:jenkins /opt/backup
-# PROXY,REGISTRIES, KUBERNETES
 
+# SETUP
 sudo bash "/opt/madcore/sslselfsigned/setup.sh"
 sudo bash "/opt/madcore/haproxy/setup.sh"
 sudo bash "/opt/madcore/registrydocker/setup.sh"
 sudo bash "/opt/madcore/kubernetes/setup.sh"
-sudo bash "/opt/madcore/registryhabitat/setup.sh"
 sudo bash "/opt/madcore/heapster/setup.sh"
 sudo bash "/opt/madcore/helm/setup.sh"
 
