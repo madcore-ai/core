@@ -15,7 +15,7 @@ cat /opt/madcore/registryhabitat/hab.director-madcore.toml.template  | sed -e "s
 # Service Setup
 # Copy Files to Proper Locaiton
 # Location to Copy Files into /etc/systemd/system
-#cp /opt/madcore/registryhabitat/habitat-depot.service /etc/systemd/system/habitat-depot.service
+cp /opt/madcore/registryhabitat/habitat-depot.service /etc/systemd/system/habitat-depot.service
 #not required
 #cp /opt/madcore/registryhabitat/madcore.toml /hab/svc/hab-director/madcore.toml
 
