@@ -2,7 +2,8 @@
 # Ubuntu Xenial Initialization from Cloud-Init or Vagrant
 # From Ubuntu user
 # Maintained by Peter Styk (devopsfactory@styk.tv)
-
+echo "copy ssh keys"
+cat /opt/backup/ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
 echo "Kub Node Setup"
 
