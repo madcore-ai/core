@@ -7,7 +7,7 @@ ln -s /opt/bin/kubectl /usr/local/bin/kubectl
 
 sudo chmod +x /usr/local/bin/docker-compose
 
-mkdir -p /opt/kubernetes
+mkdir -p /opt/kubernetes/manifests
 chmod +x /opt/madcore/kubernetes/cluster/kubernetes_generate_ssl.sh
 /opt/madcore/kubernetes/cluster/kubernetes_generate_ssl.sh
 
@@ -15,7 +15,6 @@ pushd /opt/madcore/kubernetes/cluster/
     sudo mkdir -p /opt/docker-compose
     cp docker-compose.service /opt/docker-compose/docker-compose-kubernetes.service
     ln -s /opt/docker-compose/docker-compose-kubernetes.service /etc/systemd/system/docker-compose-kubernetes.service
-    -----------------------------=
     cat docker-compose.yml.template | sed -e "s/\${ip}/$KUB_MASTER_IP/" | sed -e "s/\${node_ip}/$ip/" > /opt/kubernetes/docker-compose.yml
     cat manifests/proxy.yaml | sed -e "s/\${ip}/$KUB_MASTER_IP/" > /opt/kubernetes/manifests/proxy.yaml
 popd
