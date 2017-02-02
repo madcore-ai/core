@@ -6,6 +6,9 @@
 
 echo "INSTALLING CORE OF MADCORE"
 
+#Generate ssh certifiates
+sudo su -c "ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -P '' -C Madcore-Core" jenkins
+
 # PREREQUESITES
 pushd /tmp
     sudo wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -

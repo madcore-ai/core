@@ -21,4 +21,13 @@ mkdir -p ${BACKUP_DIR}/redis
 redis-cli save
 cp /hab/svc/redis/data/dump.rdb ${BACKUP_DIR}/redis/
 
+# backup ssh public key
+mkdir -p ${BACKUP_DIR}/ssh
+cp /home/jenkins/.ssh/id_rsa_pub ${BACKUP_DIR}/ssh/
+
+# backup kubernetes certs
+mkdir -p ${BACKUP_DIR}/kubernetes
+cp /opt/kubernetes/ssl/ca.pem ${BACKUP_DIR}/kubernetes/
+cp /opt/kubernetes/ssl/ca-key.pem ${BACKUP_DIR}/kubernetes/
+
 aws s3 sync ${BACKUP_DIR} s3://${S3_BUCKET_NAME}/backup

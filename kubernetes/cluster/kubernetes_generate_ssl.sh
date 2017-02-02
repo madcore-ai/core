@@ -3,6 +3,7 @@ ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 local_ip=$(wget -q -O - http://169.254.169.254/latest/meta-data/local-ipv4)
 
 # copy config
+mkdir -p /opt/kubernetes/ssl/
 pushd /opt/madcore/kubernetes/cluster/ssl/
   cp kube.conf /opt/kubernetes/ssl/
   cp worker-kubeconfig.yaml /opt/kubernetes/ssl/
@@ -11,8 +12,8 @@ popd
 
 pushd /opt/kubernetes/ssl/
 # copy CA certificate
-scp -i /home/ubuntu/.ssl/id_rsa -o StrictHostKeychecking=no ubuntu@$KUB_MASTER_IP:/opt/kubernetes/ssl/ca.pem
-scp -i /home/ubuntu/.ssl/id_rsa -o StrictHostKeychecking=no ubuntu@$KUB_MASTER_IP:/opt/kubernetes/ssl/ca-key.pem
+cp /opt/backup/kubernetes/ca.pem /opt/kubernetes/ssl/
+cp /opt/backup/kubernjetes/ca-key.pem /opt/kubernetes/ssl/
 
 # generate worker certificate and key
 openssl genrsa -out slave-worker-key.pem 2048
