@@ -6,8 +6,7 @@
 
 echo "INSTALLING CORE OF MADCORE"
 
-#Generate ssh certifiates
-sudo su -c "ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -P '' -C Madcore-Core" jenkins
+
 
 # PREREQUESITES
 pushd /tmp
@@ -25,6 +24,8 @@ pushd /tmp
     sudo chmod +x /usr/local/bin/docker-compose
     sudo curl -sSf https://static.rust-lang.org/rustup.sh | sh
 popd
+
+
 
 # HABITAT
 sudo su -c "mkdir -p /var/lib/jenkins/git/habitat" jenkins
@@ -60,6 +61,9 @@ sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://1
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin ws-cleanup -deploy" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin workflow-aggregator  -deploy" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin parameterized-trigger  -deploy" jenkins
+
+#Generate ssh certifiates
+sudo su -c "ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -P '' -C Madcore-Core" jenkins
 
 # CONFIGURE AND RUN 1ST SEED JOB (WILL CREATE ALL OTHER JOBS FROM REPO)
 SEED_DSL_MASTER_JOB_NAME="madcore.jenkins.dsl.seed.master"

@@ -2,6 +2,9 @@
 # Ubuntu Xenial Initialization from Cloud-Init or Vagrant
 # From Ubuntu user
 # Maintained by Peter Styk (devopsfactory@styk.tv)
+sudo apt update -y
+sudo apt install python python-pip
+sudo pip install awscli
 echo "copy ssh keys"
 cat /opt/backup/ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
