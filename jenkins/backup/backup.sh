@@ -23,7 +23,7 @@ cp /hab/svc/redis/data/dump.rdb ${BACKUP_DIR}/redis/
 
 # backup ssh public key
 mkdir -p ${BACKUP_DIR}/ssh
-cp /home/jenkins/.ssh/id_rsa_pub ${BACKUP_DIR}/ssh/
+cp /var/lib/jenkins/.ssh/id_rsa.pub ${BACKUP_DIR}/ssh/
 
 # backup kubernetes certs
 mkdir -p ${BACKUP_DIR}/kubernetes
