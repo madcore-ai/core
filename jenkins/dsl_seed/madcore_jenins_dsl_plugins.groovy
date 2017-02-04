@@ -6,7 +6,7 @@ job('madcore.jenkins.dsl.seed.plugins') {
             remote {
                 url('https://github.com/madcore-ai/plugins')
             }
-            branch('master')
+            branch('${MADCORE_PLUGINS_COMMIT}')
         }
     }
 

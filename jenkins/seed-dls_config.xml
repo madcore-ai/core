@@ -13,9 +13,14 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!/bin/bash 
+      <command>#!/bin/bash
+echo "Switch to branch '${MADCORE_BRANCH}', commit id '${MADCORE_COMMIT}'"
 pushd /opt/madcore
-    git pull
+    git fetch
+    git checkout "${MADCORE_BRANCH}"
+    git --no-pager log -50 --pretty=oneline
+    git reset --hard "${MADCORE_COMMIT}"
+    git --no-pager log -1
 popd</command>
     </hudson.tasks.Shell>
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.51">
