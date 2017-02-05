@@ -30,4 +30,6 @@ mkdir -p ${BACKUP_DIR}/kubernetes
 cp /opt/kubernetes/ssl/ca.pem ${BACKUP_DIR}/kubernetes/
 cp /opt/kubernetes/ssl/ca-key.pem ${BACKUP_DIR}/kubernetes/
 
-aws s3 sync ${BACKUP_DIR} s3://${S3_BUCKET_NAME}/backup
+bucket_region=$(aws s3api get-bucket-location --bucket ${S3_BUCKET_NAME})
+
+aws s3 sync ${BACKUP_DIR} s3://${S3_BUCKET_NAME}/backup --region $bucket_region
