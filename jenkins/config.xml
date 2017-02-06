@@ -36,5 +36,25 @@
     <excludeClientIPFromCrumb>false</excludeClientIPFromCrumb>
   </crumbIssuer>
   <nodeProperties/>
-  <globalNodeProperties/>
+  <globalNodeProperties>
+    <hudson.slaves.EnvironmentVariablesNodeProperty>
+      <envVars serialization="custom">
+        <unserializable-parents/>
+        <tree-map>
+          <default>
+            <comparator class="hudson.util.CaseInsensitiveComparator"/>
+          </default>
+          <int>4</int>
+          <string>MADCORE_BRANCH</string>
+          <string>${MADCORE_BRANCH}</string>
+          <string>MADCORE_COMMIT</string>
+          <string>${MADCORE_COMMIT}</string>
+          <string>MADCORE_PLUGINS_BRANCH</string>
+          <string>${MADCORE_PLUGINS_BRANCH}</string>
+          <string>MADCORE_PLUGINS_COMMIT</string>
+          <string>${MADCORE_PLUGINS_COMMIT}</string>
+        </tree-map>
+      </envVars>
+    </hudson.slaves.EnvironmentVariablesNodeProperty>
+  </globalNodeProperties>
 </hudson>
