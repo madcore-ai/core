@@ -51,6 +51,13 @@ sudo su -c "cp -f /opt/madcore/jenkins/config.xml /var/lib/jenkins/config.xml"
 sudo su -c "cp -f /opt/madcore/jenkins/jenkins /etc/init.d/jenkins"
 sudo sed -i '/^JAVA_ARGS=/c\JAVA_ARGS=\"-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false\"' /etc/default/jenkins
 sudo su -c "sed -i '/<useSecurity>/c\<useSecurity>false</useSecurity>' /var/lib/jenkins/config.xml" jenkins
+
+# JENKINS REPLACE SET GLOBAL ENV VARIABLES
+sudo su -c "sed -ie 's/\${MADCORE_BRANCH}/${MADCORE_BRANCH}/g' /var/lib/jenkins/config.xml" jenkins
+sudo su -c "sed -ie 's/\${MADCORE_COMMIT}/${MADCORE_COMMIT}/g' /var/lib/jenkins/config.xml" jenkins
+sudo su -c "sed -ie 's/\${MADCORE_PLUGINS_BRANCH}/${MADCORE_PLUGINS_BRANCH}/g' /var/lib/jenkins/config.xml" jenkins
+sudo su -c "sed -ie 's/\${MADCORE_PLUGINS_COMMIT}/${MADCORE_PLUGINS_COMMIT}/g' /var/lib/jenkins/config.xml" jenkins
+
 sudo systemctl daemon-reload
 sudo service jenkins start
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
