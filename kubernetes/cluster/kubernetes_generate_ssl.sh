@@ -1,4 +1,4 @@
-#!/bin bash
+#!/bin/bash
 ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 local_ip=$(wget -q -O - http://169.254.169.254/latest/meta-data/local-ipv4)
 
