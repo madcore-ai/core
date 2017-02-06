@@ -7,13 +7,13 @@ mkdir -p /opt/kubernetes/ssl/
 pushd /opt/madcore/kubernetes/cluster/ssl/
   cp kube.conf /opt/kubernetes/ssl/
   cp worker-kubeconfig.yaml /opt/kubernetes/ssl/
-  cat worker-openssl_template.cnf | sed -e "s/\${node_ip}/$ip}/" | sed -e "s/\${local_node_ip}/$local_ip}/" > /opt/kubernetes/ssl/worker-openssl.cnf
+  cat worker-openssl_template.cnf | sed -e "s/\${node_ip}/$ip/" | sed -e "s/\${local_node_ip}/$local_ip/" > /opt/kubernetes/ssl/worker-openssl.cnf
 popd
 
 pushd /opt/kubernetes/ssl/
 # copy CA certificate
 cp /opt/backup/kubernetes/ca.pem /opt/kubernetes/ssl/
-cp /opt/backup/kubernjetes/ca-key.pem /opt/kubernetes/ssl/
+cp /opt/backup/kubernetes/ca-key.pem /opt/kubernetes/ssl/
 
 # generate worker certificate and key
 openssl genrsa -out slave-worker-key.pem 2048
