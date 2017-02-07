@@ -6,7 +6,7 @@ sudo apt update -y
 sudo apt install python python-pip
 sudo pip install awscli
 echo "copy ssh keys"
-cat /opt/backup/ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+sudo su -c "cat /opt/backup/ssh/id_rsa.pub >> ~/.ssh/authorized_keys" ubuntu
 
 echo "Kub Node Setup"
 
