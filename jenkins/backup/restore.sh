@@ -12,7 +12,9 @@ else
     mkdir -p ${BACKUP_DIR}
 fi
 
-aws s3 sync s3://${S3_BUCKET_NAME}/backup ${BACKUP_DIR}
+bucket_region=$(aws s3api get-bucket-location --bucket ${S3_BUCKET_NAME} | jq .[] | sed "s^\"^^g")
+
+aws s3 sync s3://${S3_BUCKET_NAME}/backup ${BACKUP_DIR} --region $bucket_region
 
 if [ -d "${BACKUP_DIR}/certs" ]; then
     rm -rfv /opt/certs/*
