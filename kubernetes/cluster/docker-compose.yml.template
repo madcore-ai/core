@@ -22,6 +22,7 @@ services:
       - --tls-cert-file=/etc/kubernetes/ssl/slave-worker.pem
       - --tls-private-key-file=/etc/kubernetes/ssl/slave-worker-key.pem
       - --v=2
+      - --node-labels=${cluster_name}
     volumes:
       - /sys:/sys:ro
       - /dev:/dev
