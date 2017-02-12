@@ -45,3 +45,6 @@ echo "kubernetes api server is ready"
 # Start dashboard and dns
 
 kubectl create -f /opt/kubernetes/addons
+
+# Run backup job
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build madcore.backup -p S3BucketName=${S3_BUCKET}" jenkins
