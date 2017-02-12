@@ -29,6 +29,3 @@ popd
 
 # Start the service
 systemctl start docker-compose-kubernetes
-
-# Run backup job
-sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build madcore.backup -p S3BucketName=${S3_BUCKET}" jenkins
