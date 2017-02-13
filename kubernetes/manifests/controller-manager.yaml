@@ -17,7 +17,6 @@ spec:
     - "--root-ca-file=/etc/kubernetes/ssl/ca.pem"
     - "--min-resync-period=3m"
     - "--leader-elect=true"
-    - "--cluster-cidr=10.1.0.0/16"
     - "--v=2"
     volumeMounts:
     - name: kubernetes-ssl
