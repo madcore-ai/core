@@ -24,13 +24,15 @@ services:
       - --config=/etc/kubernetes/manifests
       - --cluster-dns=10.0.0.10
       - --cluster-domain=cluster.local
+      - --containerized
       - --v=2
     volumes:
+      - /:/rootfs:ro
       - /sys:/sys:ro
       - /dev:/dev
       - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/:/var/lib/docker:ro
-      - /var/lib/kubelet/:/var/lib/kubelet:rw,rslave
+      - /var/lib/docker/:/var/lib/docker:rw
+      - /var/lib/kubelet/:/var/lib/kubelet:shared
       - /var/run:/var/run:rw
       - /opt/kubernetes/manifests/:/etc/kubernetes/manifests/
       - /opt/kubernetes/ssl/:/etc/kubernetes/ssl/
