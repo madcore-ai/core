@@ -5,7 +5,7 @@ metadata:
 spec:
   rules:
   - host: {{ HOST }}
-    https:
+    http:
       paths:
       - path: /
         backend:
