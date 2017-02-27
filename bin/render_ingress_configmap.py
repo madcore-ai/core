@@ -5,6 +5,7 @@ i_key = "owner-info"
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 json_data = r_server.get(i_key)
 if json_data is not None:
+    data = json.loads(json_data)
     email = data['Email']
 
 config_template = open('/opt/plugins/cluster/ingress/kub/lego_configmap.template').read()
