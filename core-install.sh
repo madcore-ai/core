@@ -105,6 +105,10 @@ sudo chown -R jenkins /opt/plugins
 sudo mkdir -p /opt/backup
 sudo chown -R jenkins:jenkins /opt/backup
 
+# Create  INGRESS folder
+sudo mkdir -p /opt/ingress
+sudo chown -R jenkins:jenkins /opt/ingress
+
 # SETUP
 sudo bash "/opt/madcore/sslselfsigned/setup.sh"
 sudo bash "/opt/madcore/haproxy/setup.sh"
