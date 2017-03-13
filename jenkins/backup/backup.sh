@@ -31,5 +31,8 @@ cp /opt/kubernetes/ssl/ca.pem ${BACKUP_DIR}/kubernetes/
 cp /opt/kubernetes/ssl/ca-key.pem ${BACKUP_DIR}/kubernetes/
 
 bucket_region=$(aws s3api get-bucket-location --bucket ${S3_BUCKET_NAME} | jq .[] | sed "s^\"^^g")
+if [ $bucket_region = "null" ]; then
+   bucket_region="us-west-1"
+fi
 
 aws s3 sync ${BACKUP_DIR} s3://${S3_BUCKET_NAME}/backup --region $bucket_region
