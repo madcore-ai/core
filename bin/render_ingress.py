@@ -8,7 +8,7 @@ if json_data is not None:
     data = json.loads(json_data)
     main_domain = data['Hostname']
 
-fqdn = sys.argv[1] + "ext." + main_domain
+fqdn = sys.argv[1] + ".ext." + main_domain
 
 config_template = open('/opt/madcore/bin/templates/ingress.template').read()
 template = Template(config_template)
