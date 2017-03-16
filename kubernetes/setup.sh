@@ -28,6 +28,10 @@ pushd /etc/systemd/system/
     sudo systemctl enable docker-compose-kubernetes.service
 popd
 
+### fix for kubernetes dns
+sudo echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf
+sudo sysctl -p
+
 # Start the service
 systemctl start docker-compose-kubernetes
 
