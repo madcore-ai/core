@@ -30,7 +30,7 @@ pushd /tmp
 popd
 
 pushd /opt/madcore/flannel
-  cp flanneld.service /etc/systemd/system/flanneld.service
+  cat flanneld.service | sed -e "s/\${ip}/$KUB_MASTER_IP/" > /etc/systemd/system/flanneld.service
   cp docker.service /lib/systemd/system/docker.service
 popd
 

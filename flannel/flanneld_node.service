@@ -1,11 +1,9 @@
 [Unit]
 Description=Flannel daemon
-Requires=etcd.service
-After=etcd.service
+
 
 [Service]
-ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "172.16.0.0/16" }'
-ExecStart=/usr/local/bin/flanneld --etcd-endpoints=http://${KUB_MASTER_IP}:4001
+ExecStart=/usr/local/bin/flanneld --etcd-endpoints=http://${ip}:4001
 
 [Install]
 WantedBy=multi-user.target
