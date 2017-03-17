@@ -10,7 +10,7 @@ spec:
   - name: kube-proxy
     image: gcr.io/google_containers/hyperkube-amd64:v1.5.4
     command:
-    - /hyperkube
+    - sleep 60 && /hyperkube
     - proxy
     - --master=http://127.0.0.1:8080
     - --cluster-cidr=172.16.0.0/16
