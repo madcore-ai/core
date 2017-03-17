@@ -25,6 +25,29 @@ pushd /tmp
     sudo curl -sSf https://static.rust-lang.org/rustup.sh | sh
 popd
 
+## flannel
+pushd /tmp
+  apt-get install linux-libc-dev golang gcc
+  git clone https://github.com/coreos/flannel.git
+    pushd /tmp/flannel
+      make dist/flanneld-amd64
+      cp flanneld-amd64 /usr/local/bin/flanneld
+    popd
+popd
+
+pushd /opt/madcore/flannel
+  cp etcd.service /lib/systemd/system/etcd.service
+  cp flanneld.service /etc/systemd/system/flanneld.service
+  cp docker.service /lib/systemd/system/docker.service
+popd
+
+systemctl daemon-reload
+systemctl restart etcd
+systemctl enable etcd
+systemctl start flanneld
+systemctl enable flanneld
+systemctl restart docker
+
 
 
 # HABITAT

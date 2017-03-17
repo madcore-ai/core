@@ -19,5 +19,26 @@ pushd /tmp
     sudo chmod +x /usr/local/bin/docker-compose
 popd
 
+## flannel
+pushd /tmp
+  apt-get install linux-libc-dev golang gcc
+  git clone https://github.com/coreos/flannel.git
+    pushd /tmp/flannel
+      make dist/flanneld-amd64
+      cp flanneld-amd64 /usr/local/bin/flanneld
+    popd
+popd
+
+pushd /opt/madcore/flannel
+  cp flanneld.service /etc/systemd/system/flanneld.service
+  cp docker.service /lib/systemd/system/docker.service
+popd
+
+systemctl daemon-reload
+systemctl start flanneld
+systemctl enable flanneld
+systemctl restart docker
+
+
 # PROXY,REGISTRIES, KUBERNETES
 sudo bash "/opt/madcore/kubernetes/cluster/setup.sh"
