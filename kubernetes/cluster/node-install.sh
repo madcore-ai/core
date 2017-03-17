@@ -22,11 +22,9 @@ popd
 ## flannel
 pushd /tmp
   apt-get install linux-libc-dev golang gcc -y
-  git clone https://github.com/coreos/flannel.git
-    pushd /tmp/flannel
-      make dist/flanneld-amd64
-      cp dist/flanneld-amd64 /usr/local/bin/flanneld
-    popd
+  wget https://github.com/coreos/flannel/releases/download/v0.7.0/flanneld-amd64
+  cp flanneld-amd64 /usr/local/bin/flanneld
+  chmod +x /usr/local/bin/flanneld
 popd
 
 pushd /opt/madcore/flannel
