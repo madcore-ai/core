@@ -4,6 +4,10 @@ Requires=etcd.service
 After=etcd.service
 
 [Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=5m
+TimeoutStopSec=10s
 ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "172.16.0.0/16" }'
 ExecStart=/usr/local/bin/flanneld
 

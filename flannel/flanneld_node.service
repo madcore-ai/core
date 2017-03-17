@@ -3,6 +3,10 @@ Description=Flannel daemon
 
 
 [Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=5m
+TimeoutStopSec=10s
 ExecStart=/usr/local/bin/flanneld --etcd-endpoints=http://${ip}:4001
 
 [Install]

@@ -5,6 +5,10 @@ After=network.target docker.socket flanneld.service
 Requires=docker.socket
 
 [Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=5m
+TimeoutStopSec=10s
 Type=notify
 EnvironmentFile=-/run/flannel/subnet.env
 ExecStart=/usr/bin/dockerd --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}
