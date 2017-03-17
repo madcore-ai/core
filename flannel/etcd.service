@@ -9,10 +9,10 @@ Wants=network-online.target
 Environment=DAEMON_ARGS=
 Environment=ETCD_NAME=%H
 Environment=ETCD_DATA_DIR=/var/lib/etcd/default
-Environment=ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
-Environment=ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
-Environment=ETCD_INITIAL_ADVERTISE_PEER_URLS=http://0.0.0.0:2380
-Environment=ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379
+Environment=ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380,http://0.0.0.0:7001
+Environment=ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379, http://0.0.0.0:4001
+Environment=ETCD_INITIAL_ADVERTISE_PEER_URLS=http://0.0.0.0:2380,http://0.0.0.0:7001
+Environment=ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379, http://0.0.0.0:4001
 EnvironmentFile=-/etc/default/%p
 Type=notify
 User=etcd
