@@ -25,7 +25,7 @@ pushd /tmp
   git clone https://github.com/coreos/flannel.git
     pushd /tmp/flannel
       make dist/flanneld-amd64
-      cp flanneld-amd64 /usr/local/bin/flanneld
+      cp dist/flanneld-amd64 /usr/local/bin/flanneld
     popd
 popd
 
