@@ -13,6 +13,7 @@ spec:
     - /hyperkube
     - proxy
     - --master=https://${ip}:8443
+    - --cluster-cidr=172.16.0.0/16
     - --kubeconfig=/etc/kubernetes/ssl/worker-kubeconfig.yaml
     - --proxy-mode=iptables
     securityContext:
