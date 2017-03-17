@@ -1,13 +1,5 @@
 version: '2'
 services:
-  etcd:
-    image: gcr.io/google_containers/etcd:3.0.4
-    container_name: etcd
-    network_mode: "host"
-    pid: host
-    entrypoint:
-      - etcd
-
   kubelet:
     image: gcr.io/google_containers/hyperkube:v1.5.2
     container_name: kubelet
