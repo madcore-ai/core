@@ -11,6 +11,9 @@ mkdir -p /opt/kubernetes/manifests
 chmod +x /opt/madcore/kubernetes/cluster/kubernetes_generate_ssl.sh
 /opt/madcore/kubernetes/cluster/kubernetes_generate_ssl.sh
 
+mkdir -p /etc/cni/net.d
+mkdir -p /opt/cni/bin
+
 pushd /opt/madcore/kubernetes/cluster/
     sudo mkdir -p /opt/docker-compose
     cp docker-compose.service /opt/docker-compose/docker-compose-kubernetes.service

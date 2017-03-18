@@ -107,8 +107,6 @@ spec:
             - mountPath: /var/run/calico
               name: var-run-calico
               readOnly: false
-            - mountPath: /calico-secrets
-              name: etcd-certs
         # This container installs the Calico CNI binaries
         # and CNI network config file on each node.
         - name: install-cni

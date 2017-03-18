@@ -22,6 +22,9 @@ services:
       - --tls-cert-file=/etc/kubernetes/ssl/slave-worker.pem
       - --tls-private-key-file=/etc/kubernetes/ssl/slave-worker-key.pem
       - --containerized
+      - --network-plugin=cni
+      - --cni-conf-dir=/etc/cni/net.d
+      - --cni-bin-dir=/opt/cni/bin
       - --v=2
       - --node-labels=${cluster_name}
     volumes:
@@ -34,3 +37,5 @@ services:
       - /var/run:/var/run:rw
       - /opt/kubernetes/manifests/:/etc/kubernetes/manifests/
       - /opt/kubernetes/ssl/:/etc/kubernetes/ssl/
+      - /etc/cni/net.d/:/etc/cni/net.d/
+      - /opt/cni/bin/:/opt/cni/bin/

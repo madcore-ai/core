@@ -1,4 +1,5 @@
 #!/bin/bash
+ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 mkdir /opt/bin
 pushd /opt/bin
 curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
@@ -12,9 +13,14 @@ mkdir -p /opt/kubernetes/
 chmod +x /opt/madcore/kubernetes/kubernetes_generate_ssl.sh
 /opt/madcore/kubernetes/kubernetes_generate_ssl.sh
 
+mkdir -p /etc/cni/net.d
+mkdir -p /opt/cni/bin
+mkdir -p /opt/kubernetes/calico
+
 pushd /opt/madcore/kubernetes/
     cp docker-compose.service /etc/systemd/system/docker-compose-kubernetes.service
     cp docker-compose.yml.template  /opt/kubernetes/docker-compose.yml
+    cat calico/calico.yaml | sed -e "s/\${ip}/$ip/" > /opt/kubernetes/calico/calico.yaml
     cp -R manifests /opt/kubernetes
     cp -R addons /opt/kubernetes
     cp -R ssl /opt/kubernetes
@@ -42,6 +48,9 @@ until [[ $count > 3 ]]; do
     sleep 10
 done
 echo "kubernetes api server is ready"
+### start calico
+kubectl create -f /opt/kubernetes/calico
+
 # Start dashboard and dns
 
 kubectl create -f /opt/kubernetes/addons
