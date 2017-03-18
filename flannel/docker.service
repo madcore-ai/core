@@ -11,7 +11,7 @@ TimeoutStartSec=5m
 TimeoutStopSec=10s
 Type=notify
 EnvironmentFile=-/run/flannel/subnet.env
-ExecStart=/usr/bin/dockerd --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}
+ExecStart=/usr/bin/dockerd --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU} --host=fd://
 ExecReload=/bin/kill -s HUP $MAINPID
 LimitNOFILE=1048576
 LimitNPROC=infinity
