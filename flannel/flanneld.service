@@ -8,8 +8,8 @@ Restart=on-failure
 RestartSec=10
 TimeoutStartSec=5m
 TimeoutStopSec=10s
-ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "172.16.0.0/16","SubnetLen":24, "Backend":{ "Type":"udp" } }'
-ExecStart=/usr/local/bin/flanneld
+ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "172.16.0.0/16","SubnetLen":24, "Backend":{ "Type":"aws-vpc" } }'
+ExecStart=/usr/local/bin/flanneld --ip-masq=true
 
 [Install]
 WantedBy=multi-user.target
