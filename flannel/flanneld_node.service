@@ -7,7 +7,7 @@ Restart=on-failure
 RestartSec=10
 TimeoutStartSec=5m
 TimeoutStopSec=10s
-ExecStart=/usr/local/bin/flanneld --etcd-endpoints=http://${ip}:4001 ip-masq=true
+ExecStart=/usr/local/bin/flanneld --etcd-endpoints=http://${ip}:4001 
 
 [Install]
 WantedBy=multi-user.target
