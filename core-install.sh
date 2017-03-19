@@ -13,6 +13,7 @@ pushd /tmp
     sudo wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
     sudo sh -c 'echo deb https://pkg.jenkins.io/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
     sudo apt-get update
+    sudo apt install jenkins -y
     sudo apt-get install openjdk-8-jdk git jenkins python-pip awscli haproxy letsencrypt libcurl4-gnutls-dev librtmp-dev apache2-utils jq -y
     sudo pip install --upgrade pip
     sudo pip install -r /opt/madcore/requirements.txt
