@@ -14,7 +14,7 @@ pushd /tmp
     sudo sh -c 'echo deb https://pkg.jenkins.io/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
     sudo apt-get update
     sudo apt install jenkins -y
-    sudo apt-get install openjdk-8-jdk git jenkins python-pip awscli haproxy letsencrypt libcurl4-gnutls-dev librtmp-dev apache2-utils jq -y
+    sudo apt-get install openjdk-8-jdk git python-pip awscli haproxy letsencrypt libcurl4-gnutls-dev librtmp-dev apache2-utils jq -y
     sudo pip install --upgrade pip
     sudo pip install -r /opt/madcore/requirements.txt
     sudo groupadd hab && useradd -g hab -s /bin/bash -m hab
@@ -70,7 +70,7 @@ sudo hab pkg binlink core/hab-director hab-director
 sudo bash "/opt/madcore/registryhabitat/setup.sh"
 
 # JENKINS PLUGINS
-sudo service jenkins stop
+sudo systemctl stop jenkins
 sudo chown -R jenkins:jenkins /opt/madcore
 sudo su -c "cp -f /opt/madcore/jenkins/config.xml /var/lib/jenkins/config.xml"
 sudo su -c "cp -f /opt/madcore/jenkins/jenkins /etc/init.d/jenkins"
@@ -84,7 +84,7 @@ sudo su -c "sed -ie 's/\${MADCORE_PLUGINS_BRANCH}/${MADCORE_PLUGINS_BRANCH}/g' /
 sudo su -c "sed -ie 's/\${MADCORE_PLUGINS_COMMIT}/${MADCORE_PLUGINS_COMMIT}/g' /var/lib/jenkins/config.xml" jenkins
 
 sudo systemctl daemon-reload
-sudo service jenkins start
+sudo systemctl start jenkins
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin git -deploy" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin ssh-credentials" jenkins
@@ -111,7 +111,7 @@ sudo su -c "mkdir -p /opt/jenkins/schedules" jenkins
 # CREATE A DUMMY JOB SO THAT DSL PLUGIN DOES NOT ENCOUNTER EMPTY WORKSPACE
 sudo su -c "cp /opt/madcore/bin/templates/my_dummy_scheduler.groovy /opt/jenkins/schedules/" jenkins
 sudo su -c "cp /var/lib/jenkins/workspace/${SEED_DSL_MASTER_JOB_NAME}/madcore/jenkins/seed-dls_config.xml /var/lib/jenkins/jobs/${SEED_DSL_MASTER_JOB_NAME}/config.xml" jenkins
-sudo service jenkins restart
+sudo systemctl restart jenkins
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build ${SEED_DSL_MASTER_JOB_NAME}" jenkins
 sudo mkdir -p /opt/certs
