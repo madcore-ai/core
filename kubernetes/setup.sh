@@ -1,4 +1,6 @@
 #!/bin/bash
+ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+echo "NODE_IP=$IP" >> /etc/environment
 mkdir /opt/bin
 pushd /opt/bin
 curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
