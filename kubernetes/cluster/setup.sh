@@ -12,10 +12,7 @@ chmod +x /opt/madcore/kubernetes/cluster/kubernetes_generate_ssl.sh
 /opt/madcore/kubernetes/cluster/kubernetes_generate_ssl.sh
 
 pushd /opt/madcore/kubernetes/cluster/
-    sudo mkdir -p /opt/docker-compose
-    cp docker-compose.service /opt/docker-compose/docker-compose-kubernetes.service
-    ln -s /opt/docker-compose/docker-compose-kubernetes.service /etc/systemd/system/docker-compose-kubernetes.service
-    cat docker-compose.yml.template | sed -e "s/\${ip}/$KUB_MASTER_IP/" | sed -e "s/\${node_ip}/$ip/" | sed -e "s/\${cluster_name}/${KUB_CLUSTER_NAME}/" > /opt/kubernetes/docker-compose.yml
+    sudo cp kubelet.service /etc/systemd/system/kubelet.service
     cat manifests/proxy.yaml | sed -e "s/\${ip}/$KUB_MASTER_IP/" > /opt/kubernetes/manifests/proxy.yaml
 popd
 
@@ -23,9 +20,7 @@ popd
 sudo systemctl daemon-reload
 
 # Enable the service
-pushd /etc/systemd/system/
-    sudo systemctl enable docker-compose-kubernetes.service
-popd
+sudo systemctl enable kubelet.service
 
 # Start the service
-systemctl start docker-compose-kubernetes
+systemctl start kubelet
