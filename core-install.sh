@@ -44,7 +44,10 @@ systemctl restart etcd
 systemctl enable etcd
 systemctl start flanneld
 systemctl enable flanneld
-systemctl restart docker
+systemctl stop docker
+sleep 5
+systemctl start docker
+
 
 
 
