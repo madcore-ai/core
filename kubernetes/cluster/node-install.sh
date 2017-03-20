@@ -10,6 +10,10 @@ sudo su -c "cat /opt/backup/ssh/id_rsa.pub >> ~/.ssh/authorized_keys" ubuntu
 
 echo "Kub Node Setup"
 
+echo  "disable source-destination health check"
+INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
+sudo aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --no-source-dest-check --region ${AWS_REGION}
+
 # PREREQUESITES
 pushd /tmp
     sudo apt-get update

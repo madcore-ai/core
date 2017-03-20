@@ -2,10 +2,6 @@
 IP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 echo "NODE_IP=$IP" >> /etc/environment
 
-# disable source-destination health check
-INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
-aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --no-source-dest-check --region ${AWS_REGION}
-
 mkdir /opt/bin
 pushd /opt/bin
 curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
