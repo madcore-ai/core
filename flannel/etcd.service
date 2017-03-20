@@ -6,21 +6,22 @@ After=network.target
 Wants=network-online.target
 
 [Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=5m
+TimeoutStopSec=10s
 Environment=DAEMON_ARGS=
 Environment=ETCD_NAME=%H
 Environment=ETCD_DATA_DIR=/var/lib/etcd/default
 Environment=ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380,http://0.0.0.0:7001
-Environment=ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379, http://0.0.0.0:4001
+Environment=ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,http://0.0.0.0:4001
 Environment=ETCD_INITIAL_ADVERTISE_PEER_URLS=http://0.0.0.0:2380,http://0.0.0.0:7001
-Environment=ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379, http://0.0.0.0:4001
+Environment=ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379,http://0.0.0.0:4001
 EnvironmentFile=-/etc/default/%p
 Type=notify
 User=etcd
 PermissionsStartOnly=true
-#ExecStart=/bin/sh -c "GOMAXPROCS=$(nproc) /usr/bin/etcd $DAEMON_ARGS"
 ExecStart=/usr/bin/etcd $DAEMON_ARGS
-Restart=on-abnormal
-#RestartSec=10s
 LimitNOFILE=65536
 
 [Install]

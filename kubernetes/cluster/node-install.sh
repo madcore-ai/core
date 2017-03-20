@@ -21,16 +21,14 @@ popd
 
 ## flannel
 pushd /tmp
-  apt-get install linux-libc-dev golang gcc
-  git clone https://github.com/coreos/flannel.git
-    pushd /tmp/flannel
-      make dist/flanneld-amd64
-      cp dist/flanneld-amd64 /usr/local/bin/flanneld
-    popd
+  apt-get install linux-libc-dev golang gcc -y
+  wget https://github.com/coreos/flannel/releases/download/v0.7.0/flanneld-amd64
+  cp flanneld-amd64 /usr/local/bin/flanneld
+  chmod +x /usr/local/bin/flanneld
 popd
 
 pushd /opt/madcore/flannel
-  cp flanneld.service /etc/systemd/system/flanneld.service
+  cat flanneld_node.service | sed -e "s/\${ip}/$KUB_MASTER_IP/" > /etc/systemd/system/flanneld.service
   cp docker.service /lib/systemd/system/docker.service
 popd
 

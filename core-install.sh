@@ -13,7 +13,7 @@ pushd /tmp
     sudo wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
     sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
     sudo apt-get update
-    sudo apt-get install openjdk-8-jdk git jenkins python-pip awscli haproxy letsencrypt libcurl4-gnutls-dev librtmp-dev apache2-utils jq -y
+    sudo apt-get install openjdk-8-jdk jenkins git python-pip awscli haproxy letsencrypt libcurl4-gnutls-dev librtmp-dev apache2-utils jq -y
     sudo pip install --upgrade pip
     sudo pip install -r /opt/madcore/requirements.txt
     sudo groupadd hab && useradd -g hab -s /bin/bash -m hab
@@ -27,12 +27,10 @@ popd
 
 ## flannel
 pushd /tmp
-  apt-get install linux-libc-dev golang gcc
-  git clone https://github.com/coreos/flannel.git
-    pushd /tmp/flannel
-      make dist/flanneld-amd64
-      cp dist/flanneld-amd64 /usr/local/bin/flanneld
-    popd
+  apt-get install linux-libc-dev golang gcc etcd -y
+  wget https://github.com/coreos/flannel/releases/download/v0.7.0/flanneld-amd64
+  cp flanneld-amd64 /usr/local/bin/flanneld
+  chmod +x /usr/local/bin/flanneld
 popd
 
 pushd /opt/madcore/flannel
@@ -46,7 +44,10 @@ systemctl restart etcd
 systemctl enable etcd
 systemctl start flanneld
 systemctl enable flanneld
-systemctl restart docker
+systemctl stop docker
+sleep 5
+systemctl start docker
+
 
 
 

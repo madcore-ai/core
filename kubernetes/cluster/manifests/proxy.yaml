@@ -8,11 +8,12 @@ spec:
   hostNetwork: true
   containers:
   - name: kube-proxy
-    image: gcr.io/google_containers/hyperkube-amd64:v1.5.2
+    image: gcr.io/google_containers/hyperkube-amd64:v1.5.4
     command:
     - /hyperkube
     - proxy
     - --master=https://${ip}:8443
+    - --cluster-cidr=172.16.0.0/16
     - --kubeconfig=/etc/kubernetes/ssl/worker-kubeconfig.yaml
     - --proxy-mode=iptables
     securityContext:

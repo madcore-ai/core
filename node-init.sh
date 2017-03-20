@@ -6,6 +6,10 @@ sudo echo ENV=AWS >> /etc/environment
 
 KUB_MASTER_IP="${KUB_MASTER_IP:-10.99.101.99}"
 
+# disable source-destination health check
+INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
+aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --no-source-dest-check --region ${AWS_REGION}
+
 # PRECONFIGURE madcore
 sudo apt-get update
 sudo apt-get install git -y

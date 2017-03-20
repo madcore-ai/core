@@ -4,7 +4,12 @@ Requires=etcd.service
 After=etcd.service
 
 [Service]
-ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "172.16.0.0/16" }'
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=5m
+TimeoutStopSec=10s
+ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "172.16.0.0/16","SubnetLen":24, "Backend":{ "Type":"aws-vpc" } }'
+ExecStartPre=/sbin/iptables -P FORWARD ACCEPT
 ExecStart=/usr/local/bin/flanneld
 
 [Install]

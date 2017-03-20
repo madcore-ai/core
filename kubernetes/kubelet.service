@@ -1,0 +1,42 @@
+[Unit]
+Description=My Rigistry
+Requires=docker.service etcd.service
+After=docker.service etcd.service
+
+[Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=5m
+TimeoutStopSec=10s
+ExecStartPre=-/usr/bin/docker rm -f kubelet
+ExecStartPre=/usr/bin/docker pull gcr.io/google_containers/hyperkube:v1.5.4
+ExecStart=/usr/bin/docker run \
+     --tty \
+     --net=host \
+     --pid=host \
+     --privileged \
+     --restart=unless-stopped \
+     --name kubelet \
+     --volume /:/rootfs:ro \
+     --volume /sys:/sys:ro \
+     --volume /dev:/dev \
+     --volume /var/run/docker.sock:/var/run/docker.sock \
+     --volume /var/lib/docker/:/var/lib/docker:rw \
+     --volume /var/lib/kubelet/:/var/lib/kubelet:shared \
+     --volume /var/run:/var/run:rw \
+     --volume /opt/kubernetes/manifests/:/etc/kubernetes/manifests/ \
+     --volume /opt/kubernetes/ssl/:/etc/kubernetes/ssl/ \
+     gcr.io/google_containers/hyperkube:v1.5.4 \
+     /hyperkube kubelet \
+     --allow-privileged \
+     --address=0.0.0.0 \
+     --api-servers=http://127.0.0.1:8080 \
+     --config=/etc/kubernetes/manifests \
+     --cluster-dns=10.0.0.10 \
+     --cluster-domain=cluster.local \
+     --containerized \
+     --v=2 \
+     --node-labels=core
+
+[Install]
+WantedBy=multi-user.target
