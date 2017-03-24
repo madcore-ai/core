@@ -5,6 +5,7 @@ job('madcore.kubectl.wait.pod.up') {
 
     steps {
         def command = """#!/bin/bash
+status=""
 until [[ $status == "Running" ]]; do
 status=\$(kubectl get pods --all-namespaces | grep \$POD_NAME | awk '{print \$4}')
 done
