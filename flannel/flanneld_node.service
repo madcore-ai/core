@@ -1,0 +1,14 @@
+[Unit]
+Description=Flannel daemon
+
+
+[Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=5m
+TimeoutStopSec=10s
+ExecStartPre=/sbin/iptables -P FORWARD ACCEPT
+ExecStart=/usr/local/bin/flanneld --etcd-endpoints=http://${ip}:4001
+
+[Install]
+WantedBy=multi-user.target

@@ -1,4 +1,7 @@
 #!/bin/bash
+IP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+echo "NODE_IP=$IP" >> /etc/environment
+
 mkdir /opt/bin
 pushd /opt/bin
 curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
@@ -13,8 +16,7 @@ chmod +x /opt/madcore/kubernetes/kubernetes_generate_ssl.sh
 /opt/madcore/kubernetes/kubernetes_generate_ssl.sh
 
 pushd /opt/madcore/kubernetes/
-    cp docker-compose.service /etc/systemd/system/docker-compose-kubernetes.service
-    cp docker-compose.yml.template  /opt/kubernetes/docker-compose.yml
+    sudo cp kubelet.service /etc/systemd/system/kubelet.service
     cp -R manifests /opt/kubernetes
     cp -R addons /opt/kubernetes
     cp -R ssl /opt/kubernetes
@@ -24,12 +26,11 @@ popd
 sudo systemctl daemon-reload
 
 # Enable the service
-pushd /etc/systemd/system/
-    sudo systemctl enable docker-compose-kubernetes.service
-popd
+systemctl enable kubelet.service
+
 
 # Start the service
-systemctl start docker-compose-kubernetes
+systemctl start kubelet
 
 # wait kubernetes api
 echo "waiting kubernetes api...."
