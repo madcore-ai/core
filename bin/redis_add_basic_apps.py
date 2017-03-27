@@ -12,7 +12,8 @@ data_apps = [
     {"name": "kubedash", "port": "8080"},
     {"name": "grafana", "port": "8080"},
     {"name": "spark", "port": "8080"},
-    {"name": "zeppelin", "port": "80"}
+    {"name": "zeppelin", "port": "80"},
+    {"name": "elasticsearch", "port": "9200"}
 ]
 
 r_server.set(i_key, json.dumps(data_apps))
