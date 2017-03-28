@@ -104,6 +104,12 @@ if (check == "1") or (need_haproxy == "yes"):
                 ri = "redirect  code 301 location https://kubeapi.%s:8080/api/v1/proxy/namespaces/spark-cluster/services/zeppelin/ if is_%s \n    " % (
                     data["Hostname"], app["name"])
                 redirect += ri
+            elif app["name"] == 'elasticsearch':
+                ai = "acl is_%s hdr_end(host) -i %s.%s \n    " % (app["name"], app["name"], data["Hostname"])
+                acl += ai
+                ri = "redirect  code 301 location https://kubeapi.%s:8080/api/v1/proxy/namespaces/es-cluster/services/elasticsearch:9200/ if is_%s \n    " % (
+                    data["Hostname"], app["name"])
+                redirect += ri
             else:
                 i = "use_backend %s if { hdr_end(host) -i %s }\n    " % (
                     app["name"], app["name"] + "." + data['Hostname'])
