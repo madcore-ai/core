@@ -83,7 +83,7 @@ if data_apps:
     apps = json.loads(data_apps)
     for app in apps:
         ### get service ip
-        service_ip = run("kubectl get svc --all-namespaces | grep %s | grep %s | awk '{print $3}'" % (app["namespace"], app["service_name"]))
+        service_ip = run("kubectl get svc --all-namespaces | grep %s | grep %s | awk '{print $3}' | tr -d '\n'" % (app["namespace"], app["service_name"]))
         if service_ip == "":
             service_ip = "127.0.0.1"
         i = "use_backend %s if { hdr_end(host) -i %s }\n    " % (
