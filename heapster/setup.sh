@@ -26,3 +26,6 @@ kubectl create -f /opt/heapster
 echo "Waiting for monitoring-grafana (may take few minutes) …"
 sudo su -c "until curl -sL -w '%{http_code}' 'http://localhost:8080/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 echo “monitoring-grafana confirmed”
+
+# Recongigure haproxy
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build madcore.ssl.letsencrypt.getandinstall -p S3BucketName=${S3_BUCKET}" jenkins

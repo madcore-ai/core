@@ -8,6 +8,8 @@ app_key = "apps"
 app_info = json.loads(r_server.get(app_key))
 app_name = sys.argv[1]
 app_port = sys.argv[2]
+app_namespace = sys.argv[3]
+app_service_name = sys.argv[4]
 check = False
 
 for app in app_info:
@@ -16,7 +18,7 @@ for app in app_info:
         break
 
 if not check:
-    element = '[{"name":"%s", "port":"%s"}]' % (app_name, app_port)
+    element = '[{"name":"%s", "namespace":"%s", "service_name":"%s" "port":"%s"}]' % (app_name, app_namespace, app_service_name  app_port)
     el = json.loads(element)
     app_info.extend(el)
     app_data = json.dumps(app_info)
