@@ -5,10 +5,16 @@ import json
 import os
 import pycurl
 import sys
+import subprocess
 from StringIO import StringIO
 
 import redis
 from jinja2 import Template
+
+
+def run(command):
+    output = subprocess.check_output(command, shell=True)
+    return output
 
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 check = r_server.get("need_CSR")
@@ -77,7 +83,7 @@ if data_apps:
     apps = json.loads(data_apps)
     for app in apps:
         ### get service ip
-        service_ip = os.system("kubectl get svc --all-namespaces | grep %s | grep %s | awk '{print $3}'" % (app["namespace"], app["service_name"]))
+        service_ip = run("kubectl get svc --all-namespaces | grep %s | grep %s | awk '{print $3}'" % (app["namespace"], app["service_name"]))
         if service_ip == "":
             service_ip = "127.0.0.1"
         i = "use_backend %s if { hdr_end(host) -i %s }\n    " % (
