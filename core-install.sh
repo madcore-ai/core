@@ -7,7 +7,6 @@
 echo "INSTALLING CORE OF MADCORE"
 
 
-
 # PREREQUESITES
 pushd /tmp
     sudo wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
@@ -140,6 +139,11 @@ sudo bash "/opt/madcore/registrydocker/setup.sh"
 sudo bash "/opt/madcore/kubernetes/setup.sh"
 sudo bash "/opt/madcore/heapster/setup.sh"
 sudo bash "/opt/madcore/helm/setup.sh"
+
+
+### add dns recore to host
+IP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+echo "${IP} madcore.core" >> /etc/hosts
 
 # Run only if we are on VAGRANT env
 if [[ "$ENV" == "VAGRANT" ]]; then
