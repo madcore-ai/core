@@ -87,8 +87,7 @@ if data_apps:
             app["name"], app["name"],service_ip, app["port"]))
         backend_conf += i
     template = Template(config_template)
-    config = (
-        template.render(hostname=hostname, crt_path=crt_path, subdomain=frontend_conf, backend=backend_conf)
+    config = (template.render(hostname=hostname, crt_path=crt_path, subdomain=frontend_conf, backend=backend_conf)
 else:
     template = Template(config_template)
     config = (template.render(hostname=hostname, crt_path=crt_path))
