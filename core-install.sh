@@ -143,7 +143,7 @@ sudo bash "/opt/madcore/helm/setup.sh"
 
 ### add dns recore to host
 IP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
-echo "${IP} core.madcore" >> /etc/hosts
+sudo echo "${IP} core.madcore" >> /etc/hosts
 
 # Run only if we are on VAGRANT env
 if [[ "$ENV" == "VAGRANT" ]]; then
