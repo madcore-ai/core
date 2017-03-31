@@ -79,7 +79,7 @@ if data_apps:
         ### get service ip
         service_ip = os.system("kubectl get svc --all-namespaces | grep %s | grep %s | awk '{print $3}'" % (app["namespace"], app["service_name"]))
         if service_ip == "":
-            service_ip = 127.0.0.1
+            service_ip = "127.0.0.1"
         i = "use_backend %s if { hdr_end(host) -i %s }\n    " % (
             app["name"], app["name"] + "." + data['Hostname'])
         frontend_conf += i
