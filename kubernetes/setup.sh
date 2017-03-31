@@ -47,5 +47,8 @@ echo "kubernetes api server is ready"
 
 kubectl create -f /opt/kubernetes/addons
 
+# Run reconfigure HAproxy
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build madcore.ssl.letsencrypt.getandinstall -p S3BucketName=${S3_BUCKET}" jenkins
+
 # Run backup job
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build madcore.backup -p S3BucketName=${S3_BUCKET}" jenkins
