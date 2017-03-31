@@ -7,7 +7,7 @@ i_key = "apps"
 
 data_apps = [
     {"name": "jenkins", "namespace": "", "service_name": "","port": "8880"},
-    {"name": "kubeapi", "namespace": "", "service_name": "", "port": "443"},
+    {"name": "kubeapi", "namespace": "", "service_name": "", "port": "8080"},
     {"name": "kubedash", "namespace": "kube-system", "service_name": "kubernetes-dashboard", "port": "80"},
     {"name": "grafana", "namespace": "kube-system", "service_name": "monitoring-grafana", "port": "80"},
     {"name": "spark", "namespace": "spark-cluster", "service_name": "spark-ui-proxy","port": "80"},
