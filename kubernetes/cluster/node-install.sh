@@ -2,6 +2,9 @@
 # Ubuntu Xenial Initialization from Cloud-Init or Vagrant
 # From Ubuntu user
 # Maintained by Peter Styk (devopsfactory@styk.tv)
+
+sudo echo "${KUB_MASTER_IP} core.madcore" >> /etc/hosts
+
 sudo apt update -y
 sudo apt install python python-pip
 sudo pip install awscli
