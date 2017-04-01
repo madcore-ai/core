@@ -18,7 +18,7 @@ for app in app_info:
         break
 
 if not check:
-    element = '[{"name":"%s", "namespace":"%s", "service_name":"%s" "port":"%s"}]' % (app_name, app_namespace, app_service_name,  app_port)
+    element = '[{"name":"%s", "namespace":"%s", "service_name":"%s", "port":"%s"}]' % (app_name, app_namespace, app_service_name,  app_port)
     el = json.loads(element)
     app_info.extend(el)
     app_data = json.dumps(app_info)
