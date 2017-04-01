@@ -8,7 +8,7 @@ job('madcore.redis.app.update') {
     }
     steps {
         def command = """#!/bin/bash
-    python /opt/madcore/bin/redis_app_update.py "params.APP_NAME" "params.SERVICE_PORT" "params.APP_NAMESPACE" "params.APP_SERVICE_NAME"
+    python /opt/madcore/bin/redis_app_update.py "\$APP_NAME" "\$SERVICE_PORT" "\$APP_NAMESPACE" "\$APP_SERVICE_NAME"
 """
         shell(command)
     }

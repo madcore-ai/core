@@ -6,7 +6,7 @@ sudo echo ENV=AWS >> /etc/environment
 
 KUB_MASTER_IP="${KUB_MASTER_IP:-10.99.101.99}"
 
-sudo echo "${KUB_MASTER_IP} core.madcore" >> /etc/hosts
+
 
 
 
