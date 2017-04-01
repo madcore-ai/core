@@ -1,7 +1,7 @@
 mkdir -p /opt/docker_ssl/
 
 
-/opt/madcore/registrydocker/ssl/generate_CSR.sh
+bash /opt/madcore/registrydocker/ssl/generate_CSR.sh
 
 pushd /opt/docker_ssl/
     sudo openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
