@@ -25,6 +25,11 @@ cp /hab/svc/redis/data/dump.rdb ${BACKUP_DIR}/redis/
 mkdir -p ${BACKUP_DIR}/ssh
 cp /var/lib/jenkins/.ssh/id_rsa.pub ${BACKUP_DIR}/ssh/
 
+# backup docker certs
+mkdir -p ${BACKUP_DIR}/docker_ssl
+cp /opt/docker_ssl/server.crt ${BACKUP_DIR}/docker_ssl/core.madcore.crt
+
+
 # backup kubernetes certs
 mkdir -p ${BACKUP_DIR}/kubernetes
 cp /opt/kubernetes/ssl/ca.pem ${BACKUP_DIR}/kubernetes/
