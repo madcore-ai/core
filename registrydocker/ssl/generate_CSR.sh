@@ -27,7 +27,7 @@ countryName_default = GB
 localityName_default = London
 0.organizationName_default = Madcore Ltd.
 organizationalUnitName_default = Development
-commonName_default = $SERVER
+commonName_default = core.madcore
 
 [ v3_req ]
 basicConstraints = CA:FALSE
@@ -36,8 +36,8 @@ subjectAltName = @SAN
 
 
 [ SAN ]
-subjectAltName=DNS:madcore.$SERVER, DNS:grafana.$SERVER, DNS:influxdb.$SERVER, DNS:jenkins.$SERVER, DNS:kubeapi.$SERVER, DNS:kubedash.$SERVER" > /etc/pki/tls/certs/openssl.cnf
+subjectAltName=DNS:core.madcore" > /opt/docker_ssl/openssl.cnf
 
-pushd /etc/pki/tls/certs
+pushd /opt/docker_ssl/
     sudo openssl req -nodes -newkey rsa:2048 -keyout server.key -out server.csr -config openssl.cnf -sha256 -batch -reqexts SAN
 popd

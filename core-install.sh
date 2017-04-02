@@ -135,6 +135,7 @@ sudo chown -R jenkins:jenkins /opt/ingress
 # SETUP
 sudo bash "/opt/madcore/sslselfsigned/setup.sh"
 sudo bash "/opt/madcore/haproxy/setup.sh"
+sudo bash "/opt/madcore/registrydocker/ssl/generate_ssl.sh"
 sudo bash "/opt/madcore/registrydocker/setup.sh"
 sudo bash "/opt/madcore/kubernetes/setup.sh"
 sudo bash "/opt/madcore/heapster/setup.sh"
