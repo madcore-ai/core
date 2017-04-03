@@ -10,6 +10,7 @@ TimeoutStartSec=5m
 TimeoutStopSec=10s
 ExecStartPre=-/usr/bin/docker rm -f kubelet
 ExecStartPre=/usr/bin/docker pull gcr.io/google_containers/hyperkube:v1.5.4
+ExecStartPost=/sbin/iptables -P FORWARD ACCEPT
 ExecStart=/usr/bin/docker run \
      --tty \
      --net=host \
