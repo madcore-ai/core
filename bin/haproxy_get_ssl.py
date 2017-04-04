@@ -98,4 +98,5 @@ else:
     template = Template(config_template)
     config = (template.render(hostname=hostname, crt_path=crt_path))
 open("/opt/haproxy/haproxy.cfg", "w").write(config)
-os.system("haproxy -f /opt/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)")
+#os.system("haproxy -f /opt/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)")
+os.system("service haproxy reload")
