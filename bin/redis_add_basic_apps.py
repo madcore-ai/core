@@ -14,6 +14,8 @@ data_apps = [
     {"name": "zeppelin", "namespace": "spark-cluster", "service_name": "zeppelin", "port": "80"},
     {"name": "elasticsearch", "namespace": "es-cluster", "service_name": "elasticsearch-main", "port": "9200"},
     {"name": "influxdb", "namespace": "kube-system", "service_name": "monitoring-influxdb", "port": "8083"}
+    {"name": "influxdb", "namespace": "kube-system", "service_name": "monitoring-influxdb", "port": "8083"}
+    {"name": "influxdb-api", "namespace": "kube-system", "service_name": "monitoring-influxdb", "port": "8086"}
 ]
 
 r_server.set(i_key, json.dumps(data_apps))
