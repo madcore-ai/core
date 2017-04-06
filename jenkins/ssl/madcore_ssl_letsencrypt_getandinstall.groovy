@@ -4,7 +4,12 @@ job('madcore.ssl.letsencrypt.getandinstall') {
     }
     steps {
         def command = """#!/bin/bash
-	sudo /opt/madcore/bin/haproxy_get_ssl.py
+sudo /opt/madcore/bin/haproxy_get_ssl.py
+CODE=$?
+if [[ $CODE -ne 0 ]]; then
+	echo "MADCORE GET CERT FAILED WITH POSITIVE CODE ($CODE). FORCING JENKINS BASH EXIT AS -1 (TO SHOW THE FAIL)"
+	exit -1
+fi
 """
         shell(command)
     }
