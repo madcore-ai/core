@@ -4,7 +4,7 @@ job('madcore.ssl.letsencrypt.getandinstall') {
     }
     steps {
         def command = """#!/bin/bash
-        sudo /opt/madcore/bin/haproxy_get_ssl.py
+	sudo /opt/madcore/bin/haproxy_get_ssl.py
 """
         shell(command)
     }
@@ -19,5 +19,3 @@ job('madcore.ssl.letsencrypt.getandinstall') {
         }
     }
 }
-
-​
