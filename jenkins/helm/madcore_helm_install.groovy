@@ -8,7 +8,7 @@ job('madcore.helm.install') {
     steps {
         def command = """#!/bin/bash
 pushd /opt/madcore/helm
-    bash install.sh /opt/plugins/charts/"\$CHART" --name "\$RELEASE_NAME" --namespace="\$NAMESPACE"
+    bash install.sh /opt/plugins/"\$CHART" --name "\$RELEASE_NAME" --namespace="\$NAMESPACE"
 popd
 """
         shell(command)

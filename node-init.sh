@@ -8,6 +8,8 @@ KUB_MASTER_IP="${KUB_MASTER_IP:-10.99.101.99}"
 
 
 
+
+
 # PRECONFIGURE madcore
 sudo apt-get update
 sudo apt-get install git -y

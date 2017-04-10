@@ -5,10 +5,16 @@ import json
 import os
 import pycurl
 import sys
+import subprocess
 from StringIO import StringIO
 
 import redis
 from jinja2 import Template
+
+
+def run(command):
+    output = subprocess.check_output(command, shell=True)
+    return output
 
 r_server = redis.StrictRedis('127.0.0.1', db=2)
 check = r_server.get("need_CSR")
@@ -65,63 +71,32 @@ if check == "1":
 else:
     print("Don't need new certificate")
 
-# reconfigure haproxy
-if (check == "1") or (need_haproxy == "yes"):
-
-    app_key = "apps"
-    data_apps = r_server.get(app_key)
-    os.system("rm -rf /opt/haproxy/haproxy.cfg")
-    config_template = open('/opt/madcore/bin/templates/haproxy.cfg').read()
-    if os.environ["ENV"] == 'AWS':
-        crt_path = "/opt/certs/server.bundle.pem"
-    else:
-        crt_path = "/etc/pki/tls/certs/server.bundle.pem"
-
-    if data_apps:
-        apps = json.loads(data_apps)
-        for app in apps:
-            if app["name"] == 'kubedash':
-                ai = "acl is_%s hdr_end(host) -i %s.%s \n    " % (app["name"], app["name"], data["Hostname"])
-                acl += ai
-                ri = "redirect  code 301 location https://kubeapi.%s/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard/ if is_%s \n    " % (
-                    data["Hostname"], app["name"])
-                redirect += ri
-            elif app["name"] == 'grafana':
-                ai = "acl is_%s hdr_end(host) -i %s.%s \n    " % (app["name"], app["name"], data["Hostname"])
-                acl += ai
-                ri = "redirect  code 301 location https://kubeapi.%s/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/ if is_%s \n    " % (
-                    data["Hostname"], app["name"])
-                redirect += ri
-            elif app["name"] == 'spark':
-                ai = "acl is_%s hdr_end(host) -i %s.%s \n    " % (app["name"], app["name"], data["Hostname"])
-                acl += ai
-                ri = "redirect  code 301 location https://kubeapi.%s:8080/api/v1/proxy/namespaces/spark-cluster/services/spark-master:8080/ if is_%s \n    " % (
-                    data["Hostname"], app["name"])
-                redirect += ri
-            elif app["name"] == 'zeppelin':
-                ai = "acl is_%s hdr_end(host) -i %s.%s \n    " % (app["name"], app["name"], data["Hostname"])
-                acl += ai
-                ri = "redirect  code 301 location https://kubeapi.%s:8080/api/v1/proxy/namespaces/spark-cluster/services/zeppelin/ if is_%s \n    " % (
-                    data["Hostname"], app["name"])
-                redirect += ri
-            else:
-                i = "use_backend %s if { hdr_end(host) -i %s }\n    " % (
-                    app["name"], app["name"] + "." + data['Hostname'])
-                frontend_conf += i
-                i = ("backend %s\n    balance roundrobin\n    server %s 127.0.0.1:%s check\n  " % (
-                    app["name"], app["name"], app["port"]))
-                backend_conf += i
-        template = Template(config_template)
-        config = (
-            template.render(hostname=hostname, crt_path=crt_path, subdomain=frontend_conf, backend=backend_conf,
-                            acl=acl,
-                            redirect=redirect))
-    else:
-        template = Template(config_template)
-        config = (template.render(hostname=hostname, crt_path=crt_path))
-
-    open("/opt/haproxy/haproxy.cfg", "w").write(config)
-    os.system("haproxy -f /opt/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)")
-
+app_key = "apps"
+data_apps = r_server.get(app_key)
+os.system("rm -rf /opt/haproxy/haproxy.cfg")
+config_template = open('/opt/madcore/bin/templates/haproxy.cfg').read()
+if os.environ["ENV"] == 'AWS':
+    crt_path = "/opt/certs/server.bundle.pem"
 else:
-    print("Don't need reconfigure HAproxy")
+    crt_path = "/etc/pki/tls/certs/server.bundle.pem"
+if data_apps:
+    apps = json.loads(data_apps)
+    for app in apps:
+        ### get service ip
+        service_ip = run("sudo su -c \"kubectl get svc --all-namespaces | grep %s | grep %s | awk '{print \$3}' | tr -d '\n'\" jenkins" % (app["namespace"], app["service_name"]))
+        if service_ip == "":
+            service_ip = "127.0.0.1"
+        i = "use_backend %s if { hdr_end(host) -i %s }\n    " % (
+            app["name"], app["name"] + "." + data['Hostname'])
+        frontend_conf += i
+        i = ("backend %s\n    balance roundrobin\n    server %s %s:%s check\n  " % (
+            app["name"], app["name"],service_ip, app["port"]))
+        backend_conf += i
+    template = Template(config_template)
+    config = (template.render(hostname=hostname, crt_path=crt_path, subdomain=frontend_conf, backend=backend_conf))
+else:
+    template = Template(config_template)
+    config = (template.render(hostname=hostname, crt_path=crt_path))
+open("/opt/haproxy/haproxy.cfg", "w").write(config)
+#os.system("haproxy -f /opt/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)")
+os.system("service haproxy reload")

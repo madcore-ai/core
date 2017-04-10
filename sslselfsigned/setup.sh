@@ -1,7 +1,7 @@
 mkdir -p /etc/pki/tls/certs
 export SERVER=$HOSTNAME
 
-/opt/madcore/sslselfsigned/generate_CSR.sh
+bash /opt/madcore/sslselfsigned/generate_CSR.sh
 
 pushd /etc/pki/tls/certs
     sudo openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt

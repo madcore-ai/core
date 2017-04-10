@@ -2,14 +2,13 @@ job('madcore.redis.app.update') {
     wrappers { preBuildCleanup() }
     parameters {
 	stringParam('APP_NAME', '', '')
-	stringParam('APP_PORT', '', '')
+	stringParam('SERVICE_PORT', '', '')
+  stringParam('APP_NAMESPACE', '', '')
+	stringParam('APP_SERVICE_NAME', '', '')
     }
     steps {
         def command = """#!/bin/bash
-echo "APP_NAME: '\$APP_NAME'"
-echo "APP_PORT: '\$APP_PORT'"
-
-    python /opt/madcore/bin/redis_app_update.py "\$APP_NAME" "\$APP_PORT"
+    python /opt/madcore/bin/redis_app_update.py "\$APP_NAME" "\$SERVICE_PORT" "\$APP_NAMESPACE" "\$APP_SERVICE_NAME"
 """
         shell(command)
     }

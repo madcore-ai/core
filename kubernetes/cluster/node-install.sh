@@ -2,11 +2,16 @@
 # Ubuntu Xenial Initialization from Cloud-Init or Vagrant
 # From Ubuntu user
 # Maintained by Peter Styk (devopsfactory@styk.tv)
+
+sudo echo "${KUB_MASTER_IP} core.madcore" >> /etc/hosts
+
 sudo apt update -y
 sudo apt install python python-pip
 sudo pip install awscli
 echo "copy ssh keys"
 sudo su -c "cat /opt/backup/ssh/id_rsa.pub >> ~/.ssh/authorized_keys" ubuntu
+sudo cp /opt/backup/docker_ssl/core.madcore.crt /usr/local/share/ca-certificates/core.madcore.crt
+sudo update-ca-certificates
 
 echo "Kub Node Setup"
 

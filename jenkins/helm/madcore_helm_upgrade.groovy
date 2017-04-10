@@ -8,7 +8,7 @@ job('madcore.helm.upgrade') {
     steps {
         def command = """#!/bin/bash
 pushd /opt/madcore/helm
-    bash upgrade.sh "\$RELEASE_NAME" /opt/plugins/charts/"\$CHART" --namespace="\$NAMESPACE"
+    bash upgrade.sh "\$RELEASE_NAME" /opt/plugins/"\$CHART" --namespace="\$NAMESPACE"
 popd
 """
         shell(command)
