@@ -26,10 +26,15 @@ popd
 
 ### etcd
 pushd /var
+    sudo mkdir /var/lib/etcd
+    sudo useradd etcd
     sudo apt-get install linux-libc-dev golang gcc -y
     sudo curl -L  https://github.com/coreos/etcd/releases/download/v3.1.5/etcd-v3.1.5-linux-amd64.tar.gz -o etcd.tar.gz
     sudo tar -xzvf etcd.tar.gz
     sudo cp etcd-v3.1.5-linux-amd64/etcd /usr/bin/etcd
+    sudo cp etcd-v3.1.5-linux-amd64/etcdctl /usr/bin/etcdctl
+    chown -R etcd /var/lib/etcd
+    chown -R etcd /usr/bin/etcd
 popd
 
 
