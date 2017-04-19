@@ -31,7 +31,6 @@ ExecStart=/usr/bin/docker run \
      gcr.io/google_containers/hyperkube-amd64:v1.6.1 \
      /hyperkube kubelet \
      --require-kubeconfig \
-     --kubeconfig=/etc/kubernetes/ssl/worker-kubeconfig.conf \
      --allow-privileged \
      --address=0.0.0.0 \
      --register-node=true \
