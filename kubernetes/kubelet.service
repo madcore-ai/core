@@ -31,8 +31,8 @@ ExecStart=/usr/bin/docker run \
      /hyperkube kubelet \
      --allow-privileged \
      --address=0.0.0.0 \
-     --api-servers=http://127.0.0.1:8080 \
-     --config=/etc/kubernetes/manifests \
+     --kubeconfig=/etc/kubernetes/ssl/kube.conf \
+     --pod-manifest-path=/etc/kubernetes/manifests \
      --cluster-dns=10.0.0.10 \
      --cluster-domain=cluster.local \
      --containerized \

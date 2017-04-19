@@ -30,12 +30,12 @@ ExecStart=/usr/bin/docker run \
      --volume /opt/kubernetes/ssl/:/etc/kubernetes/ssl/ \
      gcr.io/google_containers/hyperkube-amd64:v1.6.1 \
      /hyperkube kubelet \
-     --api-servers=https://${KUB_MASTER_IP}:8443 \
+     --kubeconfig=/etc/kubernetes/ssl/kube.conf \
      --allow-privileged \
      --address=0.0.0.0 \
      --register-node=true \
      --node-ip=${NODE_IP} \
-     --config=/etc/kubernetes/manifests \
+     --pod-manifest-path=/etc/kubernetes/manifests \
      --cluster-dns=10.0.0.10 \
      --cluster-domain=cluster.local \
      --kubeconfig=/etc/kubernetes/ssl/worker-kubeconfig.yaml \
