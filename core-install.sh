@@ -24,12 +24,25 @@ pushd /tmp
     sudo curl -sSf https://static.rust-lang.org/rustup.sh | sh
 popd
 
+### etcd
+pushd /var
+    sudo mkdir /var/lib/etcd
+    sudo useradd etcd
+    sudo apt-get install linux-libc-dev golang gcc -y
+    sudo curl -L  https://github.com/coreos/etcd/releases/download/v3.1.5/etcd-v3.1.5-linux-amd64.tar.gz -o etcd.tar.gz
+    sudo tar -xzvf etcd.tar.gz
+    sudo cp etcd-v3.1.5-linux-amd64/etcd /usr/bin/etcd
+    sudo cp etcd-v3.1.5-linux-amd64/etcdctl /usr/bin/etcdctl
+    chown -R etcd /var/lib/etcd
+    chown -R etcd /usr/bin/etcd
+popd
+
+
 ## flannel
 pushd /tmp
-  apt-get install linux-libc-dev golang gcc etcd -y
-  wget https://github.com/coreos/flannel/releases/download/v0.7.0/flanneld-amd64
-  cp flanneld-amd64 /usr/local/bin/flanneld
-  chmod +x /usr/local/bin/flanneld
+  sudo wget https://github.com/coreos/flannel/releases/download/v0.7.0/flanneld-amd64
+  sudo cp flanneld-amd64 /usr/local/bin/flanneld
+  sudo chmod +x /usr/local/bin/flanneld
 popd
 
 pushd /opt/madcore/flannel
