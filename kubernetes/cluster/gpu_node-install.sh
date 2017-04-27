@@ -5,13 +5,20 @@
 
 sudo echo "${KUB_MASTER_IP} core.madcore" >> /etc/hosts
 
-sudo yum update -y
-sudo yum install python python-pip
+sudo apt update -y
+sudo apt install python python-pip
 sudo pip install awscli
 echo "copy ssh keys"
 sudo su -c "cat /opt/backup/ssh/id_rsa.pub >> ~/.ssh/authorized_keys" ubuntu
 sudo cp /opt/backup/docker_ssl/core.madcore.crt /usr/local/share/ca-certificates/core.madcore.crt
 sudo update-ca-certificates
+
+### Install cuda
+pushd /var
+  wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+  sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+  sudo apt-get install gcc cuda cuda-drivers nvidia-cuda-toolkit -y
+popd
 
 echo "Kub Node Setup"
 
@@ -21,8 +28,8 @@ sudo aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --no-source-
 
 # PREREQUESITES
 pushd /tmp
-    sudo yum update -y
-    sudo yum install git -y
+    sudo apt-get update
+    sudo apt-get install git -y
     sudo curl -fsSL https://get.docker.com/ | sh
     sudo wget https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
@@ -30,7 +37,7 @@ popd
 
 ## flannel
 pushd /tmp
-  sudo yum install linux-libc-dev golang gcc -y
+  apt-get install linux-libc-dev golang gcc -y
   wget https://github.com/coreos/flannel/releases/download/v0.7.0/flanneld-amd64
   cp flanneld-amd64 /usr/local/bin/flanneld
   chmod +x /usr/local/bin/flanneld
@@ -48,4 +55,4 @@ systemctl restart docker
 
 
 # PROXY,REGISTRIES, KUBERNETES
-sudo bash "/opt/madcore/kubernetes/GPU/setup.sh"
+sudo bash "/opt/madcore/kubernetes/cluster/setup.sh"
