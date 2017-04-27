@@ -57,3 +57,7 @@ systemctl restart docker
 
 # PROXY,REGISTRIES, KUBERNETES
 sudo bash "/opt/madcore/kubernetes/cluster/setup.sh"
+
+
+#### reboot for activate nvidia drivers
+sudo reboot
