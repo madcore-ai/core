@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: kubedns
-        image: gcr.io/google_containers/kubedns-amd64:1.8
+        image: gcr.io/google_containers/kubedns-amd64:1.9
         resources:
           limits:
             memory: 170Mi
@@ -63,7 +63,7 @@ spec:
         - name: kubernetes-ssl
           mountPath: /etc/kubernetes/ssl
       - name: dnsmasq
-        image: gcr.io/google_containers/kube-dnsmasq-amd64:1.4
+        image: gcr.io/google_containers/kube-dnsmasq-amd64:1.4.1
         livenessProbe:
           httpGet:
             path: /healthz-dnsmasq

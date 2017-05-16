@@ -8,7 +8,7 @@ spec:
   hostNetwork: true
   containers:
   - name: scheduler
-    image: gcr.io/google_containers/hyperkube-amd64:v1.5.4
+    image: gcr.io/google_containers/hyperkube-amd64:v1.6.1
     command:
     - "/hyperkube"
     - scheduler
@@ -16,7 +16,7 @@ spec:
     - "--leader-elect=true"
     - "--v=2"
   - name: setup
-    image: gcr.io/google_containers/hyperkube-amd64:v1.5.4
+    image: gcr.io/google_containers/hyperkube-amd64:v1.6.1
     command:
     - "/setup-files.sh"
     - IP:10.0.0.1,DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc,DNS:kubernetes.default.svc.cluster.local

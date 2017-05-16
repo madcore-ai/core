@@ -9,7 +9,7 @@ RestartSec=10
 TimeoutStartSec=5m
 TimeoutStopSec=10s
 ExecStartPre=-/usr/bin/docker rm -f kubelet
-ExecStartPre=/usr/bin/docker pull gcr.io/google_containers/hyperkube:v1.5.4
+ExecStartPre=/usr/bin/docker pull gcr.io/google_containers/hyperkube-amd64:v1.6.1
 ExecStartPost=/sbin/iptables -P FORWARD ACCEPT
 ExecStart=/usr/bin/docker run \
      --tty \
@@ -27,12 +27,13 @@ ExecStart=/usr/bin/docker run \
      --volume /var/run:/var/run:rw \
      --volume /opt/kubernetes/manifests/:/etc/kubernetes/manifests/ \
      --volume /opt/kubernetes/ssl/:/etc/kubernetes/ssl/ \
-     gcr.io/google_containers/hyperkube:v1.5.4 \
+     gcr.io/google_containers/hyperkube-amd64:v1.6.1 \
      /hyperkube kubelet \
      --allow-privileged \
      --address=0.0.0.0 \
-     --api-servers=http://127.0.0.1:8080 \
-     --config=/etc/kubernetes/manifests \
+     --require-kubeconfig \
+     --kubeconfig=/etc/kubernetes/ssl/kube.conf \
+     --pod-manifest-path=/etc/kubernetes/manifests \
      --cluster-dns=10.0.0.10 \
      --cluster-domain=cluster.local \
      --containerized \
