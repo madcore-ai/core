@@ -5,7 +5,7 @@ job_name = 'madcore.docker.image.build'
 repo_url = sys.argv[1]
 app_name = sys.argv[2]
 dockerfile_path = sys.argv[3]
-if(len(sys.argv)==5):
+if(len(sys.argv)>4):
     repo_branch = sys.argv[4]
 else:
     repo_branch = 'master'
