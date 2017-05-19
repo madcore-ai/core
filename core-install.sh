@@ -51,6 +51,10 @@ pushd /opt/madcore/flannel
   cp docker.service /lib/systemd/system/docker.service
 popd
 
+if [[ "$ENV" == "VAGRANT" ]]; then
+    sudo sed -i 's/aws-vpc/vxlan/g' /etc/systemd/system/flanneld.service
+fi
+
 systemctl daemon-reload
 systemctl restart etcd
 systemctl enable etcd
