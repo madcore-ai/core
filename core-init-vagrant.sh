@@ -3,11 +3,11 @@
 # Madcore is a trademark of Madcore Ltd in United Kingdom
 # All other trademarks belong to their respective owners
 
-#sudo echo ENV=VAGRANT >> /etc/environment
-#sudo echo MADCORE_BRANCH=$BRANCH_CORE >> /etc/environment
-#sudo echo MADCORE_COMMIT=FETCH_HEAD >> /etc/environment
-#sudo echo MADCORE_PLUGINS_BRANCH=$BRANCH_PLUGINS >> /etc/environment
-#sudo echo MADCORE_PLUGINS_COMMIT=FETCH_HEAD >> /etc/environment
+sudo echo ENV=VAGRANT >> /etc/environment
+sudo echo MADCORE_BRANCH=$BRANCH_CORE >> /etc/environment
+sudo echo MADCORE_COMMIT=FETCH_HEAD >> /etc/environment
+sudo echo MADCORE_PLUGINS_BRANCH=$BRANCH_PLUGINS >> /etc/environment
+sudo echo MADCORE_PLUGINS_COMMIT=FETCH_HEAD >> /etc/environment
 
 echo 'Installing Madcore Core - Vagrant Edition...'
 
