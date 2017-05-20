@@ -14,7 +14,7 @@ echo 'Installing Madcore Core - Vagrant Edition...'
 sudo apt-get update
 sudo apt-get install git -y
 pushd /opt
-    sudo git clone -b {$MADCORE_BRANCH} https://github.com/madcore-ai/core.git madcore
+    sudo git clone -b $(echo $MADCORE_BRANCH) https://github.com/madcore-ai/core.git madcore
     sudo chown -R ubuntu:ubuntu /opt/madcore
 popd
 pushd /opt/madcore
