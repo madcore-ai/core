@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -exak
 # Madcore Core (c) 2015-2017 Madcore Ltd on MIT License
 # Madcore is a trademark of Madcore Ltd in United Kingdom
 # All other trademarks belong to their respective owners
@@ -14,6 +14,7 @@ echo 'Installing Madcore Core - Vagrant Edition...'
 sudo apt-get update
 sudo apt-get install git -y
 pushd /opt
+    echo "CLONING BRANCH CORE: $BRANCH_CORE"
     sudo git clone -b $BRANCH_CORE https://github.com/madcore-ai/core.git madcore
     sudo chown -R ubuntu:ubuntu /opt/madcore
 popd
