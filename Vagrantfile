@@ -2,13 +2,21 @@
 # vi: set ft=ruby :
 
 $script = <<SCRIPT
+#!/bin/bash -exak
+
 # VARIABLES THAT CAN BE SET PRIOR TO INSTALLATION
 
 BRANCH_CORE=development
 BRANCH_PLUGINS=development
 
-bash <(curl -s https://raw.githubusercontent.com/madcore-ai/core/$BRANCH_CORE/core-init-vagrant.sh)
+#=== DO NOT EDIT BELOW, UNLESS...
+
+export BRANCH_CORE=$BRANCH_CORE
+export BRANCH_PLUGINS=$BRANCH_PLUGINS
+curl -L https://raw.githubusercontent.com/madcore-ai/core/$(echo $BRANCH_CORE)/core-init-vagrant.sh | bash
+
 SCRIPT
+
 
 Vagrant.configure(2) do |config|
   config.vm.box = "xenial"
