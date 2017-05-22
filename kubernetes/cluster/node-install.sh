@@ -23,6 +23,7 @@ sudo aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --no-source-
 pushd /tmp
     sudo apt-get update
     sudo apt-get install git -y
+    sudo apt-get install nfs-kernel-server -y
     sudo curl -fsSL https://get.docker.com/ | sh
     sudo wget https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
