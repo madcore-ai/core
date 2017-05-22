@@ -21,6 +21,7 @@ pushd /opt/madcore/kubernetes/
     cp -R manifests /opt/kubernetes
     cp -R addons /opt/kubernetes
     cp -R ssl /opt/kubernetes
+    cp -R nfs /opt/kubernetes/nfs
 popd
 
 # systemd reload
