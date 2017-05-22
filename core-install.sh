@@ -164,6 +164,6 @@ IP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 sudo echo "${IP} core.madcore" >> /etc/hosts
 
 # Run only if we are on VAGRANT env
-if [[ "$ENV" == "VAGRANT" ]]; then
-    sudo bash "/opt/madcore/spark/setup.sh" # this setup needs 15-20 min to completely finish
-fi
+#if [[ "$ENV" == "VAGRANT" ]]; then
+#    sudo bash "/opt/madcore/spark/setup.sh" # this setup needs 15-20 min to completely finish
+#fi
