@@ -3,7 +3,7 @@
 mkdir -p /opt/bin
 mkdir -p /tmp/helm
 pushd /tmp/helm
-    wget -O helm.tar.gz https://kubernetes-helm.storage.googleapis.com/helm-v2.1.0-linux-amd64.tar.gz
+    wget -O helm.tar.gz https://kubernetes-helm.storage.googleapis.com/helm-v2.4.2-linux-amd64.tar.gz
     tar -xf helm.tar.gz --strip-components=1
     cp helm /opt/bin
 popd
