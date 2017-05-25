@@ -15,13 +15,17 @@ export BRANCH_CORE=$BRANCH_CORE
 export BRANCH_PLUGINS=$BRANCH_PLUGINS
 curl -L https://raw.githubusercontent.com/madcore-ai/core/$(echo $BRANCH_CORE)/ci-vagrant/ci-init-vagrant.sh | bash
 
+GREEM='\033[1;31m'
+NC='\033[0m' # No Color
+printf "SUCCESS. JENKINS: ${GREEN} http://localhost:11111/blue ${NC}\n\n"
+
 SCRIPT
 
 
 Vagrant.configure(2) do |config|
   config.vm.box = "xenial"
   config.vm.hostname = "jenkins"
-  config.vm.network "forwarded_port", guest: 8080, host: 11111
+  config.vm.network "forwarded_port", guest: 8880, host: 11111
 
 # config.vm.synced_folder "/Users/polfilm/git_df/madcore", "/opt/madcore"
 
