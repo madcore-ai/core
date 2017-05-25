@@ -30,6 +30,7 @@ pushd /tmp
 popd
 
 # JENKINS PLUGINS
+sudo su -c "source /etc/environment" jenkins
 sudo service jenkins stop
 sudo chown -R jenkins:jenkins /opt/madcore
 sudo su -c "cp -f /opt/madcore/jenkins/config.xml /var/lib/jenkins/config.xml"
