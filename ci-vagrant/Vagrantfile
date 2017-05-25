@@ -6,8 +6,8 @@ $script = <<SCRIPT
 
 # VARIABLES THAT CAN BE SET PRIOR TO INSTALLATION
 
-#BRANCH_CORE=ci-vagrant
-#BRANCH_PLUGINS=development
+BRANCH_CORE=ci-vagrant
+BRANCH_PLUGINS=development
 
 #=== DO NOT EDIT BELOW, UNLESS...
 
