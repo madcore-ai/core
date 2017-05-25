@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$script = <<SCRIPT
+#!/bin/bash -exak
+
+# VARIABLES THAT CAN BE SET PRIOR TO INSTALLATION
+
+#BRANCH_CORE=ci-vagrant
+#BRANCH_PLUGINS=development
+
+#=== DO NOT EDIT BELOW, UNLESS...
+
+export BRANCH_CORE=$BRANCH_CORE
+export BRANCH_PLUGINS=$BRANCH_PLUGINS
+curl -L https://raw.githubusercontent.com/madcore-ai/core/$(echo $BRANCH_CORE)/ci-vagrant/ci-init-vagrant.sh | bash
+
+SCRIPT
+
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "xenial"
+  config.vm.hostname = "jenkins"
+  config.vm.network "forwarded_port", guest: 8080, host: 11111
+
+# config.vm.synced_folder "/Users/polfilm/git_df/madcore", "/opt/madcore"
+
+  config.vm.provider "virtualbox" do |vb|
+     vb.name = "jenkins"
+     vb.memory = "1024"
+  end
+
+  config.vm.provision "shell", inline: $script
+
+end
+
