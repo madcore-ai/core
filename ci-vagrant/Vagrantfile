@@ -13,7 +13,8 @@ BRANCH_PLUGINS=development
 
 export BRANCH_CORE=$BRANCH_CORE
 export BRANCH_PLUGINS=$BRANCH_PLUGINS
-curl -L https://raw.githubusercontent.com/madcore-ai/core/$(echo $BRANCH_CORE)/ci-vagrant/ci-init-vagrant.sh | bash
+wget https://raw.githubusercontent.com/madcore-ai/core/$(echo $BRANCH_CORE)/ci-vagrant/ci-init-vagrant.sh
+bash ci-init-vagrant.sh
 
 
 CODE=$?
