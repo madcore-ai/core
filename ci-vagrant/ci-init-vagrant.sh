@@ -1,4 +1,4 @@
-#!/bin/bash -xak
+#!/bin/bash -xakv +e
 # Madcore Core (c) 2015-2017 Madcore Ltd on MIT License
 # Madcore is a trademark of Madcore Ltd in United Kingdom
 # All other trademarks belong to their respective owners
