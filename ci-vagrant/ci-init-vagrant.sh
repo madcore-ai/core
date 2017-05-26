@@ -44,7 +44,7 @@ sudo su -c "sed -ie 's/\${MADCORE_COMMIT}/${MADCORE_COMMIT}/g' /var/lib/jenkins/
 sudo su -c "sed -ie 's/\${MADCORE_PLUGINS_BRANCH}/${MADCORE_PLUGINS_BRANCH}/g' /var/lib/jenkins/config.xml" jenkins
 sudo su -c "sed -ie 's/\${MADCORE_PLUGINS_COMMIT}/${MADCORE_PLUGINS_COMMIT}/g' /var/lib/jenkins/config.xml" jenkins
 
-sudo systemctl daemon-reload
+#sudo systemctl daemon-reload
 sudo service jenkins start
 sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8880/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 install-plugin git -deploy" jenkins
