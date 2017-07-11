@@ -18,7 +18,7 @@ pushd /var
   wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
   sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
   sudo apt update -y
-  sudo apt-get install gcc cuda cuda-drivers nvidia-cuda-toolkit -y
+  sudo apt-get install gcc cuda cuda-drivers nvidia-cuda-toolkit libopenblas-dev libatlas-base-dev libatlas-dev -y
 popd
 
 echo "Kub Node Setup"
