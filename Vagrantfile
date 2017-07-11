@@ -1,11 +1,26 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-branch = ENV.has_key?('MADCORE_DEV_BRANCH') ? ENV['MADCORE_DEV_BRANCH'] : "development"
+$script = <<SCRIPT
+#!/bin/bash -exak
+
+# VARIABLES THAT CAN BE SET PRIOR TO INSTALLATION
+
+BRANCH_CORE=development
+BRANCH_PLUGINS=development
+
+#=== DO NOT EDIT BELOW, UNLESS...
+
+export BRANCH_CORE=$BRANCH_CORE
+export BRANCH_PLUGINS=$BRANCH_PLUGINS
+curl -L https://raw.githubusercontent.com/madcore-ai/core/$(echo $BRANCH_CORE)/core-init-vagrant.sh | bash
+
+SCRIPT
+
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "xenial2"
-  config.vm.hostname = "xenial2"
+  config.vm.box = "xenial"
+  config.vm.hostname = "madcore"
   config.vm.network "forwarded_port", guest: 443, host: 8443
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "forwarded_port", guest: 8081, host: 8081
@@ -16,9 +31,10 @@ Vagrant.configure(2) do |config|
 # config.vm.synced_folder "/Users/polfilm/git_df/madcore", "/opt/madcore"
 
   config.vm.provider "virtualbox" do |vb|
-     vb.name = "xenial2"
-     vb.memory = "6144"
+     vb.name = "madcore"
+     vb.memory = "4096"
   end
 
-  config.vm.provision "shell", path: "https://raw.githubusercontent.com/madcore-ai/core/#{branch}/core-init-vagrant.sh"
+  config.vm.provision "shell", inline: $script
+
 end

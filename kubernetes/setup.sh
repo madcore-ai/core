@@ -2,6 +2,7 @@
 IP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 echo "NODE_IP=$IP" >> /etc/environment
 
+mkdir /opt/nfsstorage/
 mkdir /opt/bin
 pushd /opt/bin
 curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
@@ -20,6 +21,7 @@ pushd /opt/madcore/kubernetes/
     cp -R manifests /opt/kubernetes
     cp -R addons /opt/kubernetes
     cp -R ssl /opt/kubernetes
+    cp -R nfs /opt/kubernetes/nfs
 popd
 
 # systemd reload
@@ -46,6 +48,8 @@ echo "kubernetes api server is ready"
 # Start dashboard and dns
 
 kubectl create -f /opt/kubernetes/addons
+
+kubectl create -f /opt/kubernetes/nfs
 
 # Run reconfigure HAproxy
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8880 build madcore.ssl.letsencrypt.getandinstall -p S3BucketName=${S3_BUCKET}" jenkins
