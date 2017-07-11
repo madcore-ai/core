@@ -9,7 +9,7 @@ RestartSec=10
 TimeoutStartSec=5m
 TimeoutStopSec=10s
 ExecStartPre=-/usr/bin/docker rm -f kubelet
-ExecStartPre=/usr/bin/docker pull gcr.io/google_containers/hyperkube-amd64:v1.6.1
+ExecStartPre=/usr/bin/docker pull gcr.io/google_containers/hyperkube-amd64:v1.7.0
 ExecStartPost=/sbin/iptables -P FORWARD ACCEPT
 ExecStart=/usr/bin/docker run \
      --tty \
@@ -27,7 +27,7 @@ ExecStart=/usr/bin/docker run \
      --volume /var/run:/var/run:rw \
      --volume /opt/kubernetes/manifests/:/etc/kubernetes/manifests/ \
      --volume /opt/kubernetes/ssl/:/etc/kubernetes/ssl/ \
-     gcr.io/google_containers/hyperkube-amd64:v1.6.1 \
+     gcr.io/google_containers/hyperkube-amd64:v1.7.0 \
      /hyperkube kubelet \
      --allow-privileged \
      --address=0.0.0.0 \
@@ -38,7 +38,8 @@ ExecStart=/usr/bin/docker run \
      --cluster-domain=cluster.local \
      --containerized \
      --v=2 \
-     --node-labels="role=core"
+     --node-labels="role=core" \
+     --feature-gates="Accelerators=true"
 
 [Install]
 WantedBy=multi-user.target

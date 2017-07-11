@@ -15,10 +15,11 @@ sudo update-ca-certificates
 
 ### Install cuda
 pushd /var
+  sudo apt-get install linux-headers-$(uname -r)
   wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
   sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
   sudo apt update -y
-  sudo apt-get install gcc cuda cuda-drivers nvidia-cuda-toolkit libopenblas-dev libatlas-base-dev libatlas-dev -y
+  sudo apt-get install gcc cuda cuda-drivers nvidia-cuda-toolkit libopenblas-dev libatlas-base-dev libatlas-dev nvidia-cuda-dev nvidia-nsight -y
 popd
 
 echo "Kub Node Setup"
