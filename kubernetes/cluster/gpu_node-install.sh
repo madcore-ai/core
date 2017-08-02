@@ -35,6 +35,9 @@ pushd /tmp
     sudo curl -fsSL https://get.docker.com/ | sh
     sudo wget https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
+    # Install nvidia-docker and nvidia-docker-plugin
+    wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.1/nvidia-docker_1.0.1-1_amd64.deb
+    sudo dpkg -i /tmp/nvidia-docker*.deb && rm /tmp/nvidia-docker*.deb
 popd
 
 ## flannel
