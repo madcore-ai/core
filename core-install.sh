@@ -82,11 +82,12 @@ sudo hab pkg binlink core/hab-sup hab-sup
 sudo hab pkg binlink core/redis redis-cli
 sudo hab pkg binlink core/hab-depot bldr-depot
 sudo hab pkg binlink core/hab-director hab-director
-sudo hab svc start core/redis --permanent-peer --peer 10.99.101.190:9000
-sudo hab svc start core/hab-depot --permanent-peer --bind database:redis.depot,router:hab-depot.depot --peer 10.99.101.190:9000
+
 
 # SETUP HABITAT DEPOT + REDIS (REUIQRED FOR JENKINS RESTORE)
 sudo bash "/opt/madcore/registryhabitat/setup.sh"
+sudo hab svc start core/redis --permanent-peer --peer 10.99.101.190:9000
+sudo hab svc start core/hab-depot --permanent-peer --bind database:redis.depot,router:hab-depot.depot --peer 10.99.101.190:9000
 
 # JENKINS PLUGINS
 sudo service jenkins stop

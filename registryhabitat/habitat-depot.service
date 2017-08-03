@@ -2,7 +2,7 @@
 Description=Habitat Director
 
 [Service]
-ExecStart=/bin/hab-director start -c /hab/svc/hab-director/madcore.toml
+ExecStart=/bin/hab-director start 
 
 [Install]
 WantedBy=default.target
