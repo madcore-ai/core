@@ -2,9 +2,8 @@
 Description=Habitat Director
 
 [Service]
-ExecStart=/bin/hab-director start
-ExecStartPost=/bin/hab svc start core/redis --permanent-peer --peer 10.99.101.190:9000
-ExecStartPost=/bin/hab svc start core/hab-depot --permanent-peer --bind database:redis.depot,router:hab-depot.depot --peer 10.99.101.190:9000
+ExecStartPre=/bin/bash -c '/bin/hab svc load core/redis || echo "service already loaded"'
+ExecStart=/bin/bash -c "/bin/hab sup run"
 
 
 [Install]
