@@ -1,0 +1,67 @@
+#!/bin/bash -v
+# Ubuntu Xenial Initialization from Cloud-Init or Vagrant
+# From Ubuntu user
+# Maintained by Peter Styk (devopsfactory@styk.tv)
+
+sudo echo "${KUB_MASTER_IP} core.madcore" >> /etc/hosts
+
+sudo apt update -y
+sudo apt install python python-pip
+sudo pip install awscli
+echo "copy ssh keys"
+sudo su -c "cat /opt/backup/ssh/id_rsa.pub >> ~/.ssh/authorized_keys" ubuntu
+sudo cp /opt/backup/docker_ssl/core.madcore.crt /usr/local/share/ca-certificates/core.madcore.crt
+sudo update-ca-certificates
+
+### Install cuda
+pushd /var
+  sudo apt-get install linux-headers-$(uname -r)
+  wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+  sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+  sudo apt update -y
+  sudo apt-get install gcc cuda cuda-drivers nvidia-cuda-toolkit libopenblas-dev libatlas-base-dev libatlas-dev nvidia-cuda-dev nvidia-nsight -y
+popd
+
+echo "Kub Node Setup"
+
+echo  "disable source-destination health check"
+INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
+sudo aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --no-source-dest-check --region ${AWS_REGION}
+
+# PREREQUESITES
+pushd /tmp
+    sudo apt-get update
+    sudo apt-get install git -y
+    sudo curl -fsSL https://get.docker.com/ | sh
+    sudo wget https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    # Install nvidia-docker and nvidia-docker-plugin
+    wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.1/nvidia-docker_1.0.1-1_amd64.deb
+    sudo dpkg -i /tmp/nvidia-docker*.deb && rm /tmp/nvidia-docker*.deb
+popd
+
+## flannel
+pushd /tmp
+  apt-get install linux-libc-dev golang gcc -y
+  wget https://github.com/coreos/flannel/releases/download/v0.7.0/flanneld-amd64
+  cp flanneld-amd64 /usr/local/bin/flanneld
+  chmod +x /usr/local/bin/flanneld
+popd
+
+pushd /opt/madcore/flannel
+  cat flanneld_node.service | sed -e "s/\${ip}/$KUB_MASTER_IP/" > /etc/systemd/system/flanneld.service
+  cp docker.service /lib/systemd/system/docker.service
+popd
+
+systemctl daemon-reload
+systemctl start flanneld
+systemctl enable flanneld
+systemctl restart docker
+
+
+# PROXY,REGISTRIES, KUBERNETES
+sudo bash "/opt/madcore/kubernetes/cluster/setup.sh"
+
+
+#### reboot for activate nvidia drivers
+sudo reboot

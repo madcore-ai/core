@@ -2,7 +2,9 @@
 Description=Habitat Director
 
 [Service]
-ExecStart=/bin/hab-director start -c /hab/svc/hab-director/madcore.toml
+ExecStartPre=/bin/bash -c '/bin/hab svc load core/redis || echo "service already loaded"'
+ExecStart=/bin/bash -c "/bin/hab sup run"
+
 
 [Install]
 WantedBy=default.target

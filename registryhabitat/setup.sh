@@ -4,13 +4,13 @@
 # Option 1
 # ip=`ifconfig|xargs|awk '{print $7}'|sed -e 's/[a-z]*:/''/'`
 #Option 2
-ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+#ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 # echo "Inserting IP Address: "$ip
 
 # write toml file with ip address
 # write directly to proper folder, do not ever write anything into repo folder as it will conflict later with pulls
-mkdir -p /hab/svc/hab-director
-cat /opt/madcore/registryhabitat/hab.director-madcore.toml.template  | sed -e "s/\${ip}/${ip}/" >  /hab/svc/hab-director/madcore.toml
+#mkdir -p /hab/svc/hab-director
+##cat /opt/madcore/registryhabitat/hab.director-madcore.toml.template  | sed -e "s/\${ip}/${ip}/" >  /hab/svc/hab-director/madcore.toml
 
 # Service Setup
 # Copy Files to Proper Locaiton
