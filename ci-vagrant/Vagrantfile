@@ -1,0 +1,48 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$script = <<SCRIPT
+#!/bin/bash -exak
+
+# VARIABLES THAT CAN BE SET PRIOR TO INSTALLATION
+
+BRANCH_CORE=ci-vagrant
+BRANCH_PLUGINS=development
+
+#=== DO NOT EDIT BELOW, UNLESS...
+
+export BRANCH_CORE=$BRANCH_CORE
+export BRANCH_PLUGINS=$BRANCH_PLUGINS
+wget https://raw.githubusercontent.com/madcore-ai/core/$(echo $BRANCH_CORE)/ci-vagrant/ci-init-vagrant.sh
+bash ci-init-vagrant.sh
+
+
+CODE=$?
+if [[ $CODE -ne 0 ]]; then
+    echo "INSTALLATION FAILED. GO FIGURE..."
+    exit -1
+fi
+
+GREEM='\033[1;31m'
+NC='\033[0m' # No Color
+printf "SUCCESS. JENKINS: ${GREEN} http://localhost:11111/blue ${NC}\n\n"
+
+SCRIPT
+
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "xenial"
+  config.vm.hostname = "jenkins"
+  config.vm.network "forwarded_port", guest: 8880, host: 11111
+
+# config.vm.synced_folder "/Users/polfilm/git_df/madcore", "/opt/madcore"
+
+  config.vm.provider "virtualbox" do |vb|
+     vb.name = "jenkins"
+     vb.memory = "2048"
+  end
+
+  config.vm.provision "shell", inline: $script
+
+end
+
